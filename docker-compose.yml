@@ -1,0 +1,11 @@
+services:
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: standalone
+    ports:
+      - '${APP_PORT:-3000}:3000' # choose a different host port if needed
+    restart: unless-stopped
+    env_file:
+      - ./.env

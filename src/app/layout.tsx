@@ -1,15 +1,17 @@
-import { Geist, Geist_Mono, DM_Sans } from "next/font/google"
+import type { Metadata } from 'next'
+import { DM_Sans } from 'next/font/google'
+import './globals.css'
+import RootProvider from '@app/_providers/root.provider'
+import Navbar from '@widgets/navbar'
+import BackgroundPattern from '@shared/ui/background-pattern'
 
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' })
 
-const dmSans = DM_Sans({subsets:['latin'],variable:'--font-sans'})
-
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
+export const metadata: Metadata = {
+  title: 'Cronbot - Schedule and automate your tasks with ease',
+  description:
+    'Cronbot is a task scheduling and automation tool that helps you manage your tasks efficiently. With Cronbot, you can easily create, schedule, and automate your tasks to save time and increase productivity.',
+}
 
 export default function RootLayout({
   children,
@@ -17,13 +19,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", dmSans.variable)}
-    >
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${dmSans.variable} antialiased`}>
+        <RootProvider>
+          <BackgroundPattern />
+          <Navbar />
+          {children}
+        </RootProvider>
       </body>
     </html>
   )

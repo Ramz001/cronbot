@@ -1,7 +1,4 @@
-dist/
-node_modules/
-.next/
-.turbo/
-coverage/
-pnpm-lock.yaml
-.pnpm-store/
+# Ignore artifacts:
+build
+coverage
+node_modules

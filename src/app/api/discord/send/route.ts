@@ -21,8 +21,6 @@ function authHeaders() {
 // Body: { message: string, channelId?: string }
 // channelId falls back to DISCORD_CHANNEL_ID env var
 export async function POST(req: NextRequest) {
-  const defaultChannelId = process.env.DISCORD_CHANNEL_ID
-
   let headers: ReturnType<typeof authHeaders>
   try {
     headers = authHeaders()
@@ -30,22 +28,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: (e as Error).message }, { status: 500 })
   }
 
-  let body: { message: string; channelId?: string } = await req.json()
+  let body: { message: string; channelId: string } = await req.json()
 
   const { message, channelId } = body
-  const targetChannel = channelId ?? defaultChannelId
 
   if (!message) {
     return NextResponse.json({ error: 'message is required' }, { status: 400 })
   }
-  if (!targetChannel) {
+  if (!channelId) {
     return NextResponse.json(
       { error: 'channelId is required (or set DISCORD_CHANNEL_ID in env)' },
       { status: 400 }
     )
   }
 
-  const res = await fetch(`${DISCORD_API}/channels/${targetChannel}/messages`, {
+  const res = await fetch(`${DISCORD_API}/channels/${channelId}/messages`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ content: message }),

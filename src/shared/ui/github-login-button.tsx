@@ -1,15 +1,17 @@
 import { Button } from '@/shared/ui/button'
 import { handleError } from '@shared/utils/handle-error'
-import { signIn } from 'next-auth/react'
-import { usePostHog } from 'posthog-js/react'
+import { signIn } from '@shared/utils/auth-client'
 
 export const GithubLoginButton = () => {
-  const posthog = usePostHog()
-
   const handleLogin = async () => {
     try {
-      await signIn('github', { redirect: true, redirectTo: '/' })
-      posthog.capture('signed_in_github')
+      const { data, error } = await signIn.social({
+        provider: 'github',
+      })
+      if (error) {
+        throw new Error(error.message || 'Github login failed')
+      }
+      console.log(data)
     } catch (error) {
       handleError(error)
     }

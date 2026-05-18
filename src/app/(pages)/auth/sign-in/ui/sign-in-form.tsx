@@ -28,11 +28,9 @@ import { handleError } from '@shared/utils/handle-error'
 import { useRouter } from 'next/navigation'
 import { throwAuthError } from '@shared/utils/map-authjs-error'
 import { LoginSchema } from '@shared/models/auth.schema'
-import { usePostHog } from 'posthog-js/react'
 
 export function SignInForm() {
   const [showPassword, setShowPassword] = useState(false)
-  const posthog = usePostHog()
   const router = useRouter()
 
   const form = useForm({
@@ -54,10 +52,6 @@ export function SignInForm() {
           throwAuthError(result.error)
         }
 
-        posthog.capture('signed_in', {
-          email: value.email,
-          page: 'sign_in_form',
-        })
         toast.success('Signed in successfully.')
         router.push('/')
       } catch (error) {

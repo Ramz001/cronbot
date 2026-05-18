@@ -30,13 +30,11 @@ import { handleError } from '@shared/utils/handle-error'
 import { useRouter } from 'next/navigation'
 import { throwAuthError } from '@shared/utils/map-authjs-error'
 import { isSuccess } from '@shared/api/server-error-handlers'
-import { usePostHog } from 'posthog-js/react'
 
 export function SignUpForm() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const posthog = usePostHog()
   
   const form = useForm({
     defaultValues: {
@@ -66,9 +64,6 @@ export function SignUpForm() {
           throwAuthError(res.error)
         }
 
-        posthog.capture('signed_up', {
-          email: value.email,
-        })
         toast.success('Account created! You can now sign in.')
         router.push('/')
       } catch (error) {

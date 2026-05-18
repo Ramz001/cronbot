@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import z from 'zod'
 
 export type MapErrorResult = {
@@ -13,6 +14,19 @@ export function mapError(error: unknown): MapErrorResult {
         issues: error.issues,
       },
       status: 400,
+    }
+  }
+
+  // Handle AxiosErrors first since they extend Error
+  if (error instanceof AxiosError) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'An error occurred during the API request'
+
+    return {
+      error: { message },
+      status: error.response?.status || 500,
     }
   }
 

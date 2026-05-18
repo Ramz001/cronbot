@@ -1,3 +1,4 @@
+import '@shared/configs/env'
 import ToastProvider from './toast.provider'
 import AuthSessionProvider from './session.provider'
 import ThemeProvider from './theme.provider'

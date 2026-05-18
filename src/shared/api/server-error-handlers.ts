@@ -6,11 +6,23 @@ export type ActionSuccess<T> = {
   data?: T
 }
 
-type ActionError = MapErrorResult & {
+export type ActionError = MapErrorResult & {
   success: false
 }
 
-type ActionResult<T> = ActionSuccess<T> | ActionError
+export type ActionResult<T> = ActionSuccess<T> | ActionError
+
+export type RouteSuccess<T> = NextResponse<{
+  success: true
+  data?: T
+}>
+
+export type RouteError = MapErrorResult &
+  NextResponse<{
+    success: false
+  }>
+
+export type RouteResult<T> = RouteSuccess<T> | RouteError
 
 /**
  * Wrap any async server handler to catch errors.
@@ -24,7 +36,12 @@ export function withActionErrorHandler<Args extends unknown[], T>(
       return await handler(...args)
     } catch (error: unknown) {
       const { error: mappedError, status } = mapError(error)
-      console.error('[Server Action Error]:', error)
+
+      const logInfo =
+        error instanceof Error
+          ? { message: error.message, response: (error as any).response?.data }
+          : error
+      console.error('[Server Action Error]:', logInfo)
 
       return {
         success: false,
@@ -39,15 +56,21 @@ export function withActionErrorHandler<Args extends unknown[], T>(
  * Wrap any async server handler to catch errors.
  * Ignores the handler's normal return value — only ensures errors are handled consistently.
  */
-export const withRouteErrorHandler = (
-  handler: (req: NextRequest) => Promise<NextResponse>
+export const withRouteErrorHandler = <TContext extends unknown[]>(
+  handler: (req: NextRequest, ...args: TContext) => Promise<NextResponse>
 ) => {
-  return async (req: NextRequest): Promise<NextResponse> => {
+  return async (req: NextRequest, ...args: TContext): Promise<NextResponse> => {
     try {
-      return await handler(req)
+      return await handler(req, ...args)
     } catch (error) {
       const { error: mappedError, status } = mapError(error)
-      console.error('[Route Error]:', error)
+
+      const logInfo =
+        error instanceof Error
+          ? { message: error.message, response: (error as any).response?.data }
+          : error
+
+      console.error(`[Route Error] ${req.nextUrl.pathname}:`, logInfo)
 
       return NextResponse.json(
         { success: false, error: mappedError },

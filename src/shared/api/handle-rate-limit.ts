@@ -3,7 +3,6 @@
 import { RateLimiterPrisma, RateLimiterRes } from 'rate-limiter-flexible'
 
 import z from 'zod'
-import { requireAuth } from './auth.guard'
 import prisma from '@shared/lib/prisma'
 import { headers } from 'next/headers'
 
@@ -69,12 +68,6 @@ export const handleRateLimit = async (options: RateLimitOptions) => {
       case RATE_LIMIT_METHODS.ip:
         identifier = await getUserIP()
         break
-
-      case RATE_LIMIT_METHODS.session: {
-        const user = await requireAuth()
-        identifier = user.id
-        break
-      }
 
       default:
         identifier = await getUserIP()

@@ -8,6 +8,8 @@ export default function Gutter({
   className?: string
 }) {
   return (
-    <div className={cn('container mx-auto px-4', className)}>{children}</div>
+    <section className={cn('container mx-auto px-4', className)}>
+      {children}
+    </section>
   )
 }

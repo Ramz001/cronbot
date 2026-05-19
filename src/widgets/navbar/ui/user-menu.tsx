@@ -1,11 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { signOut } from 'next-auth/react'
-import { LogOut, Settings, Shield } from 'lucide-react'
-import { Role } from '@shared/prisma/generated/enums'
+import { signOut } from '@shared/utils/auth-client'
+import { LogOut, Settings } from 'lucide-react'
 import { Button } from '@shared/ui/button'
-import { Badge } from '@shared/ui/badge'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +13,10 @@ import {
   DropdownMenuTrigger,
 } from '@shared/ui/dropdown-menu'
 import { cn } from '@shared/utils/cn'
-import type { Session } from 'next-auth'
+import { User } from 'better-auth'
 
 type UserMenuProps = {
-  user: Session['user']
+  user: User
 }
 
 function getInitials(name?: string | null, email?: string | null) {
@@ -35,7 +33,6 @@ function getInitials(name?: string | null, email?: string | null) {
 
 export function UserMenu({ user }: UserMenuProps) {
   const initials = getInitials(user.name, user.email)
-  const isAdmin = user.role === Role.ADMIN
 
   return (
     <DropdownMenu>
@@ -57,9 +54,7 @@ export function UserMenu({ user }: UserMenuProps) {
             <span
               className={cn(
                 'flex size-8 items-center justify-center rounded-full text-xs font-semibold',
-                isAdmin
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground'
+                'bg-secondary text-secondary-foreground'
               )}
             >
               {initials}
@@ -76,14 +71,6 @@ export function UserMenu({ user }: UserMenuProps) {
               <p className="text-foreground truncate text-sm font-medium">
                 {user.name ?? 'User'}
               </p>
-              {isAdmin && (
-                <Badge
-                  variant="secondary"
-                  className="h-4 shrink-0 px-1.5 text-[10px]"
-                >
-                  Admin
-                </Badge>
-              )}
             </div>
             <p className="text-muted-foreground truncate text-xs">
               {user.email}
@@ -100,15 +87,6 @@ export function UserMenu({ user }: UserMenuProps) {
               Settings
             </Link>
           </DropdownMenuItem>
-
-          {isAdmin && (
-            <DropdownMenuItem asChild>
-              <Link href="/admin">
-                <Shield />
-                Admin Panel
-              </Link>
-            </DropdownMenuItem>
-          )}
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />

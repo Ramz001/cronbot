@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/shared/ui/button'
-import { signOut } from 'next-auth/react'
+import { signOut } from '@shared/utils/auth-client'
 
 export function SignOutButton() {
   return (

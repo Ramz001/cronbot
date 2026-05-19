@@ -1,25 +1,29 @@
+'use client'
+
 import { Button } from '@/shared/ui/button'
 import { handleError } from '@shared/utils/handle-error'
 import { signIn } from '@shared/utils/auth-client'
+import { RiGithubFill } from '@remixicon/react'
 
 export const GithubLoginButton = () => {
   const handleLogin = async () => {
     try {
-      const { data, error } = await signIn.social({
-        provider: 'github',
-      })
-      if (error) {
-        throw new Error(error.message || 'Github login failed')
-      }
-      console.log(data)
+      const { data } = await signIn.social({ provider: 'github' })
+      console.log('Github login data:', data)
     } catch (error) {
       handleError(error)
     }
   }
 
   return (
-    <Button onClick={handleLogin} variant="outline" type="button">
-      Login with Github
+    <Button
+      onClick={handleLogin}
+      variant="outline"
+      type="button"
+      className="w-full"
+    >
+      <RiGithubFill className="mr-2 h-4 w-4" />
+      Continue with Github
     </Button>
   )
 }

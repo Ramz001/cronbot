@@ -1,17 +1,23 @@
 import Gutter from '@shared/ui/gutter'
-import { SignInForm } from './ui/sign-in-form'
+import { GithubLoginButton } from '@shared/ui/github-login-button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@shared/ui/card'
 
 export default function SignInPage() {
   return (
-    <Gutter className="flex min-h-[90dvh] flex-col items-center justify-center gap-4">
-      <header className="space-y-1 text-center">
-        <h1 className="text-foreground text-3xl font-semibold">Welcome back</h1>
-        <p className="text-muted-foreground text-sm">
-          Sign in with your email and password to continue.
-        </p>
-      </header>
-
-      <SignInForm />
+    <Gutter className="flex min-h-[90dvh] flex-col items-center justify-center p-4">
+      <Card className="w-full max-w-sm">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl font-semibold tracking-tight">
+            Welcome back
+          </CardTitle>
+          <CardDescription>
+            Log in to your account to continue
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <GithubLoginButton />
+        </CardContent>
+      </Card>
     </Gutter>
   )
 }

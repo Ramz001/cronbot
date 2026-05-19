@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { MessageSquareText } from 'lucide-react'
 import Gutter from '@shared/ui/gutter'
 import ClientSection from './ui/client-section'
+import { RiTimeFill } from '@remixicon/react'
 
 export default function Navbar() {
   return (
@@ -11,30 +11,9 @@ export default function Navbar() {
           href="/"
           className="text-foreground flex shrink-0 items-center gap-2 font-semibold transition-opacity hover:opacity-80"
         >
-          <MessageSquareText className="text-primary size-5" />
-          <span className="inline">Future Generations AI</span>
+          <RiTimeFill className="text-primary size-5" />
+          <span className="inline">CronBot</span>
         </Link>
-
-        {/* <div className="flex items-center gap-6">
-          <Link
-            href="/"
-            className="text-foreground text-sm font-medium transition-opacity hover:opacity-80"
-          >
-            Home
-          </Link>
-          <Link
-            href="/blogs"
-            className="text-foreground text-sm font-medium transition-opacity hover:opacity-80"
-          >
-            Blogs
-          </Link>
-          <Link
-            href="/blogs"
-            className="text-foreground text-sm font-medium transition-opacity hover:opacity-80"
-          >
-            Privacy
-          </Link>
-        </div> */}
         <ClientSection />
       </Gutter>
     </header>

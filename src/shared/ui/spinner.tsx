@@ -1,13 +1,15 @@
-import { cn } from '@shared/utils/cn'
-import { Loader2Icon } from 'lucide-react'
+import { cn } from '@/shared/lib/utils'
+import { RiLoaderLine } from '@remixicon/react'
 
-function Spinner({ className, ...props }: React.ComponentProps<'svg'>) {
+function Spinner(props: React.ComponentProps<typeof RiLoaderLine>) {
+  const { className, ...rest } = props
+
   return (
-    <Loader2Icon
+    <RiLoaderLine
       role="status"
       aria-label="Loading"
       className={cn('size-4 animate-spin', className)}
-      {...props}
+      {...rest}
     />
   )
 }

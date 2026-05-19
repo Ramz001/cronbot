@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
-import { DM_Sans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import RootProvider from '@app/_providers/root.provider'
 import Navbar from '@widgets/navbar'
 import BackgroundPattern from '@shared/ui/background-pattern'
+import { cn } from '@shared/utils/cn'
 
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' })
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
 export const metadata: Metadata = {
   title: 'Cronbot - Schedule and automate your tasks with ease',
@@ -19,8 +20,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${dmSans.variable} antialiased`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn('font-sans', inter.variable)}
+    >
+      <body className={`${inter.variable} antialiased`}>
         <RootProvider>
           <BackgroundPattern />
           <Navbar />

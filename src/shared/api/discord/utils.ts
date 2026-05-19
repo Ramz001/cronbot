@@ -21,11 +21,7 @@ const SESSION_HEADERS = {
   'sec-ch-ua-platform': '"Windows"',
 }
 
-export const authHeaders = () => {
-  const token = process.env.DISCORD_USER_TOKEN
-
-  if (!token) throw new Error('DISCORD_USER_TOKEN is not set')
-
+export const authHeaders = ({ token }: { token: string }) => {
   return {
     Authorization: token,
     ...SESSION_HEADERS,

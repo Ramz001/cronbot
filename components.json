@@ -13,7 +13,7 @@
   "iconLibrary": "remixicon",
   "aliases": {
     "components": "@/shared/components",
-    "utils": "@/shared/utils",
+    "utils": "@/shared/lib/utils",
     "ui": "@/shared/ui",
     "lib": "@/shared/lib",
     "hooks": "@/shared/hooks"

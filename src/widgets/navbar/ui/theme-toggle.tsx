@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
-import { Moon, Sun } from 'lucide-react'
+import { RiMoonClearFill, RiSunFill } from '@remixicon/react'
 import { Button } from '@shared/ui/button'
 
 export function ThemeToggle() {
@@ -35,9 +35,9 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
     >
       {resolvedTheme === 'dark' ? (
-        <Sun className="size-4 transition-transform duration-200" />
+        <RiSunFill className="size-4 transition-transform duration-200" />
       ) : (
-        <Moon className="size-4 transition-transform duration-200" />
+        <RiMoonClearFill className="size-4 transition-transform duration-200" />
       )}
     </Button>
   )

@@ -1,7 +1,7 @@
 'use client'
 
 import { signOut } from '@shared/utils/auth-client'
-import { LogOut } from 'lucide-react'
+import { RiLogoutBoxFill } from '@remixicon/react'
 import { Button } from '@shared/ui/button'
 import {
   DropdownMenu,
@@ -83,7 +83,7 @@ export function UserMenu({ user }: UserMenuProps) {
           onClick={async () => await signOut()}
           className="cursor-pointer"
         >
-          <LogOut />
+          <RiLogoutBoxFill />
           Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>

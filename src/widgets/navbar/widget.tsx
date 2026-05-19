@@ -5,7 +5,7 @@ import { RiTimeFill } from '@remixicon/react'
 
 export default function Navbar() {
   return (
-    <header className="border-border/40 bg-background/80 supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur-md">
+    <nav className="border-border/40 bg-background/80 supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur-md">
       <Gutter className="flex h-14 items-center justify-between gap-4">
         <Link
           href="/"
@@ -16,6 +16,6 @@ export default function Navbar() {
         </Link>
         <ClientSection />
       </Gutter>
-    </header>
+    </nav>
   )
 }

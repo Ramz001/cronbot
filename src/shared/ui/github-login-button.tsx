@@ -22,8 +22,8 @@ export const GithubLoginButton = () => {
       type="button"
       className="w-full"
     >
-      <RiGithubFill className="mr-2 h-4 w-4" />
-      Continue with Github
+      <RiGithubFill className="h-4 w-4" />
+      Sign in
     </Button>
   )
 }

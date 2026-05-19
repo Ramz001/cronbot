@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import RootProvider from '@app/_providers/root.provider'
-import Navbar from '@widgets/navbar'
 import BackgroundPattern from '@shared/ui/background-pattern'
 import { cn } from '@shared/utils/cn'
 
@@ -28,7 +27,6 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <RootProvider>
           <BackgroundPattern />
-          <Navbar />
           {children}
         </RootProvider>
       </body>

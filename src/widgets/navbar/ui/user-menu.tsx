@@ -1,13 +1,11 @@
 'use client'
 
-import Link from 'next/link'
 import { signOut } from '@shared/utils/auth-client'
-import { LogOut, Settings } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { Button } from '@shared/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -69,7 +67,7 @@ export function UserMenu({ user }: UserMenuProps) {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <p className="text-foreground truncate text-sm font-medium">
-                {user.name ?? 'User'}
+                {user.name ?? ''}
               </p>
             </div>
             <p className="text-muted-foreground truncate text-xs">
@@ -77,17 +75,6 @@ export function UserMenu({ user }: UserMenuProps) {
             </p>
           </div>
         </div>
-
-        <DropdownMenuSeparator />
-
-        <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/settings">
-              <Settings />
-              Settings
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
 

@@ -11,8 +11,16 @@ export default async function HomePage() {
 
   if (session) {
     return (
-      <Gutter>
-        <main className="flex h-[calc(100dvh-4rem)] flex-col"></main>
+      <Gutter className="flex min-h-[90dvh] flex-col items-center justify-center gap-4 text-center">
+        <h1 className="text-foreground mb-2 text-4xl font-bold">
+          Welcome back to CronBot👋
+        </h1>
+        <p className="text-foreground/80 mb-4 text-lg">
+          Manage your scheduled tasks and stay organized with ease.
+        </p>
+        <Button asChild>
+          <Link href={'/dashboard'}>Go to Dashboard</Link>
+        </Button>
       </Gutter>
     )
   }

@@ -20,13 +20,14 @@ export default async function HomePage() {
         <p className="text-foreground/80 mb-4 text-lg">
           Manage your scheduled tasks and stay organized with ease.
         </p>
-        <Button asChild>
-          {session ? (
-            <Link href={'/dashboard'}>Go to Dashboard</Link>
-          ) : (
-            <Link href={'/auth/sign-in'}>Sign In</Link>
-          )}
-        </Button>
+        <div className="flex gap-4">
+          <Button asChild>
+            {session && <Link href={'/dashboard'}>Go to Dashboard</Link>}
+          </Button>
+          <Button>
+            <Link href={'https://docs.cronbot.uz'}>Docs</Link>
+          </Button>
+        </div>
       </Gutter>
     </>
   )

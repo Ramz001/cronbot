@@ -24,9 +24,7 @@ export default function RootLayout({
       className={cn('font-sans', inter.variable)}
     >
       <body className={`${inter.variable} antialiased`}>
-        <RootProvider>
-          {children}
-        </RootProvider>
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   )

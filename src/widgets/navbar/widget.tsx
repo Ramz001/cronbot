@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Gutter from '@shared/ui/gutter'
 import ClientSection from './ui/client-section'
-import { RiTimeFill } from '@remixicon/react'
+import { RiTimeLine } from '@remixicon/react'
 
 export default function Navbar() {
   return (
@@ -11,7 +11,7 @@ export default function Navbar() {
           href="/"
           className="text-foreground flex shrink-0 items-center gap-2 font-semibold transition-opacity hover:opacity-80"
         >
-          <RiTimeFill className="text-primary size-5" />
+          <RiTimeLine className="text-primary size-5" />
           <span className="inline">CronBot</span>
         </Link>
         <ClientSection />

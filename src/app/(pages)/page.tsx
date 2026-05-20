@@ -24,7 +24,7 @@ export default async function HomePage() {
       <Gutter className="relative z-10 flex min-h-[90dvh] flex-1 flex-col items-center justify-center gap-6 py-24 text-center">
         <div className="bg-secondary/50 text-secondary-foreground hover:bg-secondary/70 mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors">
           <Sparkles className="text-primary h-4 w-4" />
-          <span>Discord Self-Bot Integration Live</span>
+          <span>Discord Self-Bot Integration</span>
         </div>
 
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">

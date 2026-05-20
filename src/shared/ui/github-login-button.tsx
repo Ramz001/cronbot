@@ -5,7 +5,13 @@ import { handleError } from '@shared/utils/handle-error'
 import { signIn } from '@shared/utils/auth-client'
 import { RiGithubFill } from '@remixicon/react'
 
-export const GithubLoginButton = () => {
+export const GithubLoginButton = ({
+  className,
+  title = 'Sign in',
+}: {
+  className?: string
+  title?: string
+}) => {
   const handleLogin = async () => {
     try {
       const { data } = await signIn.social({ provider: 'github' })
@@ -20,10 +26,10 @@ export const GithubLoginButton = () => {
       onClick={handleLogin}
       variant="outline"
       type="button"
-      className="w-full"
+      className={className}
     >
       <RiGithubFill className="h-4 w-4" />
-      Sign in
+      {title}
     </Button>
   )
 }

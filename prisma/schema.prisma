@@ -1,7 +1,6 @@
-
 generator client {
   provider = "prisma-client"
-  output = "./generated"
+  output   = "./generated"
 }
 
 datasource db {
@@ -9,15 +8,16 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id                String             @id
+  name              String
+  email             String
+  emailVerified     Boolean            @default(false)
+  image             String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  sessions          Session[]
+  accounts          Account[]
+  integrationTokens IntegrationToken[]
 
   @@unique([email])
   @@map("user")
@@ -69,4 +69,25 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum Provider {
+  discord
+}
+
+model IntegrationToken {
+  id           String    @id @default(cuid())
+  userId       String
+  provider     Provider
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String?
+  tokenPreview String
+  token        String
+  expiresAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([provider])
+  @@map("integration_token")
 }

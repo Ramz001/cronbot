@@ -5,6 +5,7 @@ import { getSession } from '@/auth'
 import { headers } from 'next/headers'
 import Navbar from '@widgets/navbar'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import { GithubLoginButton } from '@shared/ui/github-login-button'
 
 export default async function HomePage() {
   const session = await getSession({
@@ -22,7 +23,7 @@ export default async function HomePage() {
 
       {/* Content layer */}
       <Gutter className="relative z-10 flex min-h-[90dvh] flex-1 flex-col items-center justify-center gap-6 py-24 text-center">
-        <div className="bg-secondary/50 text-secondary-foreground hover:bg-secondary/70 mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors">
+        <div className="bg-secondary/50 text-secondary-foreground hover:bg-secondary/70 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors sm:mb-4">
           <Sparkles className="text-primary h-4 w-4" />
           <span>Discord Self-Bot Integration</span>
         </div>
@@ -40,22 +41,27 @@ export default async function HomePage() {
         </p>
 
         <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-          <Button asChild size="lg" className="h-12 px-8 font-semibold">
-            {session ? (
-              <Link href={'/dashboard'}>
+          {session ? (
+            <Button
+              asChild
+              size="lg"
+              className="h-12 w-full px-8 font-semibold sm:w-auto"
+            >
+              <Link href="/dashboard">
                 Go to Dashboard <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
-            ) : (
-              <Link href={'/api/auth/signin'}>
-                Get Started <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            )}
-          </Button>
+            </Button>
+          ) : (
+            <GithubLoginButton
+              className="h-12 w-full px-8 font-semibold sm:w-auto"
+              title="Continue with GitHub"
+            />
+          )}
           <Button
             asChild
             variant="outline"
             size="lg"
-            className="h-12 px-8 font-semibold"
+            className="h-12 w-full px-8 font-semibold sm:w-auto"
           >
             <Link href={'https://docs.cronbot.uz'}>Documentation</Link>
           </Button>

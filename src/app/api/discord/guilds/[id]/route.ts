@@ -13,7 +13,7 @@ async function getGuildChannels(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ): Promise<RouteResult<unknown>> {
-  const headers = authHeaders()
+  const headers = authHeaders({ token: '' })
 
   const { id } = await params
   const guildId = ParamsSchema.parse(id)

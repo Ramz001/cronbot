@@ -17,7 +17,7 @@ const SendMessageBody = z.object({
 })
 
 async function sendMessage(req: NextRequest): Promise<RouteResult<string>> {
-  const headers = authHeaders()
+  const headers = authHeaders({ token: '' })
   const body = await req.json()
 
   const { message, channelId } = SendMessageBody.parse(body)

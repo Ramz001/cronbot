@@ -7,7 +7,7 @@ import { DISCORD_API, authHeaders } from '@shared/api/discord/utils'
 import axios from 'axios'
 
 async function getGuilds(): Promise<RouteResult<unknown>> {
-  const headers = authHeaders()
+  const headers = authHeaders({ token: '' })
 
   const { data, status, statusText } = await axios.get(
     `${DISCORD_API}/users/@me/guilds`,

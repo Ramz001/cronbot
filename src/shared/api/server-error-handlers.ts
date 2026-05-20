@@ -1,7 +1,7 @@
 import { mapError, type MapErrorResult } from './map-error'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export type ActionSuccess<T> = {
+export type ActionSuccess<T = void> = {
   success: true
   data?: T
 }
@@ -10,9 +10,9 @@ export type ActionError = MapErrorResult & {
   success: false
 }
 
-export type ActionResult<T> = ActionSuccess<T> | ActionError
+export type ActionResult<T = void> = ActionSuccess<T> | ActionError
 
-export type RouteSuccess<T> = NextResponse<{
+export type RouteSuccess<T = void> = NextResponse<{
   success: true
   data?: T
 }>
@@ -22,7 +22,7 @@ export type RouteError = MapErrorResult &
     success: false
   }>
 
-export type RouteResult<T> = RouteSuccess<T> | RouteError
+export type RouteResult<T = void> = RouteSuccess<T> | RouteError
 
 /**
  * Wrap any async server handler to catch errors.
@@ -80,6 +80,6 @@ export const withRouteErrorHandler = <TContext extends unknown[]>(
   }
 }
 
-export function isSuccess<T>(res: ActionResult<T>): res is ActionSuccess<T> {
+export function isSuccess<T = void>(res: ActionResult<T>): res is ActionSuccess<T> {
   return res.success === true
 }

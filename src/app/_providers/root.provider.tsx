@@ -1,4 +1,4 @@
-import '@shared/configs/env'
+// import '@shared/configs/env'
 import ToastProvider from './toast.provider'
 import ThemeProvider from './theme.provider'
 import { TooltipProvider } from '@shared/ui/tooltip'

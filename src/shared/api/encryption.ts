@@ -8,7 +8,7 @@ const SECRET = process.env.TOKEN_SECRET!
 // must be 32 bytes
 const KEY = crypto.createHash('sha256').update(SECRET).digest()
 
-export function encrypt(text: string) {
+export async function encrypt(text: string) {
   const iv = crypto.randomBytes(16)
 
   const cipher = crypto.createCipheriv(ALGORITHM, KEY, iv)
@@ -19,7 +19,7 @@ export function encrypt(text: string) {
   return `${iv.toString('hex')}:${encrypted}`
 }
 
-export function decrypt(encryptedText: string) {
+export async function decrypt(encryptedText: string) {
   const [ivHex, encrypted] = encryptedText.split(':')
 
   const decipher = crypto.createDecipheriv(

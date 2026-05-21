@@ -2,16 +2,23 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@shared/ui/sidebar'
-import { RiRobot2Line, RiCommandLine } from '@remixicon/react'
+import { RiCommandLine, RiTimeLine } from '@remixicon/react'
 
 const SidebarTitle = () => {
+  const { toggleSidebar } = useSidebar()
+
   return (
     <SidebarMenu>
       <SidebarMenuItem className="relative flex items-center gap-2">
-        <SidebarMenuButton size="lg" className="group relative w-full flex-1">
+        <SidebarMenuButton
+          onClick={toggleSidebar}
+          size="lg"
+          className="group relative w-full flex-1"
+        >
           <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-            <RiRobot2Line className="size-4" />
+            <RiTimeLine className="size-4" />
           </div>
           <span className="truncate text-lg font-semibold">Cronbot</span>
 

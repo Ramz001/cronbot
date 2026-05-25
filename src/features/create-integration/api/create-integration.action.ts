@@ -20,11 +20,13 @@ const createIntegration = async (
   const { provider, title, token, expiresAt } =
     CreateIntegrationSchema.parse(values)
 
+  const encryptedToken = await encrypt(token)
+
   await prisma.integrationToken.create({
     data: {
       provider,
       title,
-      token: encrypt(token),
+      token: encryptedToken,
       tokenPreview: token.slice(0, 4),
       expiresAt,
       userId: user.id,

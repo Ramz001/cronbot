@@ -21,7 +21,7 @@ export function IntegrationsList({ tokens }: IntegrationsListProps) {
   }
 
   return (
-    <ScrollArea className="grid h-[calc(100vh-10rem)] grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
+    <ScrollArea className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
       {tokens.map((token) => (
         <IntegrationCard key={token.id} token={token} />
       ))}

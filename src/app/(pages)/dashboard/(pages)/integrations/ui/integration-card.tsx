@@ -5,7 +5,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from '@shared/ui/card'
 import { Badge } from '@shared/ui/badge'
 import { Calendar, Bot, KeyRound, Clock } from 'lucide-react'

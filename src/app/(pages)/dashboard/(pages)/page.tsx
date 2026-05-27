@@ -134,32 +134,6 @@ const LandingPage = () => {
     setSelectedSlot(slotInfo)
   }
 
-  const handleCreateEvent = (data: {
-    title: string
-    start: string
-    end: string
-    variant: CalendarEvent['variant']
-  }) => {
-    const startDate = new Date(data.start)
-    const endDate = new Date(data.end)
-    const allDaySelection =
-      startDate.getHours() === 0 &&
-      startDate.getMinutes() === 0 &&
-      endDate.getHours() === 0 &&
-      endDate.getMinutes() === 0 &&
-      endDate.getTime() - startDate.getTime() >= 24 * 60 * 60 * 1000
-
-    const newEvent: CalendarEvent = {
-      title: data.title,
-      start: startDate,
-      end: endDate,
-      allDay: allDaySelection,
-      variant: data.variant ?? 'primary',
-    }
-    setEvents((previous) => [...previous, newEvent])
-    setSelectedSlot(null)
-  }
-
   const deriveAllDay = (
     startDate: Date,
     endDate: Date,
@@ -244,7 +218,7 @@ const LandingPage = () => {
   return (
     <DnDCalendar
       localizer={localizer}
-      style={{ height: 700, width: '100%' }}
+      style={{ height: '100%', width: '100%' }}
       className="border-border border-rounded-md rounded-lg border-2 border-solid"
       selectable
       date={date}

@@ -9,16 +9,18 @@ import {
 } from '@shared/ui/sidebar'
 import {
   RiCalendarLine,
-  RiBarChartLine,
-  RiHammerLine,
   RiStackLine,
+  RiRobot2Line,
+  RiFileListLine,
+  RiFlowChart,
 } from '@remixicon/react'
 
 const tabs = [
   { title: 'Calendar', url: '', icon: RiCalendarLine },
-  { title: 'Stats', url: '/stats', icon: RiBarChartLine },
-  { title: 'Builder', url: '/builder', icon: RiHammerLine },
+  { title: 'Builder', url: '/builder', icon: RiFlowChart },
+  { title: 'Automations', url: '/automations', icon: RiRobot2Line },
   { title: 'Integrations', url: '/integrations', icon: RiStackLine },
+  { title: 'Logs', url: '/logs', icon: RiFileListLine },
 ]
 
 export function SidebarLinks() {

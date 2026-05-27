@@ -1,17 +1,29 @@
 'use client'
 
 import ShadcnBigCalendar from '@widgets/calendar'
-import moment from 'moment'
 import { ComponentType, SetStateAction, useState } from 'react'
 import type { CalendarProps } from 'react-big-calendar'
-import { momentLocalizer, SlotInfo, Views } from 'react-big-calendar'
+import { dateFnsLocalizer, SlotInfo, Views } from 'react-big-calendar'
+import { format, parse, startOfWeek, getDay } from 'date-fns'
+import { enUS } from 'date-fns/locale/en-US'
 import type { EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+
+const locales = {
+  'en-US': enUS,
+}
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+})
 
 const DnDCalendar = withDragAndDrop<CalendarEvent>(
   ShadcnBigCalendar as ComponentType<CalendarProps<CalendarEvent>>
 )
-const localizer = momentLocalizer(moment)
 
 type CalendarEvent = {
   title: string
@@ -230,26 +242,24 @@ const LandingPage = () => {
   }
 
   return (
-    <main className="mx-auto my-auto w-full max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
-      <DnDCalendar
-        localizer={localizer}
-        style={{ height: 700, width: '100%' }}
-        className="border-border border-rounded-md rounded-lg border-2 border-solid"
-        selectable
-        date={date}
-        onNavigate={handleNavigate}
-        view={view}
-        onView={handleViewChange}
-        resizable
-        draggableAccessor={() => true}
-        resizableAccessor={() => true}
-        events={events}
-        eventPropGetter={eventPropGetter}
-        onSelectSlot={handleSelectSlot}
-        onEventDrop={handleEventDrop}
-        onEventResize={handleEventResize}
-      />
-    </main>
+    <DnDCalendar
+      localizer={localizer}
+      style={{ height: 700, width: '100%' }}
+      className="border-border border-rounded-md rounded-lg border-2 border-solid"
+      selectable
+      date={date}
+      onNavigate={handleNavigate}
+      view={view}
+      onView={handleViewChange}
+      resizable
+      draggableAccessor={() => true}
+      resizableAccessor={() => true}
+      events={events}
+      eventPropGetter={eventPropGetter}
+      onSelectSlot={handleSelectSlot}
+      onEventDrop={handleEventDrop}
+      onEventResize={handleEventResize}
+    />
   )
 }
 

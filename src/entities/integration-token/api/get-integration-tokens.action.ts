@@ -14,6 +14,9 @@ const getTokens = async (): Promise<ActionResult<typeof tokens>> => {
     where: {
       userId: user.id,
     },
+    omit: {
+      token: true,
+    },
   })
 
   return {

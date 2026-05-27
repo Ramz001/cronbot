@@ -1,4 +1,3 @@
-import React from 'react'
 import { type IntegrationToken } from '@prisma/generated/client'
 import {
   Card,
@@ -13,7 +12,7 @@ import { Calendar, Bot, KeyRound, Clock } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 
 interface IntegrationCardProps {
-  token: IntegrationToken
+  token: Omit<IntegrationToken, 'token'>
 }
 
 export function IntegrationCard({ token }: IntegrationCardProps) {

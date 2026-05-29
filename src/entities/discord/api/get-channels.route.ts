@@ -1,6 +1,8 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { RouteResult } from '@shared/api/server-error-handlers'
-import { DISCORD_API, authHeaders } from './utils'
+import { authHeaders } from '../utils/discord-auth-headers'
+import { DISCORD_API } from '../consts/discord'
+import { requireAuth } from '@shared/api/auth.guard'
 import axios from 'axios'
 import z from 'zod'
 
@@ -10,7 +12,8 @@ export async function getGuildChannels(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ): Promise<RouteResult<unknown>> {
-  const headers = authHeaders({ token: '' })
+  const user = await requireAuth()
+  const headers = await authHeaders({ user })
 
   const { id } = await params
   const guildId = ParamsSchema.parse(id)

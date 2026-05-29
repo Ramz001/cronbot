@@ -141,7 +141,9 @@ export const IntegrationTokenScalarFieldEnum = {
   token: 'token',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  revokedAt: 'revokedAt',
+  status: 'status'
 } as const
 
 export type IntegrationTokenScalarFieldEnum = (typeof IntegrationTokenScalarFieldEnum)[keyof typeof IntegrationTokenScalarFieldEnum]

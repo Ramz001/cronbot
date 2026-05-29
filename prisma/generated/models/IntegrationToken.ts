@@ -34,6 +34,8 @@ export type IntegrationTokenMinAggregateOutputType = {
   expiresAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  revokedAt: Date | null
+  status: $Enums.IntegrationTokenStatus | null
 }
 
 export type IntegrationTokenMaxAggregateOutputType = {
@@ -46,6 +48,8 @@ export type IntegrationTokenMaxAggregateOutputType = {
   expiresAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  revokedAt: Date | null
+  status: $Enums.IntegrationTokenStatus | null
 }
 
 export type IntegrationTokenCountAggregateOutputType = {
@@ -58,6 +62,8 @@ export type IntegrationTokenCountAggregateOutputType = {
   expiresAt: number
   createdAt: number
   updatedAt: number
+  revokedAt: number
+  status: number
   _all: number
 }
 
@@ -72,6 +78,8 @@ export type IntegrationTokenMinAggregateInputType = {
   expiresAt?: true
   createdAt?: true
   updatedAt?: true
+  revokedAt?: true
+  status?: true
 }
 
 export type IntegrationTokenMaxAggregateInputType = {
@@ -84,6 +92,8 @@ export type IntegrationTokenMaxAggregateInputType = {
   expiresAt?: true
   createdAt?: true
   updatedAt?: true
+  revokedAt?: true
+  status?: true
 }
 
 export type IntegrationTokenCountAggregateInputType = {
@@ -96,6 +106,8 @@ export type IntegrationTokenCountAggregateInputType = {
   expiresAt?: true
   createdAt?: true
   updatedAt?: true
+  revokedAt?: true
+  status?: true
   _all?: true
 }
 
@@ -181,6 +193,8 @@ export type IntegrationTokenGroupByOutputType = {
   expiresAt: Date | null
   createdAt: Date
   updatedAt: Date
+  revokedAt: Date | null
+  status: $Enums.IntegrationTokenStatus
   _count: IntegrationTokenCountAggregateOutputType | null
   _min: IntegrationTokenMinAggregateOutputType | null
   _max: IntegrationTokenMaxAggregateOutputType | null
@@ -214,6 +228,8 @@ export type IntegrationTokenWhereInput = {
   expiresAt?: Prisma.DateTimeNullableFilter<"IntegrationToken"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"IntegrationToken"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IntegrationToken"> | Date | string
+  revokedAt?: Prisma.DateTimeNullableFilter<"IntegrationToken"> | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFilter<"IntegrationToken"> | $Enums.IntegrationTokenStatus
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -227,6 +243,8 @@ export type IntegrationTokenOrderByWithRelationInput = {
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  revokedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -243,6 +261,8 @@ export type IntegrationTokenWhereUniqueInput = Prisma.AtLeast<{
   expiresAt?: Prisma.DateTimeNullableFilter<"IntegrationToken"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"IntegrationToken"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IntegrationToken"> | Date | string
+  revokedAt?: Prisma.DateTimeNullableFilter<"IntegrationToken"> | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFilter<"IntegrationToken"> | $Enums.IntegrationTokenStatus
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
@@ -256,6 +276,8 @@ export type IntegrationTokenOrderByWithAggregationInput = {
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  revokedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.IntegrationTokenCountOrderByAggregateInput
   _max?: Prisma.IntegrationTokenMaxOrderByAggregateInput
   _min?: Prisma.IntegrationTokenMinOrderByAggregateInput
@@ -274,6 +296,8 @@ export type IntegrationTokenScalarWhereWithAggregatesInput = {
   expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"IntegrationToken"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"IntegrationToken"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"IntegrationToken"> | Date | string
+  revokedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"IntegrationToken"> | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusWithAggregatesFilter<"IntegrationToken"> | $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenCreateInput = {
@@ -285,6 +309,8 @@ export type IntegrationTokenCreateInput = {
   expiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  revokedAt?: Date | string | null
+  status?: $Enums.IntegrationTokenStatus
   user: Prisma.UserCreateNestedOneWithoutIntegrationTokensInput
 }
 
@@ -298,6 +324,8 @@ export type IntegrationTokenUncheckedCreateInput = {
   expiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  revokedAt?: Date | string | null
+  status?: $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenUpdateInput = {
@@ -309,6 +337,8 @@ export type IntegrationTokenUpdateInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFieldUpdateOperationsInput | $Enums.IntegrationTokenStatus
   user?: Prisma.UserUpdateOneRequiredWithoutIntegrationTokensNestedInput
 }
 
@@ -322,6 +352,8 @@ export type IntegrationTokenUncheckedUpdateInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFieldUpdateOperationsInput | $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenCreateManyInput = {
@@ -334,6 +366,8 @@ export type IntegrationTokenCreateManyInput = {
   expiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  revokedAt?: Date | string | null
+  status?: $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenUpdateManyMutationInput = {
@@ -345,6 +379,8 @@ export type IntegrationTokenUpdateManyMutationInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFieldUpdateOperationsInput | $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenUncheckedUpdateManyInput = {
@@ -357,6 +393,8 @@ export type IntegrationTokenUncheckedUpdateManyInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFieldUpdateOperationsInput | $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenListRelationFilter = {
@@ -379,6 +417,8 @@ export type IntegrationTokenCountOrderByAggregateInput = {
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  revokedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type IntegrationTokenMaxOrderByAggregateInput = {
@@ -391,6 +431,8 @@ export type IntegrationTokenMaxOrderByAggregateInput = {
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  revokedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type IntegrationTokenMinOrderByAggregateInput = {
@@ -403,6 +445,8 @@ export type IntegrationTokenMinOrderByAggregateInput = {
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  revokedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type IntegrationTokenCreateNestedManyWithoutUserInput = {
@@ -451,6 +495,10 @@ export type EnumProviderFieldUpdateOperationsInput = {
   set?: $Enums.Provider
 }
 
+export type EnumIntegrationTokenStatusFieldUpdateOperationsInput = {
+  set?: $Enums.IntegrationTokenStatus
+}
+
 export type IntegrationTokenCreateWithoutUserInput = {
   id?: string
   provider: $Enums.Provider
@@ -460,6 +508,8 @@ export type IntegrationTokenCreateWithoutUserInput = {
   expiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  revokedAt?: Date | string | null
+  status?: $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenUncheckedCreateWithoutUserInput = {
@@ -471,6 +521,8 @@ export type IntegrationTokenUncheckedCreateWithoutUserInput = {
   expiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  revokedAt?: Date | string | null
+  status?: $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenCreateOrConnectWithoutUserInput = {
@@ -512,6 +564,8 @@ export type IntegrationTokenScalarWhereInput = {
   expiresAt?: Prisma.DateTimeNullableFilter<"IntegrationToken"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"IntegrationToken"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IntegrationToken"> | Date | string
+  revokedAt?: Prisma.DateTimeNullableFilter<"IntegrationToken"> | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFilter<"IntegrationToken"> | $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenCreateManyUserInput = {
@@ -523,6 +577,8 @@ export type IntegrationTokenCreateManyUserInput = {
   expiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  revokedAt?: Date | string | null
+  status?: $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenUpdateWithoutUserInput = {
@@ -534,6 +590,8 @@ export type IntegrationTokenUpdateWithoutUserInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFieldUpdateOperationsInput | $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenUncheckedUpdateWithoutUserInput = {
@@ -545,6 +603,8 @@ export type IntegrationTokenUncheckedUpdateWithoutUserInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFieldUpdateOperationsInput | $Enums.IntegrationTokenStatus
 }
 
 export type IntegrationTokenUncheckedUpdateManyWithoutUserInput = {
@@ -556,6 +616,8 @@ export type IntegrationTokenUncheckedUpdateManyWithoutUserInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumIntegrationTokenStatusFieldUpdateOperationsInput | $Enums.IntegrationTokenStatus
 }
 
 
@@ -570,6 +632,8 @@ export type IntegrationTokenSelect<ExtArgs extends runtime.Types.Extensions.Inte
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  revokedAt?: boolean
+  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["integrationToken"]>
 
@@ -583,6 +647,8 @@ export type IntegrationTokenSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  revokedAt?: boolean
+  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["integrationToken"]>
 
@@ -596,6 +662,8 @@ export type IntegrationTokenSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  revokedAt?: boolean
+  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["integrationToken"]>
 
@@ -609,9 +677,11 @@ export type IntegrationTokenSelectScalar = {
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  revokedAt?: boolean
+  status?: boolean
 }
 
-export type IntegrationTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "provider" | "title" | "tokenPreview" | "token" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["integrationToken"]>
+export type IntegrationTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "provider" | "title" | "tokenPreview" | "token" | "expiresAt" | "createdAt" | "updatedAt" | "revokedAt" | "status", ExtArgs["result"]["integrationToken"]>
 export type IntegrationTokenInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -637,6 +707,8 @@ export type $IntegrationTokenPayload<ExtArgs extends runtime.Types.Extensions.In
     expiresAt: Date | null
     createdAt: Date
     updatedAt: Date
+    revokedAt: Date | null
+    status: $Enums.IntegrationTokenStatus
   }, ExtArgs["result"]["integrationToken"]>
   composites: {}
 }
@@ -1070,6 +1142,8 @@ export interface IntegrationTokenFieldRefs {
   readonly expiresAt: Prisma.FieldRef<"IntegrationToken", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"IntegrationToken", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"IntegrationToken", 'DateTime'>
+  readonly revokedAt: Prisma.FieldRef<"IntegrationToken", 'DateTime'>
+  readonly status: Prisma.FieldRef<"IntegrationToken", 'IntegrationTokenStatus'>
 }
     
 

@@ -14,3 +14,12 @@ export const Provider = {
 } as const
 
 export type Provider = (typeof Provider)[keyof typeof Provider]
+
+
+export const IntegrationTokenStatus = {
+  active: 'active',
+  revoked: 'revoked',
+  expired: 'expired'
+} as const
+
+export type IntegrationTokenStatus = (typeof IntegrationTokenStatus)[keyof typeof IntegrationTokenStatus]

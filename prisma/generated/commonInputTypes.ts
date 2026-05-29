@@ -155,6 +155,13 @@ export type EnumProviderFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumProviderFilter<$PrismaModel> | $Enums.Provider
 }
 
+export type EnumIntegrationTokenStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntegrationTokenStatus | Prisma.EnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntegrationTokenStatus[] | Prisma.ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntegrationTokenStatus[] | Prisma.ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntegrationTokenStatusFilter<$PrismaModel> | $Enums.IntegrationTokenStatus
+}
+
 export type EnumProviderWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.Provider | Prisma.EnumProviderFieldRefInput<$PrismaModel>
   in?: $Enums.Provider[] | Prisma.ListEnumProviderFieldRefInput<$PrismaModel>
@@ -163,6 +170,16 @@ export type EnumProviderWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProviderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProviderFilter<$PrismaModel>
+}
+
+export type EnumIntegrationTokenStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntegrationTokenStatus | Prisma.EnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntegrationTokenStatus[] | Prisma.ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntegrationTokenStatus[] | Prisma.ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntegrationTokenStatusWithAggregatesFilter<$PrismaModel> | $Enums.IntegrationTokenStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIntegrationTokenStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIntegrationTokenStatusFilter<$PrismaModel>
 }
 
 export type NestedStringFilter<$PrismaModel = never> = {
@@ -319,6 +336,13 @@ export type NestedEnumProviderFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumProviderFilter<$PrismaModel> | $Enums.Provider
 }
 
+export type NestedEnumIntegrationTokenStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntegrationTokenStatus | Prisma.EnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntegrationTokenStatus[] | Prisma.ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntegrationTokenStatus[] | Prisma.ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntegrationTokenStatusFilter<$PrismaModel> | $Enums.IntegrationTokenStatus
+}
+
 export type NestedEnumProviderWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.Provider | Prisma.EnumProviderFieldRefInput<$PrismaModel>
   in?: $Enums.Provider[] | Prisma.ListEnumProviderFieldRefInput<$PrismaModel>
@@ -327,6 +351,16 @@ export type NestedEnumProviderWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProviderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProviderFilter<$PrismaModel>
+}
+
+export type NestedEnumIntegrationTokenStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IntegrationTokenStatus | Prisma.EnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.IntegrationTokenStatus[] | Prisma.ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.IntegrationTokenStatus[] | Prisma.ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumIntegrationTokenStatusWithAggregatesFilter<$PrismaModel> | $Enums.IntegrationTokenStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIntegrationTokenStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIntegrationTokenStatusFilter<$PrismaModel>
 }
 
 

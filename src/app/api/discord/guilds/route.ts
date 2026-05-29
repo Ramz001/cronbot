@@ -1,20 +1,4 @@
-import { NextResponse } from 'next/server'
-import {
-  RouteResult,
-  withRouteErrorHandler,
-} from '@shared/api/server-error-handlers'
-import { DISCORD_API, authHeaders } from '@shared/api/discord/utils'
-import axios from 'axios'
-
-async function getGuilds(): Promise<RouteResult<unknown>> {
-  const headers = authHeaders({ token: '' })
-
-  const { data, status, statusText } = await axios.get(
-    `${DISCORD_API}/users/@me/guilds`,
-    { headers }
-  )
-
-  return NextResponse.json({ success: true, data }, { status, statusText })
-}
+import { withRouteErrorHandler } from '@shared/api/server-error-handlers'
+import { getGuilds } from '@entities/discord'
 
 export const GET = withRouteErrorHandler(getGuilds)

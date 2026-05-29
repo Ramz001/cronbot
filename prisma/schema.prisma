@@ -75,19 +75,28 @@ enum Provider {
   discord
 }
 
+enum IntegrationTokenStatus {
+  active
+  revoked
+  expired
+}
+
 model IntegrationToken {
-  id           String    @id @default(cuid())
+  id           String                 @id @default(cuid())
   userId       String
   provider     Provider
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   title        String?
   tokenPreview String
   token        String
   expiresAt    DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  revokedAt    DateTime?
+  status       IntegrationTokenStatus @default(active)
 
   @@index([userId])
   @@index([provider])
+  @@index([userId, provider, status])
   @@map("integration_token")
 }

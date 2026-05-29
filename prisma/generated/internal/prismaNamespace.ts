@@ -884,7 +884,9 @@ export const IntegrationTokenScalarFieldEnum = {
   token: 'token',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  revokedAt: 'revokedAt',
+  status: 'status'
 } as const
 
 export type IntegrationTokenScalarFieldEnum = (typeof IntegrationTokenScalarFieldEnum)[keyof typeof IntegrationTokenScalarFieldEnum]
@@ -966,6 +968,20 @@ export type EnumProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'Provider[]'
  */
 export type ListEnumProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Provider[]'>
+    
+
+
+/**
+ * Reference to a field of type 'IntegrationTokenStatus'
+ */
+export type EnumIntegrationTokenStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntegrationTokenStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'IntegrationTokenStatus[]'
+ */
+export type ListEnumIntegrationTokenStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntegrationTokenStatus[]'>
     
 
 

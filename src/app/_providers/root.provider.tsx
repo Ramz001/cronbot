@@ -5,7 +5,7 @@ import { TooltipProvider } from '@shared/ui/tooltip'
 import NuqsProvider from './nuqs.provider'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-
+import QueryProvider from './query.provider'
 export default function RootProvider({
   children,
 }: {
@@ -18,7 +18,9 @@ export default function RootProvider({
       <TooltipProvider>
         <ThemeProvider>
           <NuqsProvider>
-            <ToastProvider>{children}</ToastProvider>
+            <QueryProvider>
+              <ToastProvider>{children}</ToastProvider>
+            </QueryProvider>
           </NuqsProvider>
         </ThemeProvider>
       </TooltipProvider>

@@ -1,4 +1,3 @@
-'use server'
 import UserAgent from 'user-agents'
 import prisma from '@shared/lib/prisma'
 import { User } from 'better-auth'
@@ -37,8 +36,6 @@ export const authHeaders = async ({ user }: { user: User }) => {
       token: true,
     },
   })
-
-  console.log('test integration token retrival', integrationToken)
 
   return {
     Authorization: integrationToken.token,

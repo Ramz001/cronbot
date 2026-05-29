@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios'
 import z from 'zod'
+import { isPrismaError, mapPrismaError } from './map-prisma-error'
 
 export type MapErrorResult = {
   error: { message: string; issues?: Array<z.core.$ZodIssue> }
@@ -28,6 +29,11 @@ export function mapError(error: unknown): MapErrorResult {
       error: { message },
       status: error.response?.status || 500,
     }
+  }
+
+  // Handle Prisma errors
+  if (isPrismaError(error)) {
+    return mapPrismaError(error)
   }
 
   // Handle Error instances

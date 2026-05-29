@@ -65,12 +65,7 @@ export const withRouteErrorHandler = <TContext extends unknown[]>(
     } catch (error) {
       const { error: mappedError, status } = mapError(error)
 
-      const logInfo =
-        error instanceof Error
-          ? { message: error.message, response: (error as any).response?.data }
-          : error
-
-      console.error(`[Route Error] ${req.nextUrl.pathname}:`, logInfo)
+      console.error(`[Route Error] ${(error as Error)?.message}`)
 
       return NextResponse.json(
         { success: false, error: mappedError },
@@ -80,6 +75,8 @@ export const withRouteErrorHandler = <TContext extends unknown[]>(
   }
 }
 
-export function isSuccess<T = void>(res: ActionResult<T>): res is ActionSuccess<T> {
+export function isSuccess<T = void>(
+  res: ActionResult<T>
+): res is ActionSuccess<T> {
   return res.success === true
 }

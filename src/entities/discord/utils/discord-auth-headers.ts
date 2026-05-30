@@ -2,6 +2,7 @@ import UserAgent from 'user-agents'
 import prisma from '@shared/lib/prisma'
 import { User } from 'better-auth'
 import { IntegrationTokenStatus, Provider } from '@prisma/generated/enums'
+import { decrypt } from '@shared/api/encryption'
 
 const ua = new UserAgent({ deviceCategory: 'desktop' })
 
@@ -37,8 +38,10 @@ export const authHeaders = async ({ user }: { user: User }) => {
     },
   })
 
+  const decryptedToken = await decrypt(integrationToken.token)
+
   return {
-    Authorization: integrationToken.token,
+    Authorization: decryptedToken,
     ...SESSION_HEADERS,
   }
 }

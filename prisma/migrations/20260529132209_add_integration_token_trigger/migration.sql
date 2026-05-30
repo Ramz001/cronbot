@@ -5,9 +5,9 @@ BEGIN
   IF NEW.status = 'active' THEN
     UPDATE integration_token
     SET status = 'revoked',
-        revoked_at = NOW(),
-        updated_at = NOW()
-    WHERE user_id = NEW.user_id
+        "revokedAt" = NOW(),
+        "updatedAt" = NOW()
+    WHERE "userId" = NEW."userId"
       AND provider = NEW.provider
       AND status = 'active'
       AND id <> NEW.id;

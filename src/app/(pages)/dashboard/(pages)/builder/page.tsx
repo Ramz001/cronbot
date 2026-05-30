@@ -57,15 +57,22 @@ export default function BuilderPage() {
       const res = await axios.get('/api/discord/guilds')
       return res.data.data
     },
-    // Don't retry if the backend says the token isn't found
+    // Don't retry if the backend says the token isn't found or expired
     retry: (failureCount, error) => {
-      if (isAxiosError(error) && error.response?.status === 404) return false
+      if (
+        isAxiosError(error) &&
+        (error.response?.status === 404 || error.response?.status === 401)
+      )
+        return false
       return failureCount < 3
     },
   })
 
   const isDiscordNotLinked =
     isAxiosError(guildsError) && guildsError.response?.status === 404
+
+  const hasTokenExpired =
+    isAxiosError(guildsError) && guildsError.response?.status === 401
 
   // Fetch Channels for the selected guild
   const { data: channelsResponse, isLoading: isLoadingChannels } = useQuery({
@@ -183,6 +190,16 @@ export default function BuilderPage() {
                       </p>
                       <p className="text-muted-foreground mt-1 text-xs">
                         Please link your Discord account to use this action.
+                      </p>
+                    </div>
+                  ) : hasTokenExpired ? (
+                    <div className="border-destructive/50 bg-destructive/10 rounded-md border border-dashed p-4 text-center">
+                      <p className="text-destructive text-sm font-medium">
+                        Token expired
+                      </p>
+                      <p className="text-muted-foreground mt-1 text-xs">
+                        Your Discord integration token has expired. Please add
+                        your new integration token.
                       </p>
                     </div>
                   ) : (

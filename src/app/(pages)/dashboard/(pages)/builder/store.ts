@@ -12,7 +12,7 @@ export interface BuilderState {
 }
 
 export const useBuilderStore = create<BuilderState>((set) => ({
-  action: 'discord',
+  action: null,
   guildId: null,
   channelId: null,
   message: '',

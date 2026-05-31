@@ -27,8 +27,5 @@ export async function getGuildChannels(
     .filter((c: { type: number }) => c.type === 0)
     .map((c: { id: string; name: string }) => ({ id: c.id, name: c.name }))
 
-  console.log('Text channels:', textChannels)
-  console.log('Raw API response:', data)
-
   return NextResponse.json({ success: true, data }, { status, statusText })
 }

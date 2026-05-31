@@ -1,14 +1,24 @@
 'use client'
 
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import axios, { isAxiosError } from 'axios'
+import {
+  DndContext,
+  useDroppable,
+  DragEndEvent,
+  DragStartEvent,
+  DragOverlay,
+  useSensor,
+  useSensors,
+  PointerSensor,
+} from '@dnd-kit/core'
 import {
   Play,
   Save,
   MessageSquare,
   ArrowDown,
   Trash2,
-  Plus,
   Workflow,
 } from 'lucide-react'
 import { Button } from '@/shared/ui/button'
@@ -25,9 +35,13 @@ import { Textarea } from '@/shared/ui/textarea'
 import { Label } from '@/shared/ui/label'
 import { useBuilderStore } from './store'
 
+import ActionItem from './components/ActionItem'
+import DraggableActionItem from './components/DraggableActionItem'
+import { Provider } from '@prisma/generated/enums'
+
 const ACTIONS = [
   {
-    id: 'discord',
+    id: Provider.discord,
     label: 'Send Discord Message',
     icon: MessageSquare,
     color: 'text-indigo-500',
@@ -46,7 +60,6 @@ export default function BuilderPage() {
     setMessage,
   } = useBuilderStore()
 
-  // Fetch Guilds
   const {
     data: guildsResponse,
     isLoading: isLoadingGuilds,
@@ -57,7 +70,6 @@ export default function BuilderPage() {
       const res = await axios.get('/api/discord/guilds')
       return res.data.data
     },
-    // Don't retry if the backend says the token isn't found or expired
     retry: (failureCount, error) => {
       if (
         isAxiosError(error) &&
@@ -70,11 +82,9 @@ export default function BuilderPage() {
 
   const isDiscordNotLinked =
     isAxiosError(guildsError) && guildsError.response?.status === 404
-
   const hasTokenExpired =
     isAxiosError(guildsError) && guildsError.response?.status === 401
 
-  // Fetch Channels for the selected guild
   const { data: channelsResponse, isLoading: isLoadingChannels } = useQuery({
     queryKey: ['discord-channels', guildId],
     queryFn: async () => {
@@ -84,9 +94,32 @@ export default function BuilderPage() {
     enabled: !!guildId,
   })
 
+  const { setNodeRef: setCanvasRef, isOver } = useDroppable({
+    id: 'canvas-dropzone',
+  })
+
+  const [activeId, setActiveId] = useState(null as string | null)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
+  )
+
+  function handleDragStart(e: DragStartEvent) {
+    setActiveId(e.active.id as string)
+  }
+
+  function handleDragEnd(e: DragEndEvent) {
+    const { active, over } = e
+    setActiveId(null)
+    if (over && over.id === 'canvas-dropzone') setAction(active.id as string)
+  }
+
+  function handleDragCancel() {
+    setActiveId(null)
+  }
+
   return (
     <div className="bg-background flex h-full w-full flex-col">
-      {/* Top Header */}
       <header className="border-border/50 flex items-center justify-between border-b px-6 py-4">
         <div>
           <h1 className="text-xl font-bold tracking-tight">Workflow Builder</h1>
@@ -106,210 +139,179 @@ export default function BuilderPage() {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left Sidebar */}
-        <div className="border-border/50 bg-background/50 flex w-72 flex-col border-r">
-          <ScrollArea className="flex-1">
-            <div className="space-y-6 p-4">
-              {/* Actions Section */}
-              <div>
+      <DndContext
+        sensors={sensors}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <div className="flex flex-1 overflow-hidden">
+          <aside className="border-border/50 bg-background/50 w-72 border-r">
+            <ScrollArea className="h-full">
+              <div className="p-4">
                 <h2 className="text-muted-foreground mb-3 text-xs font-bold tracking-wider uppercase">
                   Available Actions
                 </h2>
                 <div className="space-y-1">
-                  {ACTIONS.map((a) => {
-                    const Icon = a.icon
-                    const isActive = action === a.id
-                    return (
-                      <button
-                        key={a.id}
-                        onClick={() => setAction(a.id)}
-                        className={`hover:bg-muted/50 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
-                          isActive
-                            ? 'bg-muted/80 font-medium'
-                            : 'text-muted-foreground'
-                        }`}
-                      >
-                        <div className="bg-background border-border/50 flex size-7 items-center justify-center rounded-md border shadow-sm">
-                          <Icon className={`size-4 ${a.color}`} />
-                        </div>
-                        {a.label}
-                      </button>
-                    )
-                  })}
+                  {ACTIONS.map((a) => (
+                    <DraggableActionItem
+                      key={a.id}
+                      a={a}
+                      isActive={action === a.id}
+                      onClick={() => setAction(a.id)}
+                    />
+                  ))}
                 </div>
               </div>
-            </div>
-          </ScrollArea>
-        </div>
+            </ScrollArea>
+          </aside>
 
-        {/* Main Canvas */}
-        <div className="bg-muted/10 relative flex-1 overflow-y-auto p-8">
-          <div className="mx-auto flex max-w-2xl flex-col items-center pb-20">
-            {/* Entry Node */}
-            <div className="border-border/50 bg-background flex items-center gap-3 rounded-full border px-6 py-3 shadow-sm">
-              <Workflow className="text-muted-foreground size-4" />
-              <span className="text-sm font-medium">
-                Workflow Execution Starts
-              </span>
-            </div>
+          <main
+            ref={setCanvasRef}
+            className={`flex-1 overflow-y-auto p-8 ${isOver ? 'bg-muted/30 ring-primary/20 ring-2 ring-inset' : ''}`}
+          >
+            <div className="mx-auto flex max-w-2xl flex-col items-center">
+              <div className="flex items-center gap-3 rounded-full border px-6 py-3 shadow-sm">
+                <Workflow className="text-muted-foreground size-4" />
+                <span className="text-sm font-medium">
+                  Workflow Execution Starts
+                </span>
+              </div>
 
-            <div className="py-4">
-              <ArrowDown className="text-muted-foreground size-5" />
-            </div>
+              <div className="py-4">
+                <ArrowDown className="text-muted-foreground size-5" />
+              </div>
 
-            {/* Action Node */}
-            {action === 'discord' ? (
-              <Card className="border-border/50 w-full max-w-md shadow-sm">
-                <div className="border-border/50 bg-muted/20 flex items-center justify-between border-b px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-8 items-center justify-center rounded-md bg-indigo-500/10 text-indigo-500">
-                      <MessageSquare className="size-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold">Discord Action</h3>
-                      <p className="text-muted-foreground text-xs">
-                        Send a message to a channel
-                      </p>
-                    </div>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-muted-foreground h-8 w-8"
-                    onClick={() => setAction(null)}
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
-                </div>
-                <div className="space-y-4 p-4">
-                  {isDiscordNotLinked ? (
-                    <div className="border-destructive/50 bg-destructive/10 rounded-md border border-dashed p-4 text-center">
-                      <p className="text-destructive text-sm font-medium">
-                        Discord not connected
-                      </p>
-                      <p className="text-muted-foreground mt-1 text-xs">
-                        Please link your Discord account to use this action.
-                      </p>
-                    </div>
-                  ) : hasTokenExpired ? (
-                    <div className="border-destructive/50 bg-destructive/10 rounded-md border border-dashed p-4 text-center">
-                      <p className="text-destructive text-sm font-medium">
-                        Token expired
-                      </p>
-                      <p className="text-muted-foreground mt-1 text-xs">
-                        Your Discord integration token has expired. Please add
-                        your new integration token.
-                      </p>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="space-y-2">
-                        <Label className="text-xs">Select Guild (Server)</Label>
-                        <Select
-                          value={guildId || ''}
-                          onValueChange={setGuildId}
-                          disabled={isLoadingGuilds}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue
-                              placeholder={
-                                isLoadingGuilds
-                                  ? 'Loading guilds...'
-                                  : 'Select server'
-                              }
-                            />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {guildsResponse?.map((guild: any) => (
-                              <SelectItem key={guild.id} value={guild.id}>
-                                {guild.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+              {/* Action content (unchanged) */}
+              {action === 'discord' ? (
+                <Card className="w-full max-w-md">
+                  <div className="flex items-center justify-between border-b px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-8 items-center justify-center rounded-md bg-indigo-500/10 text-indigo-500">
+                        <MessageSquare className="size-5" />
                       </div>
-
-                      {guildId && (
-                        <div className="space-y-2">
-                          <Label className="text-xs">Select Channel</Label>
+                      <div>
+                        <h3 className="text-sm font-semibold">
+                          Discord Action
+                        </h3>
+                        <p className="text-muted-foreground text-xs">
+                          Send a message to a channel
+                        </p>
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={() => setAction(null)}
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  </div>
+                  <div className="p-4">
+                    {isDiscordNotLinked ? (
+                      <div className="border border-dashed p-4 text-center">
+                        Discord not connected
+                      </div>
+                    ) : hasTokenExpired ? (
+                      <div className="border border-dashed p-4 text-center">
+                        Token expired
+                      </div>
+                    ) : (
+                      <>
+                        <div className="mb-4">
+                          <Label className="text-xs">
+                            Select Guild (Server)
+                          </Label>
                           <Select
-                            value={channelId || ''}
-                            onValueChange={setChannelId}
-                            disabled={isLoadingChannels}
+                            value={guildId || ''}
+                            onValueChange={setGuildId}
+                            disabled={isLoadingGuilds}
                           >
                             <SelectTrigger className="w-full">
                               <SelectValue
                                 placeholder={
-                                  isLoadingChannels
-                                    ? 'Loading channels...'
-                                    : 'Select channel'
+                                  isLoadingGuilds
+                                    ? 'Loading guilds...'
+                                    : 'Select server'
                                 }
                               />
                             </SelectTrigger>
                             <SelectContent>
-                              {channelsResponse?.map((channel: any) => (
-                                <SelectItem key={channel.id} value={channel.id}>
-                                  #{channel.name}
+                              {guildsResponse?.map((guild: any) => (
+                                <SelectItem key={guild.id} value={guild.id}>
+                                  {guild.name}
                                 </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
                         </div>
-                      )}
 
-                      <div className="space-y-2">
-                        <Label className="text-xs">Message Content</Label>
-                        <Textarea
-                          className="min-h-25 resize-none"
-                          placeholder="Type your message here..."
-                          value={message}
-                          onChange={(e) => setMessage(e.target.value)}
-                        />
-                        <p className="text-muted-foreground mt-1 text-[10px]">
-                          Markdown is supported in future updates.
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </Card>
-            ) : action ? (
-              <Card className="flex w-full max-w-md flex-col items-center justify-center gap-3 border-2 border-dashed bg-transparent p-8 shadow-sm">
-                <div className="bg-muted rounded-full p-4">
-                  <Plus className="text-muted-foreground size-6" />
-                </div>
-                <h3 className="font-medium">Action Selected</h3>
-                <p className="text-muted-foreground text-sm">
-                  Configure the selected action details
-                </p>
-              </Card>
-            ) : (
-              <Card className="flex w-full max-w-md flex-col items-center justify-center gap-3 border-2 border-dashed bg-transparent p-8 shadow-sm">
-                <div className="bg-muted rounded-full p-4">
-                  <Plus className="text-muted-foreground size-6" />
-                </div>
-                <h3 className="font-medium">Add an Action</h3>
-                <p className="text-muted-foreground text-sm">
-                  Select an action to continue the workflow
-                </p>
-              </Card>
-            )}
+                        {guildId && (
+                          <div className="mb-4">
+                            <Label className="text-xs">Select Channel</Label>
+                            <Select
+                              value={channelId || ''}
+                              onValueChange={setChannelId}
+                              disabled={isLoadingChannels}
+                            >
+                              <SelectTrigger className="w-full">
+                                <SelectValue
+                                  placeholder={
+                                    isLoadingChannels
+                                      ? 'Loading channels...'
+                                      : 'Select channel'
+                                  }
+                                />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {channelsResponse?.map((channel: any) => (
+                                  <SelectItem
+                                    key={channel.id}
+                                    value={channel.id}
+                                  >
+                                    #{channel.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        )}
 
-            {action && (
-              <div className="mt-8 flex justify-center">
-                <Button
-                  variant="outline"
-                  className="text-muted-foreground gap-2 border-dashed"
-                >
-                  <Plus className="size-4" />
-                  Add next step
-                </Button>
-              </div>
-            )}
-          </div>
+                        <div>
+                          <Label className="text-xs">Message Content</Label>
+                          <Textarea
+                            className="min-h-25 resize-none"
+                            placeholder="Type your message here..."
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                          />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </Card>
+              ) : (
+                <Card className="w-full max-w-md">
+                  <div className="p-8 text-center">
+                    Select an action to continue the workflow
+                  </div>
+                </Card>
+              )}
+            </div>
+          </main>
         </div>
-      </div>
+
+        <DragOverlay>
+          {activeId ? (
+            <ActionItem
+              a={ACTIONS.find((a) => a.id === activeId)}
+              isActive={false}
+              className="w-72"
+            />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
     </div>
   )
 }

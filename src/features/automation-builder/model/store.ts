@@ -1,11 +1,11 @@
 import { create } from 'zustand'
-
+import { Provider } from '@prisma/generated/enums'
 export interface BuilderState {
-  action: string | null
+  action: Provider | null
   guildId: string | null
   channelId: string | null
   message: string
-  setAction: (action: string | null) => void
+  setAction: (action: Provider | null) => void
   setGuildId: (guildId: string | null) => void
   setChannelId: (channelId: string | null) => void
   setMessage: (message: string) => void

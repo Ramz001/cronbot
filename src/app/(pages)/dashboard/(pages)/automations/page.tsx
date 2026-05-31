@@ -1,7 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Clock, Play, Pause, Trash2, Edit2, Zap } from 'lucide-react'
+import {
+  RiAddLine,
+  RiTimeLine,
+  RiPlayLine,
+  RiPauseLine,
+  RiDeleteBin2Line,
+  RiEdit2Line,
+} from '@remixicon/react'
 import { Button } from '@/shared/ui/button'
 import { Card } from '@/shared/ui/card'
 import { Badge } from '@/shared/ui/badge'
@@ -56,7 +63,7 @@ export default function AutomationsPage() {
           </p>
         </div>
         <Button className="gap-2">
-          <Plus className="size-4" />
+          <RiAddLine className="size-4" />
           Create New Schedule
         </Button>
       </div>
@@ -71,7 +78,7 @@ export default function AutomationsPage() {
               <div
                 className={`mt-1 flex size-10 shrink-0 items-center justify-center rounded-lg ${automation.status === 'active' ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}`}
               >
-                <Clock className="size-5" />
+                <RiTimeLine className="size-5" />
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -86,7 +93,6 @@ export default function AutomationsPage() {
                   </Badge>
                 </div>
                 <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                  <Zap className="size-3" />
                   <span>
                     Workflow:{' '}
                     <strong className="text-foreground font-medium">
@@ -113,13 +119,13 @@ export default function AutomationsPage() {
                 title={automation.status === 'active' ? 'Pause' : 'Resume'}
               >
                 {automation.status === 'active' ? (
-                  <Pause className="size-4" />
+                  <RiPauseLine className="size-4" />
                 ) : (
-                  <Play className="size-4" />
+                  <RiPlayLine className="size-4" />
                 )}
               </Button>
               <Button variant="outline" size="icon" title="Edit">
-                <Edit2 className="size-4" />
+                <RiEdit2Line className="size-4" />
               </Button>
               <Button
                 variant="ghost"
@@ -127,7 +133,7 @@ export default function AutomationsPage() {
                 className="text-destructive hover:bg-destructive/10 hover:text-destructive"
                 title="Delete"
               >
-                <Trash2 className="size-4" />
+                <RiDeleteBin2Line className="size-4" />
               </Button>
             </div>
           </Card>
@@ -136,16 +142,13 @@ export default function AutomationsPage() {
         {automations.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <div className="bg-muted flex size-20 items-center justify-center rounded-full">
-              <Clock className="text-muted-foreground size-10" />
+              <RiTimeLine className="text-muted-foreground size-10" />
             </div>
             <h3 className="mt-4 text-lg font-semibold">No Automations Yet</h3>
             <p className="text-muted-foreground mb-4 text-sm">
               Create your first schedule to start automating tasks.
             </p>
-            <Button className="gap-2">
-              <Plus className="size-4" />
-              Create New Schedule
-            </Button>
+            <Button className="gap-2">Create New Schedule</Button>
           </div>
         )}
       </div>

@@ -4,7 +4,7 @@ import Gutter from '@shared/ui/gutter'
 import { getSession } from '@/auth'
 import { headers } from 'next/headers'
 import Navbar from '@widgets/navbar'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { RiArrowRightLine, RiSparklingLine } from '@remixicon/react'
 import { GithubLoginButton } from '@shared/ui/github-login-button'
 
 export default async function HomePage() {
@@ -24,7 +24,7 @@ export default async function HomePage() {
       {/* Content layer */}
       <Gutter className="relative z-10 flex min-h-[90dvh] flex-1 flex-col items-center justify-center gap-6 py-24 text-center">
         <div className="bg-secondary/50 text-secondary-foreground hover:bg-secondary/70 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors sm:mb-4">
-          <Sparkles className="text-primary h-4 w-4" />
+          <RiSparklingLine className="text-primary h-4 w-4" />
           <span>Discord Self-Bot Integration</span>
         </div>
 
@@ -48,7 +48,7 @@ export default async function HomePage() {
               className="h-12 w-full px-8 font-semibold sm:w-auto"
             >
               <Link href="/dashboard">
-                Go to Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+                Go to Dashboard <RiArrowRightLine className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           ) : (

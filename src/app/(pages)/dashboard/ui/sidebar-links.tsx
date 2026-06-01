@@ -17,7 +17,11 @@ import {
 
 const tabs = [
   { title: 'Calendar', url: '', icon: RiCalendarLine },
-  { title: 'Builder', url: '/builder', icon: RiFlowChart },
+  {
+    title: 'Automation Builder',
+    url: '/automations-builder',
+    icon: RiFlowChart,
+  },
   { title: 'Automations', url: '/automations', icon: RiRobot2Line },
   { title: 'Integrations', url: '/integrations', icon: RiStackLine },
   { title: 'Logs', url: '/logs', icon: RiFileListLine },

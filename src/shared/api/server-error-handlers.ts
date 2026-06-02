@@ -29,11 +29,16 @@ export type RouteResult<T = void> = RouteSuccess<T> | RouteError
  * Ignores the handler's normal return value — only ensures errors are handled consistently.
  */
 export function withActionErrorHandler<Args extends unknown[], T>(
-  handler: (...args: Args) => Promise<ActionResult<T>>
+  handler: (...args: Args) => Promise<T>
 ) {
-  return async (...args: Args) => {
+  return async (...args: Args): Promise<ActionResult<T>> => {
     try {
-      return await handler(...args)
+      const data = await handler(...args)
+
+      return {
+        success: true,
+        data,
+      }
     } catch (error: unknown) {
       const { error: mappedError, status } = mapError(error)
 
@@ -41,6 +46,7 @@ export function withActionErrorHandler<Args extends unknown[], T>(
         error instanceof Error
           ? { message: error.message, response: (error as any).response?.data }
           : error
+
       console.error('[Server Action Error]:', logInfo)
 
       return {

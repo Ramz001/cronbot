@@ -1,12 +1,25 @@
-import { type IntegrationToken } from '@prisma/generated/client'
 import { IntegrationCard } from './integration-card'
 import { ScrollArea } from '@shared/ui/scroll-area'
+import { getIntegrationTokens } from '@entities/integration-token'
 
-interface IntegrationsListProps {
-  tokens: Omit<IntegrationToken, 'token'>[]
-}
+export async function IntegrationsList() {
+  const res = await getIntegrationTokens()
 
-export function IntegrationsList({ tokens }: IntegrationsListProps) {
+  if (!res.success) {
+    return (
+      <div className="flex flex-col items-center justify-center rounded-lg border border-red-200 bg-red-50 p-8 text-center">
+        <h3 className="text-lg font-medium text-red-600">
+          Failed to load integrations
+        </h3>
+        <p className="mt-2 max-w-sm text-sm text-red-500">
+          {res.error.message ||
+            'An unexpected error occurred while fetching your integrations.'}
+        </p>
+      </div>
+    )
+  }
+  const tokens = res.data || []
+
   if (tokens.length === 0) {
     return (
       <div className="bg-muted/20 flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">

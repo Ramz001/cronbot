@@ -7,7 +7,12 @@ import {
   CardTitle,
 } from '@shared/ui/card'
 import { Badge } from '@shared/ui/badge'
-import { RiCalendarLine, RiRobot2Line, RiKey2Line, RiTimeLine } from '@remixicon/react'
+import {
+  RiCalendarLine,
+  RiRobot2Line,
+  RiKey2Line,
+  RiTimeLine,
+} from '@remixicon/react'
 import { formatDistanceToNow } from 'date-fns'
 
 interface IntegrationCardProps {
@@ -24,7 +29,7 @@ export function IntegrationCard({ token }: IntegrationCardProps) {
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
-              <div className="bg-primary/10 text-primary rounded-md p-2">
+            <div className="bg-primary/10 text-primary rounded-md p-2">
               <RiRobot2Line className="h-5 w-5" />
             </div>
             <div>

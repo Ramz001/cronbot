@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
 import {
   Accordion,
   AccordionContent,
@@ -63,14 +58,16 @@ Size: 1.2GB`,
     output: `Connecting to analytics provider...
 Error: 503 Service Unavailable
 Failed to sync data after 4 attempts.`,
-  }
+  },
 ]
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{label}</CardTitle>
+        <CardTitle className="text-muted-foreground text-sm font-medium">
+          {label}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
@@ -79,71 +76,101 @@ function StatCard({ label, value }: { label: string; value: string }) {
   )
 }
 
-function WorkerLogItem({ log }: { log: typeof MOCK_LOGS[number] }) {
+function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
   const isSuccess = log.status === 'success'
 
   return (
     <AccordionItem
       value={log.id}
-      className="border border-border rounded-xl bg-card overflow-hidden data-[state=open]:ring-1 ring-border/50"
+      className="border-border bg-card ring-border/50 overflow-hidden rounded-xl border data-[state=open]:ring-1"
     >
-      <AccordionTrigger className="hover:no-underline hover:bg-muted/50 transition-colors px-4 py-3 border-transparent">
-        <div className="flex flex-1 items-center justify-between gap-4 mr-4">
+      <AccordionTrigger className="hover:bg-muted/50 border-transparent px-4 py-3 transition-colors hover:no-underline">
+        <div className="mr-4 flex flex-1 items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className={`flex h-8 w-8 items-center justify-center rounded-full ${isSuccess ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}>
-              {isSuccess ? <RiCheckLine className="size-4" /> : <RiCloseLine className="size-4" />}
+            <div
+              className={`flex h-8 w-8 items-center justify-center rounded-full ${isSuccess ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}
+            >
+              {isSuccess ? (
+                <RiCheckLine className="size-4" />
+              ) : (
+                <RiCloseLine className="size-4" />
+              )}
             </div>
             <span className="font-semibold">{log.name}</span>
           </div>
-          <div className="flex items-center gap-4 text-sm font-normal text-muted-foreground mr-6">
-            <span className="hidden sm:inline-block">{log.retries} retries</span>
+          <div className="text-muted-foreground mr-6 flex items-center gap-4 text-sm font-normal">
+            <span className="hidden sm:inline-block">
+              {log.retries} retries
+            </span>
             <span className="hidden sm:inline-block">{log.startTime}</span>
-            <Badge variant={isSuccess ? 'default' : 'destructive'} className="capitalize">
+            <Badge
+              variant={isSuccess ? 'default' : 'destructive'}
+              className="capitalize"
+            >
               {log.status}
             </Badge>
           </div>
         </div>
       </AccordionTrigger>
-      
-      <AccordionContent className="px-4 pb-4 pt-0 text-sm border-t border-border mt-1">
-        <div className="flex flex-col lg:flex-row gap-6 pt-4">
+
+      <AccordionContent className="border-border mt-1 border-t px-4 pt-0 pb-4 text-sm">
+        <div className="flex flex-col gap-6 pt-4 lg:flex-row">
           {/* Left: Terminal output */}
-          <div className="flex-1 space-y-3 min-w-0">
-            <span className="text-muted-foreground text-xs uppercase tracking-wider font-semibold">Terminal Output</span>
-            <div className="bg-zinc-950 dark:bg-zinc-900 border border-zinc-800 text-zinc-50 rounded-lg p-4 font-mono text-xs whitespace-pre-wrap overflow-y-auto max-h-75 shadow-inner custom-scrollbar">
+          <div className="min-w-0 flex-1 space-y-3">
+            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+              Terminal Output
+            </span>
+            <div className="custom-scrollbar max-h-75 overflow-y-auto rounded-lg border border-zinc-800 bg-zinc-950 p-4 font-mono text-xs whitespace-pre-wrap text-zinc-50 shadow-inner dark:bg-zinc-900">
               {log.output}
             </div>
           </div>
 
           {/* Right: Info panel */}
-          <div className="w-full lg:w-72 flex flex-col gap-5 bg-muted/40 p-5 rounded-xl border border-border/50 h-fit">
-            <div className="grid grid-cols-2 gap-y-5 gap-x-4">
+          <div className="bg-muted/40 border-border/50 flex h-fit w-full flex-col gap-5 rounded-xl border p-5 lg:w-72">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-5">
               <div className="flex flex-col gap-1.5">
-                <span className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold">Start Time</span>
-                <span className="font-medium text-sm">{log.startTime}</span>
+                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  Start Time
+                </span>
+                <span className="text-sm font-medium">{log.startTime}</span>
               </div>
               <div className="flex flex-col gap-1.5">
-                <span className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold">Duration</span>
-                <span className="font-medium text-sm">{log.duration}</span>
+                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  Duration
+                </span>
+                <span className="text-sm font-medium">{log.duration}</span>
               </div>
               <div className="flex flex-col gap-1.5">
-                <span className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold">Status</span>
-                <span className="font-medium text-sm capitalize">{log.status}</span>
+                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  Status
+                </span>
+                <span className="text-sm font-medium capitalize">
+                  {log.status}
+                </span>
               </div>
               <div className="flex flex-col gap-1.5">
-                <span className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold">Retry Attempts</span>
-                <span className="font-medium text-sm">{log.retries}</span>
+                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  Retry Attempts
+                </span>
+                <span className="text-sm font-medium">{log.retries}</span>
               </div>
             </div>
-            
+
             <Separator />
-            
+
             <div className="flex flex-col gap-2.5">
-              <Button size="sm" className="w-full justify-start gap-2 shadow-sm">
+              <Button
+                size="sm"
+                className="w-full justify-start gap-2 shadow-sm"
+              >
                 <RiFileListLine className="size-4" />
                 View Full Log
               </Button>
-              <Button variant="outline" size="sm" className="w-full justify-start gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full justify-start gap-2"
+              >
                 <RiDownloadLine className="size-4" />
                 Download
               </Button>
@@ -170,8 +197,12 @@ const StatsPage = () => {
 
       <div className="mt-4 flex flex-col gap-4">
         <h2 className="text-xl font-semibold tracking-tight">Worker Logs</h2>
-        
-        <Accordion type="single" collapsible className="w-full space-y-2 border-none">
+
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full space-y-2 border-none"
+        >
           {MOCK_LOGS.map((log) => (
             <WorkerLogItem key={log.id} log={log} />
           ))}

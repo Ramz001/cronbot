@@ -34,7 +34,7 @@ const validateField = (name: keyof z.infer<typeof schema>, value: any) => {
   return result.success ? undefined : result.error.issues[0].message
 }
 
-const AutomationCreationForm = () => {
+export const CreateAutomationForm = () => {
   const form = useForm({
     defaultValues: {
       name: '',
@@ -266,5 +266,3 @@ const AutomationCreationForm = () => {
     </Card>
   )
 }
-
-export default AutomationCreationForm

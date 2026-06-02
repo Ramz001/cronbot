@@ -1,5 +1,5 @@
-import AutomationCreationBoard from '@features/automation-builder/ui/board'
+import { CreateAutomationForm } from '@features/automation-builder'
 
-export default function BuilderPage() {
-  return <AutomationCreationBoard />
+export default function CreateAutomationPage() {
+  return <CreateAutomationForm />
 }

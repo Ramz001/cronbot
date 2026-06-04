@@ -18,8 +18,10 @@ import { Provider } from '@prisma/generated/enums'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { RiMessage2Line } from '@remixicon/react'
+import { useEffect } from 'react'
 import { useStore } from '@tanstack/react-form'
 import { IntegrationErrorDisplay } from './form-blocker'
+import { useBuilderStore } from '../model/store'
 
 const schema = z.object({
   name: z.string().min(1, 'Automation name is required'),
@@ -62,10 +64,7 @@ export const CreateAutomationForm = () => {
     refetch: refetchGuilds,
   } = useQuery({
     queryKey: ['discord-guilds'],
-    queryFn: async () => {
-      const res = await axios.get('/api/discord/guilds')
-      return res.data.data
-    },
+    queryFn: async () => (await axios.get('/api/discord/guilds')).data.data,
   })
 
   const {
@@ -76,31 +75,45 @@ export const CreateAutomationForm = () => {
     refetch: refetchChannels,
   } = useQuery({
     queryKey: ['discord-channels', selectedGuildId],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/discord/guilds/${selectedGuildId}`)
-      return data.data
-    },
+    queryFn: async () =>
+      (await axios.get(`/api/discord/guilds/${selectedGuildId}`)).data.data,
     enabled: !!selectedGuildId,
   })
 
-  const error = guildsError || channelsError
-  const hasError = isGuildsError || isChannelsError
+  const setQueryError = useBuilderStore((s) => s.setQueryError)
+  const clearQueryError = useBuilderStore((s) => s.clearQueryError)
+  const storeError = useBuilderStore((s) => s.queryError)
 
-  if (hasError && error) {
+  // Sync react-query errors into the Zustand store so they survive navigation
+  useEffect(() => {
+    const queryError = guildsError || channelsError
+    if (queryError) {
+      setQueryError(queryError)
+    } else if (!isLoadingGuilds && !isLoadingChannels) {
+      clearQueryError()
+    }
+  }, [
+    guildsError,
+    channelsError,
+    isLoadingGuilds,
+    isLoadingChannels,
+    setQueryError,
+    clearQueryError,
+  ])
+
+  if (storeError) {
     return (
       <Card className="mx-auto w-full max-w-2xl">
         <CardHeader>
           <h2 className="text-lg font-semibold">Create New Automation</h2>
         </CardHeader>
-        <CardContent>
-          <IntegrationErrorDisplay
-            error={error}
-            onRetry={() => {
-              void refetchGuilds()
-              void refetchChannels()
-            }}
-          />
-        </CardContent>
+        <IntegrationErrorDisplay
+          onRetry={() => {
+            clearQueryError()
+            void refetchGuilds()
+            void refetchChannels()
+          }}
+        />
       </Card>
     )
   }

@@ -11,6 +11,13 @@ import {
   RiRefreshLine,
   RiServerLine,
 } from '@remixicon/react'
+import { useBuilderStore } from '../model/store'
+import {
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/shared/ui/card'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -21,7 +28,6 @@ type AxiosLikeError = Error & {
 }
 
 type IntegrationErrorDisplayProps = {
-  error: unknown
   onRetry?: () => void
 }
 
@@ -54,7 +60,8 @@ const statusConfig: Record<
   429: {
     icon: RiServerLine,
     title: 'Too many requests',
-    description: "You've hit the rate limit. Please wait a moment and try again.",
+    description:
+      "You've hit the rate limit. Please wait a moment and try again.",
   },
   500: {
     icon: RiServerLine,
@@ -76,9 +83,7 @@ function extractErrorInfo(error: unknown) {
     error instanceof Error ? error.message : 'An unexpected error occurred.'
 
   const status =
-    error != null &&
-    typeof error === 'object' &&
-    'response' in error
+    error != null && typeof error === 'object' && 'response' in error
       ? ((error as AxiosLikeError).response?.status ?? null)
       : null
 
@@ -90,15 +95,17 @@ function extractErrorInfo(error: unknown) {
 // ---------------------------------------------------------------------------
 
 export function IntegrationErrorDisplay({
-  error,
   onRetry,
 }: IntegrationErrorDisplayProps) {
-  const { message, status } = extractErrorInfo(error)
+  const queryError = useBuilderStore((s) => s.queryError)
+
+  if (!queryError) return null
+
+  const { message, status } = extractErrorInfo(queryError)
   const isNetwork = isNetworkError(message)
 
   const config = status ? statusConfig[status] : undefined
-  const Icon =
-    config?.icon ?? (isNetwork ? RiWifiOffLine : RiErrorWarningLine)
+  const Icon = config?.icon ?? (isNetwork ? RiWifiOffLine : RiErrorWarningLine)
   const title =
     config?.title ?? (isNetwork ? 'Connection error' : 'Something went wrong')
   const description =
@@ -110,47 +117,39 @@ export function IntegrationErrorDisplay({
   const hasFooter = Boolean(status === 401 || onRetry)
 
   return (
-    <div className="flex flex-col items-center gap-6 py-10 text-center">
-      {/* Icon */}
-      <div className="bg-destructive/10 ring-destructive/5 inline-flex size-12 items-center justify-center rounded-full ring-4">
-        <Icon className="text-destructive size-6" />
-      </div>
+    <>
+      <CardContent className="flex flex-col items-center gap-6 py-10 text-center">
+        {/* Icon */}
+        <div className="bg-destructive/10 ring-destructive/5 inline-flex size-12 items-center justify-center rounded-full ring-4">
+          <Icon className="text-destructive size-6" />
+        </div>
 
-      {/* Title & description */}
-      <div className="max-w-sm space-y-2">
-        <h3 className="text-foreground text-base font-semibold">{title}</h3>
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          {description}
-        </p>
-      </div>
+        {/* Title & description */}
+        <div className="space-y-2">
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </div>
 
-      {/* Status badge */}
-      {status && <Badge variant="destructive">Error {status}</Badge>}
+        {/* Status badge */}
+        {status && <Badge variant="destructive">Error {status}</Badge>}
+      </CardContent>
 
       {/* Footer actions */}
       {hasFooter && (
-        <div className="border-t-border w-full max-w-sm space-y-3 border-t pt-6">
-          <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
-            {status === 401 && (
-              <Button variant="secondary" asChild>
-                <Link href="/dashboard/integrations">
-                  Go to integrations
-                </Link>
-              </Button>
-            )}
-            {onRetry && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onRetry}
-              >
-                <RiRefreshLine className="mr-2 size-4" />
-                Try again
-              </Button>
-            )}
-          </div>
-        </div>
+        <CardFooter className="flex-col gap-2 border-t pt-6 sm:flex-row sm:justify-center">
+          {status === 401 && (
+            <Button variant="secondary" asChild>
+              <Link href="/dashboard/integrations">Go to integrations</Link>
+            </Button>
+          )}
+          {onRetry && (
+            <Button type="button" variant="outline" onClick={onRetry}>
+              <RiRefreshLine className="mr-2 size-4" />
+              Try again
+            </Button>
+          )}
+        </CardFooter>
       )}
-    </div>
+    </>
   )
 }

@@ -17,8 +17,9 @@ import { Field, FieldLabel, FieldContent, FieldError } from '@/shared/ui/field'
 import { Provider } from '@prisma/generated/enums'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { RiMessage2Line, RiSendPlaneLine, RiTeamLine } from '@remixicon/react'
+import { RiMessage2Line } from '@remixicon/react'
 import { useStore } from '@tanstack/react-form'
+import { IntegrationErrorDisplay } from './form-blocker'
 
 const schema = z.object({
   name: z.string().min(1, 'Automation name is required'),
@@ -52,7 +53,14 @@ export const CreateAutomationForm = () => {
     form.baseStore,
     (state) => state.values.guildId
   )
-  const { data: guildsResponse, isLoading: isLoadingGuilds } = useQuery({
+
+  const {
+    data: guildsResponse,
+    isLoading: isLoadingGuilds,
+    isError: isGuildsError,
+    error: guildsError,
+    refetch: refetchGuilds,
+  } = useQuery({
     queryKey: ['discord-guilds'],
     queryFn: async () => {
       const res = await axios.get('/api/discord/guilds')
@@ -60,14 +68,42 @@ export const CreateAutomationForm = () => {
     },
   })
 
-  const { data: channelsResponse, isLoading: isLoadingChannels } = useQuery({
+  const {
+    data: channelsResponse,
+    isLoading: isLoadingChannels,
+    isError: isChannelsError,
+    error: channelsError,
+    refetch: refetchChannels,
+  } = useQuery({
     queryKey: ['discord-channels', selectedGuildId],
     queryFn: async () => {
-      const res = await axios.get(`/api/discord/guilds/${selectedGuildId}`)
-      return res.data.data
+      const { data } = await axios.get(`/api/discord/guilds/${selectedGuildId}`)
+      return data.data
     },
     enabled: !!selectedGuildId,
   })
+
+  const error = guildsError || channelsError
+  const hasError = isGuildsError || isChannelsError
+
+  if (hasError && error) {
+    return (
+      <Card className="mx-auto w-full max-w-2xl">
+        <CardHeader>
+          <h2 className="text-lg font-semibold">Create New Automation</h2>
+        </CardHeader>
+        <CardContent>
+          <IntegrationErrorDisplay
+            error={error}
+            onRetry={() => {
+              void refetchGuilds()
+              void refetchChannels()
+            }}
+          />
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card className="mx-auto w-full max-w-2xl">
@@ -246,21 +282,19 @@ export const CreateAutomationForm = () => {
           />
         </CardContent>
         <CardFooter className="flex flex-col items-center justify-end gap-4 border-t sm:flex-row">
-          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-            <Button
-              type="button"
-              variant="secondary"
-              className="w-full sm:w-auto"
-            >
-              Test Automation
-            </Button>
-            <Button
-              type="submit"
-              className="bg-primary hover:bg-primary/80 w-full sm:w-auto"
-            >
-              Create Automation
-            </Button>
-          </div>
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full sm:w-auto"
+          >
+            Test Automation
+          </Button>
+          <Button
+            type="submit"
+            className="bg-primary hover:bg-primary/80 w-full sm:w-auto"
+          >
+            Create Automation
+          </Button>
         </CardFooter>
       </form>
     </Card>

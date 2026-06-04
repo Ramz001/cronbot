@@ -66,3 +66,8 @@ export type Verification = Prisma.VerificationModel
  * 
  */
 export type IntegrationToken = Prisma.IntegrationTokenModel
+/**
+ * Model Settings
+ * 
+ */
+export type Settings = Prisma.SettingsModel

@@ -23,9 +23,5 @@ export async function getGuildChannels(
     { headers }
   )
 
-  const textChannels = data
-    .filter((c: { type: number }) => c.type === 0)
-    .map((c: { id: string; name: string }) => ({ id: c.id, name: c.name }))
-
   return NextResponse.json({ success: true, data }, { status, statusText })
 }

@@ -4,24 +4,20 @@ import { User } from 'better-auth'
 import { IntegrationTokenStatus, Provider } from '@prisma/generated/enums'
 import { decrypt } from '@shared/api/encryption'
 
-const ua = new UserAgent({ deviceCategory: 'desktop' })
+function getSessionHeaders() {
+  const ua = new UserAgent({ deviceCategory: 'desktop' })
 
-const SESSION_HEADERS = {
-  'User-Agent': ua.toString(),
-
-  Accept:
-    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-
-  'Accept-Language': 'en-US,en;q=0.9',
-
-  Connection: 'keep-alive',
-
-  'sec-ch-ua':
-    '"Google Chrome";v="124", "Chromium";v="124", "Not-A.Brand";v="99"',
-
-  'sec-ch-ua-mobile': '?0',
-
-  'sec-ch-ua-platform': '"Windows"',
+  return {
+    'User-Agent': ua.toString(),
+    Accept:
+      'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
+    Connection: 'keep-alive',
+    'sec-ch-ua':
+      '"Google Chrome";v="124", "Chromium";v="124", "Not-A.Brand";v="99"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+  }
 }
 
 export const authHeaders = async ({ user }: { user: User }) => {
@@ -42,6 +38,6 @@ export const authHeaders = async ({ user }: { user: User }) => {
 
   return {
     Authorization: decryptedToken,
-    ...SESSION_HEADERS,
+    ...getSessionHeaders(),
   }
 }

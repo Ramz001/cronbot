@@ -114,7 +114,7 @@ export function IntegrationErrorDisplay({
       ? 'Please check your internet connection and try again.'
       : message)
 
-  const hasFooter = Boolean(status === 401 || onRetry)
+  const hasFooter = Boolean(onRetry)
 
   return (
     <>
@@ -137,8 +137,8 @@ export function IntegrationErrorDisplay({
       {/* Footer actions */}
       {hasFooter && (
         <CardFooter className="flex-col gap-2 border-t pt-6 sm:flex-row sm:justify-center">
-          {status === 401 && (
-            <Button variant="secondary" asChild>
+          {status === 404 && (
+            <Button asChild>
               <Link href="/dashboard/integrations">Go to integrations</Link>
             </Button>
           )}

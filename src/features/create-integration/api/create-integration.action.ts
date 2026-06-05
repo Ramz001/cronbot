@@ -27,7 +27,7 @@ const createIntegration = async (
       provider,
       title,
       token: encryptedToken,
-      tokenPreview: token.slice(0, 4),
+      tokenPreview: `${token.slice(0, 3)}...${token.slice(-2)}`,
       expiresAt,
       userId: user.id,
     },

@@ -89,7 +89,7 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
           <form.Field
             name="name"
             validators={{
-              onChange: ({ value }) => validateField('name', value),
+              onSubmit: ({ value }) => validateField('name', value),
             }}
             children={(field) => (
               <Field>
@@ -138,7 +138,7 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
           <form.Field
             name="guildId"
             validators={{
-              onChange: ({ value }) => validateField('guildId', value),
+              onSubmit: ({ value }) => validateField('guildId', value),
             }}
             children={(field) => (
               <Field>
@@ -175,7 +175,7 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
           <form.Field
             name="channelId"
             validators={{
-              onChange: ({ value }) => validateField('channelId', value),
+              onSubmit: ({ value }) => validateField('channelId', value),
             }}
             children={(field) => (
               <Field>
@@ -228,7 +228,7 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
           <form.Field
             name="message"
             validators={{
-              onChange: ({ value }) => validateField('message', value),
+              onSubmit: ({ value }) => validateField('message', value),
             }}
             children={(field) => (
               <Field>

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Badge } from '@/shared/ui/badge'
 import { Button } from '@/shared/ui/button'
 import { RiErrorWarningLine, RiWifiOffLine } from '@remixicon/react'
-import { errors } from '../consts/errors'
+import { errorMaps, HAS_NO_INTEGRATIONS } from '../consts/errors'
 import {
   Card,
   CardAction,
@@ -25,7 +25,7 @@ export function CreateAutomationError({
   status?: number | null
 }) {
   const isNetwork = isNetworkError(error)
-  const config = status ? errors[status] : undefined
+  const config = status ? errorMaps[status] : undefined
 
   const Icon = config?.icon ?? (isNetwork ? RiWifiOffLine : RiErrorWarningLine)
   const title =
@@ -67,7 +67,7 @@ export function CreateAutomationError({
         </CardContent>
       )}
 
-      {status === 404 && (
+      {status === HAS_NO_INTEGRATIONS && (
         <CardFooter className="justify-end">
           <Button asChild>
             <Link href="/dashboard/integrations">Go to integrations</Link>

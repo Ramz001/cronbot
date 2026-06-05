@@ -5,7 +5,9 @@ import {
   RiServerLine,
 } from '@remixicon/react'
 
-export const errors: Record<
+export const HAS_NO_INTEGRATIONS = 403
+
+export const errorMaps: Record<
   number,
   { icon: typeof RiErrorWarningLine; title: string; description: string }
 > = {
@@ -13,19 +15,18 @@ export const errors: Record<
     icon: RiLockLine,
     title: 'Integration token expired',
     description:
-      'Your Discord integration needs to be reauthorized. Head to your settings to reconnect.',
+      'Your Discord integration are likely expired. Head to your settings to reconnect.',
   },
-  403: {
+  [HAS_NO_INTEGRATIONS]: {
     icon: RiLockLine,
     title: 'Access denied',
     description:
-      "You don't have permission to access this resource. Check your integration permissions.",
+      'Add a Discord integration token in your settings before creating automations.',
   },
   404: {
     icon: RiKeyLine,
     title: 'No integration token found',
-    description:
-      'Add a Discord integration token in your settings before creating automations.',
+    description: 'Resource not found',
   },
   429: {
     icon: RiServerLine,

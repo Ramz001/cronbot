@@ -7,7 +7,7 @@ import prisma from '@shared/lib/prisma'
 const getTokens = async () => {
   const user = await requireAuth()
 
-  const tokens = await prisma.integrationToken.findMany({
+  return await prisma.integrationToken.findMany({
     where: {
       userId: user.id,
     },
@@ -15,8 +15,17 @@ const getTokens = async () => {
       token: true,
     },
   })
+}
 
-  return tokens
+const getTokensCount = async () => {
+  const user = await requireAuth()
+
+  return await prisma.integrationToken.count({
+    where: {
+      userId: user.id,
+    },
+  })
 }
 
 export const getIntegrationTokens = withActionErrorHandler(getTokens)
+export const getIntegrationTokensCount = withActionErrorHandler(getTokensCount)

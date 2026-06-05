@@ -1,6 +1,7 @@
 'use client'
 
 import { useForm } from '@tanstack/react-form'
+import { useStore } from '@tanstack/react-form'
 import { z } from 'zod'
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card'
 import { Button } from '@/shared/ui/button'
@@ -15,13 +16,9 @@ import {
 } from '@/shared/ui/select'
 import { Field, FieldLabel, FieldContent, FieldError } from '@/shared/ui/field'
 import { Provider } from '@prisma/generated/enums'
+import { RiMessage2Line } from '@remixicon/react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { RiMessage2Line } from '@remixicon/react'
-import { useEffect } from 'react'
-import { useStore } from '@tanstack/react-form'
-import { IntegrationErrorDisplay } from './form-blocker'
-import { useBuilderStore } from '../model/store'
 
 const schema = z.object({
   name: z.string().min(1, 'Automation name is required'),
@@ -37,7 +34,14 @@ const validateField = (name: keyof z.infer<typeof schema>, value: any) => {
   return result.success ? undefined : result.error.issues[0].message
 }
 
-export const CreateAutomationForm = () => {
+type DiscordGuild = { id: string; name: string }
+type DiscordChannel = { id: string; name: string }
+
+type CreateAutomationFormProps = {
+  guilds: DiscordGuild[]
+}
+
+export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
   const form = useForm({
     defaultValues: {
       name: '',
@@ -57,66 +61,17 @@ export const CreateAutomationForm = () => {
   )
 
   const {
-    data: guildsResponse,
-    isLoading: isLoadingGuilds,
-    isError: isGuildsError,
-    error: guildsError,
-    refetch: refetchGuilds,
-  } = useQuery({
-    queryKey: ['discord-guilds'],
-    queryFn: async () => (await axios.get('/api/discord/guilds')).data.data,
-  })
-
-  const {
-    data: channelsResponse,
+    data: channels = [],
     isLoading: isLoadingChannels,
-    isError: isChannelsError,
     error: channelsError,
-    refetch: refetchChannels,
-  } = useQuery({
+  } = useQuery<DiscordChannel[]>({
     queryKey: ['discord-channels', selectedGuildId],
-    queryFn: async () =>
-      (await axios.get(`/api/discord/guilds/${selectedGuildId}`)).data.data,
+    queryFn: async () => {
+      const { data } = await axios.get(`/api/discord/guilds/${selectedGuildId}`)
+      return data.data ?? []
+    },
     enabled: !!selectedGuildId,
   })
-
-  const setQueryError = useBuilderStore((s) => s.setQueryError)
-  const clearQueryError = useBuilderStore((s) => s.clearQueryError)
-  const storeError = useBuilderStore((s) => s.queryError)
-
-  // Sync react-query errors into the Zustand store so they survive navigation
-  useEffect(() => {
-    const queryError = guildsError || channelsError
-    if (queryError) {
-      setQueryError(queryError)
-    } else if (!isLoadingGuilds && !isLoadingChannels) {
-      clearQueryError()
-    }
-  }, [
-    guildsError,
-    channelsError,
-    isLoadingGuilds,
-    isLoadingChannels,
-    setQueryError,
-    clearQueryError,
-  ])
-
-  if (storeError) {
-    return (
-      <Card className="mx-auto w-full max-w-2xl">
-        <CardHeader>
-          <h2 className="text-lg font-semibold">Create New Automation</h2>
-        </CardHeader>
-        <IntegrationErrorDisplay
-          onRetry={() => {
-            clearQueryError()
-            void refetchGuilds()
-            void refetchChannels()
-          }}
-        />
-      </Card>
-    )
-  }
 
   return (
     <Card className="mx-auto w-full max-w-2xl">
@@ -195,19 +150,12 @@ export const CreateAutomationForm = () => {
                       field.handleChange(val)
                       form.setFieldValue('channelId', '')
                     }}
-                    disabled={isLoadingGuilds}
                   >
                     <SelectTrigger className="w-full">
-                      <SelectValue
-                        placeholder={
-                          isLoadingGuilds
-                            ? 'Loading servers...'
-                            : 'Select a server...'
-                        }
-                      />
+                      <SelectValue placeholder="Select a server..." />
                     </SelectTrigger>
                     <SelectContent>
-                      {guildsResponse?.map((guild: any) => (
+                      {guilds?.map((guild) => (
                         <SelectItem key={guild.id} value={guild.id}>
                           {guild.name}
                         </SelectItem>
@@ -245,12 +193,14 @@ export const CreateAutomationForm = () => {
                             ? 'Select a server first'
                             : isLoadingChannels
                               ? 'Loading channels...'
-                              : 'Select a channel...'
+                              : channelsError
+                                ? 'Failed to load channels'
+                                : 'Select a channel...'
                         }
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      {channelsResponse?.map((channel: any) => (
+                      {channels?.map((channel) => (
                         <SelectItem key={channel.id} value={channel.id}>
                           #{channel.name}
                         </SelectItem>
@@ -262,6 +212,14 @@ export const CreateAutomationForm = () => {
                       message: msg?.toString(),
                     }))}
                   />
+                  {channelsError && (
+                    <p className="text-destructive mt-1 text-sm">
+                      {(channelsError as any)?.error?.message ??
+                        (channelsError instanceof Error
+                          ? channelsError.message
+                          : 'Failed to load channels')}
+                    </p>
+                  )}
                 </FieldContent>
               </Field>
             )}

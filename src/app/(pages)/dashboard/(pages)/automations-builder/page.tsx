@@ -33,5 +33,5 @@ export default async function CreateAutomationPage() {
     )
   }
 
-  return <CreateAutomationForm guilds={guilds.data} />
+  return <CreateAutomationForm guilds={guilds.data ?? []} />
 }

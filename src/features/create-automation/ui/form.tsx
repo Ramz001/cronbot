@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { useForm } from '@tanstack/react-form'
 import { useStore } from '@tanstack/react-form'
 import { z } from 'zod'
@@ -18,7 +17,7 @@ import {
 import { Field, FieldLabel, FieldContent, FieldError } from '@/shared/ui/field'
 import { Provider } from '@prisma/generated/enums'
 import { RiMessage2Line, RiLoader2Line } from '@remixicon/react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { handleError } from '@shared/utils/handle-error'
@@ -54,7 +53,7 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
       message: '',
     },
     onSubmit: async ({ value }) => {
-      console.log('Form submitted', value)
+      await createMutation.mutateAsync(value)
     },
   })
 
@@ -76,9 +75,41 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
     enabled: !!selectedGuildId,
   })
 
-  const [isTesting, setIsTesting] = useState(false)
+  const createMutation = useMutation({
+    mutationFn: async (values: z.infer<typeof schema>) => {
+      toast.warning('Creating automation...')
+    },
+    onSuccess: () => {
+      toast.success('Automation created successfully!')
+    },
+    onError: (err) => {
+      handleError(err)
+    },
+  })
 
-  const handleTest = async () => {
+  const testMutation = useMutation({
+    mutationFn: async ({
+      channelId,
+      message,
+    }: {
+      channelId: string
+      message: string
+    }) => {
+      const { data } = await axios.post('/api/discord/send', {
+        channelId,
+        message,
+      })
+      return data
+    },
+    onSuccess: () => {
+      toast.success('Test message sent successfully!')
+    },
+    onError: (err) => {
+      handleError(err)
+    },
+  })
+
+  const handleTest = () => {
     const values = form.baseStore.state.values
 
     if (!values.channelId || !values.message) {
@@ -86,18 +117,10 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
       return
     }
 
-    setIsTesting(true)
-    try {
-      await axios.post('/api/discord/send', {
-        channelId: values.channelId,
-        message: values.message,
-      })
-      toast.success('Test message sent successfully!')
-    } catch (err) {
-      handleError(err)
-    } finally {
-      setIsTesting(false)
-    }
+    testMutation.mutate({
+      channelId: values.channelId,
+      message: values.message,
+    })
   }
 
   return (
@@ -284,10 +307,10 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
             type="button"
             variant="secondary"
             className="w-full sm:w-auto"
-            disabled={isTesting}
+            disabled={testMutation.isPending}
             onClick={handleTest}
           >
-            {isTesting ? (
+            {testMutation.isPending ? (
               <>
                 <RiLoader2Line className="size-4 animate-spin" />
                 Sending...
@@ -299,8 +322,16 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
           <Button
             type="submit"
             className="bg-primary hover:bg-primary/80 w-full sm:w-auto"
+            disabled={createMutation.isPending}
           >
-            Create Automation
+            {createMutation.isPending ? (
+              <>
+                <RiLoader2Line className="size-4 animate-spin" />
+                Creating...
+              </>
+            ) : (
+              'Create Automation'
+            )}
           </Button>
         </CardFooter>
       </form>

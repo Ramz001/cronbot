@@ -21,6 +21,7 @@ import { RiMessage2Line, RiLoader2Line } from '@remixicon/react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'sonner'
+import { handleError } from '@shared/utils/handle-error'
 
 const schema = z.object({
   name: z.string().min(1, 'Automation name is required'),
@@ -93,11 +94,7 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
       })
       toast.success('Test message sent successfully!')
     } catch (err) {
-      const message =
-        axios.isAxiosError(err) && err.response?.data?.error
-          ? err.response.data.error
-          : 'Failed to send test message'
-      toast.error(message)
+      handleError(err)
     } finally {
       setIsTesting(false)
     }

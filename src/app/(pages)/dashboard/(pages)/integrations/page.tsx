@@ -1,6 +1,8 @@
 import { CreateIntegrationForm } from '@features/create-integration'
 import { IntegrationsList } from './ui/integrations-list'
 
+export const dynamic = 'force-dynamic'
+
 const IntegrationsPage = async () => {
   return (
     <div className="space-y-4">

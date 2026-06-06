@@ -22,7 +22,7 @@ function getSessionHeaders() {
 
 const fetcher = async (userId: string) => {
   'use cache'
-  cacheLife('hours')
+  cacheLife('custom')
   cacheTag(`discord-token:${userId}`)
 
   const integrationToken = await prisma.integrationToken.findFirstOrThrow({

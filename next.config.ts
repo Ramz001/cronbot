@@ -9,10 +9,16 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
-        port: '',
         pathname: '/**',
       },
     ],
+  },
+  cacheLife: {
+    custom: {
+      stale: 60, // 1 seconds
+      revalidate: 360, // 5 minutes
+      expire: 600, // 10 minutes
+    },
   },
 }
 

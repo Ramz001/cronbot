@@ -1,4 +1,4 @@
-import { NextResponse, NextRequest } from 'next/server'
+import { NextRequest } from 'next/server'
 import { RouteResult } from '@shared/api/server-error-handlers'
 import { authHeaders } from '../utils/auth-headers'
 import { DISCORD_API } from '../consts/discord'
@@ -11,7 +11,7 @@ import { ChannelType } from '../model/types'
 
 const fetcher = async (userId: string, guildId: string) => {
   'use cache'
-  cacheLife('hours')
+  cacheLife('custom')
   cacheTag('discord-guild-channels', userId, guildId)
 
   const headers = await authHeaders({ userId })
@@ -19,13 +19,6 @@ const fetcher = async (userId: string, guildId: string) => {
   const { data } = await axios.get(
     `${DISCORD_API}/guilds/${guildId}/channels`,
     { headers }
-  )
-
-  console.log(
-    'Fetched channels for guild',
-    guildId,
-    data,
-    data?.map((c: any) => c.permission_overwrites)
   )
 
   return data

@@ -1,5 +1,12 @@
 import z from 'zod'
 
+const PermissionOverwriteSchema = z.object({
+  id: z.string(),
+  type: z.number(),
+  allow: z.string(),
+  deny: z.string(),
+})
+
 const ChannelSchema = z.object({
   id: z.string(),
   type: z.number(),
@@ -11,7 +18,7 @@ const ChannelSchema = z.object({
   rate_limit_per_user: z.number(),
   topic: z.string().nullable(),
   position: z.number(),
-  permission_overwrites: z.array(z.any()),
+  permission_overwrites: z.array(PermissionOverwriteSchema).optional(),
   bitrate: z.number().optional(),
   user_limit: z.number().optional(),
   nsfw: z.boolean(),

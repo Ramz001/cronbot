@@ -10,7 +10,7 @@ import { GuildType } from '../model/types'
 
 const fetcher = async (userId: string): Promise<GuildType[]> => {
   'use cache'
-  cacheLife('hours')
+  cacheLife('custom')
   cacheTag('discord-guilds', userId)
 
   const headers = await authHeaders({ userId })

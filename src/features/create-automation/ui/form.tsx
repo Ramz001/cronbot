@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useForm } from '@tanstack/react-form'
 import { useStore } from '@tanstack/react-form'
 import { z } from 'zod'
@@ -16,9 +17,10 @@ import {
 } from '@/shared/ui/select'
 import { Field, FieldLabel, FieldContent, FieldError } from '@/shared/ui/field'
 import { Provider } from '@prisma/generated/enums'
-import { RiMessage2Line } from '@remixicon/react'
+import { RiMessage2Line, RiLoader2Line } from '@remixicon/react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 const schema = z.object({
   name: z.string().min(1, 'Automation name is required'),
@@ -72,6 +74,34 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
     },
     enabled: !!selectedGuildId,
   })
+
+  const [isTesting, setIsTesting] = useState(false)
+
+  const handleTest = async () => {
+    const values = form.baseStore.state.values
+
+    if (!values.channelId || !values.message) {
+      toast.error('Please select a channel and enter a message before testing.')
+      return
+    }
+
+    setIsTesting(true)
+    try {
+      await axios.post('/api/discord/send', {
+        channelId: values.channelId,
+        message: values.message,
+      })
+      toast.success('Test message sent successfully!')
+    } catch (err) {
+      const message =
+        axios.isAxiosError(err) && err.response?.data?.error
+          ? err.response.data.error
+          : 'Failed to send test message'
+      toast.error(message)
+    } finally {
+      setIsTesting(false)
+    }
+  }
 
   return (
     <Card className="mx-auto w-full max-w-2xl">
@@ -257,8 +287,17 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
             type="button"
             variant="secondary"
             className="w-full sm:w-auto"
+            disabled={isTesting}
+            onClick={handleTest}
           >
-            Test Automation
+            {isTesting ? (
+              <>
+                <RiLoader2Line className="size-4 animate-spin" />
+                Sending...
+              </>
+            ) : (
+              'Test Automation'
+            )}
           </Button>
           <Button
             type="submit"

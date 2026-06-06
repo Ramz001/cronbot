@@ -1,8 +1,6 @@
 import { CreateIntegrationForm } from '@features/create-integration'
 import { IntegrationsList } from './ui/integrations-list'
 
-export const fetchCache = 'default-no-store'
-
 const IntegrationsPage = async () => {
   return (
     <div className="space-y-4">

@@ -6,8 +6,6 @@ import {
 } from '@features/create-automation'
 import { getIntegrationTokensCount } from '@entities/integration-token'
 
-export const fetchCache = 'default-no-store'
-
 export default async function CreateAutomationPage() {
   const count = await getIntegrationTokensCount()
 

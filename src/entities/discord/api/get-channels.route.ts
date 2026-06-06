@@ -5,28 +5,13 @@ import { DISCORD_API } from '../consts/discord'
 import { requireAuth } from '@shared/api/auth.guard'
 import axios from 'axios'
 import { cacheLife, cacheTag } from 'next/cache'
-import z from 'zod'
-
-const ParamsSchema = z.string().min(1, 'Guild ID is required')
-
-export async function getGuildChannels(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-): Promise<RouteResult<unknown>> {
-  // 1. Auth + params outside cache (request-specific)
-  const user = await requireAuth()
-  const { id } = await params
-  const guildId = ParamsSchema.parse(id)
-
-  // 2. Call cached inner function with args
-  const data = await fetcher(user.id, guildId)
-
-  return NextResponse.json({ success: true, data })
-}
+import { GuildIdSchema } from '../model/validator'
+import { withRouteErrorHandler } from '@shared/api/server-error-handlers'
+import { ChannelType } from '../model/types'
 
 const fetcher = async (userId: string, guildId: string) => {
   'use cache'
-  cacheLife('minutes')
+  cacheLife('hours')
   cacheTag('discord-guild-channels', userId, guildId)
 
   const headers = await authHeaders({ userId })
@@ -36,5 +21,25 @@ const fetcher = async (userId: string, guildId: string) => {
     { headers }
   )
 
+  console.log(
+    'Fetched channels for guild',
+    guildId,
+    data,
+    data?.map((c: any) => c.permission_overwrites)
+  )
+
   return data
 }
+
+async function getGuildChannels(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+): Promise<RouteResult<ChannelType[]>> {
+  const user = await requireAuth()
+  const { id } = await params
+  const guildId = GuildIdSchema.parse(id)
+
+  return await fetcher(user.id, guildId)
+}
+
+export const getGuildChannelsRoute = withRouteErrorHandler(getGuildChannels)

@@ -1,8 +1,8 @@
 import UserAgent from 'user-agents'
 import prisma from '@shared/lib/prisma'
-import { User } from 'better-auth'
 import { IntegrationTokenStatus, Provider } from '@prisma/generated/enums'
 import { decrypt } from '@shared/api/encryption'
+import { cacheLife, cacheTag } from 'next/cache'
 
 function getSessionHeaders() {
   const ua = new UserAgent({ deviceCategory: 'desktop' })
@@ -20,8 +20,10 @@ function getSessionHeaders() {
   }
 }
 
-export const authHeaders = async ({ userId }: { userId: string }) => {
-  if (!userId) throw new Error('User ID is required for auth headers')
+const fetcher = async (userId: string) => {
+  'use cache'
+  cacheLife('hours')
+  cacheTag(`discord-token:${userId}`)
 
   const integrationToken = await prisma.integrationToken.findFirstOrThrow({
     where: {
@@ -34,7 +36,13 @@ export const authHeaders = async ({ userId }: { userId: string }) => {
     },
   })
 
-  const decryptedToken = await decrypt(integrationToken.token)
+  return await decrypt(integrationToken.token)
+}
+
+export const authHeaders = async ({ userId }: { userId: string }) => {
+  if (!userId) throw new Error('User ID is required for auth headers')
+
+  const decryptedToken = await fetcher(userId)
 
   return {
     Authorization: decryptedToken,

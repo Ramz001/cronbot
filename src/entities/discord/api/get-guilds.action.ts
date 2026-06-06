@@ -6,15 +6,11 @@ import { requireAuth } from '@shared/api/auth.guard'
 import { withActionErrorHandler } from '@shared/api/server-error-handlers'
 import axios from 'axios'
 import { cacheLife, cacheTag } from 'next/cache'
+import { GuildType } from '../model/types'
 
-const action = async () => {
-  const user = await requireAuth()
-  return fetcher(user.id)
-}
-
-const fetcher = async (userId: string) => {
+const fetcher = async (userId: string): Promise<GuildType[]> => {
   'use cache'
-  cacheLife('minutes')
+  cacheLife('hours')
   cacheTag('discord-guilds', userId)
 
   const headers = await authHeaders({ userId })
@@ -23,7 +19,13 @@ const fetcher = async (userId: string) => {
     headers,
   })
 
+  console.log('Fetched guilds for user', data)
   return data
+}
+
+const action = async () => {
+  const user = await requireAuth()
+  return fetcher(user.id)
 }
 
 export const getGuilds = withActionErrorHandler(action)

@@ -67,7 +67,9 @@ export const withRouteErrorHandler = <TContext extends unknown[]>(
 ) => {
   return async (req: NextRequest, ...args: TContext): Promise<NextResponse> => {
     try {
-      return await handler(req, ...args)
+      const data = await handler(req, ...args)
+
+      return NextResponse.json({ success: true, data })
     } catch (error) {
       const { error: mappedError, status } = mapError(error)
 

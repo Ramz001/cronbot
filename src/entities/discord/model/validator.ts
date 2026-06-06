@@ -1,6 +1,6 @@
 import z from 'zod'
 
-const GuildIdSchema = z.string().min(1, 'Guild ID is required')
+export const GuildIdSchema = z.string().min(1, 'Guild ID is required')
 
 export const GetChannelsSchema = z.object({
   guildId: GuildIdSchema,

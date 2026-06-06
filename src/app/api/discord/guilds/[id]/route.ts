@@ -1,4 +1,3 @@
-import { withRouteErrorHandler } from '@shared/api/server-error-handlers'
-import { getGuildChannels } from '@entities/discord'
+import { getGuildChannelsRoute } from '@entities/discord'
 
-export const GET = withRouteErrorHandler(getGuildChannels)
+export const GET = getGuildChannelsRoute

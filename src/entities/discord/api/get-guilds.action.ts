@@ -1,7 +1,7 @@
 'use server'
 
 import { DISCORD_API } from '../consts/discord'
-import { authHeaders } from '../utils/discord-auth-headers'
+import { authHeaders } from '../utils/auth-headers'
 import { requireAuth } from '@shared/api/auth.guard'
 import { withActionErrorHandler } from '@shared/api/server-error-handlers'
 import axios from 'axios'

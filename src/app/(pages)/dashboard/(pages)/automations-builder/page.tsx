@@ -3,7 +3,7 @@ import {
   CreateAutomationError,
   CreateAutomationForm,
   HAS_NO_INTEGRATIONS,
-} from '@features/automation-builder'
+} from '@features/create-automation'
 import { getIntegrationTokensCount } from '@entities/integration-token'
 
 export default async function CreateAutomationPage() {

@@ -9,7 +9,7 @@ export async function sendMessage(
   req: NextRequest
 ): Promise<RouteResult<string>> {
   const user = await requireAuth()
-  const headers = await authHeaders({ user })
+  const headers = await authHeaders({ userId: user.id })
   const body = await req.json()
 
   const { message, channelId } = SendMessageBody.parse(body)

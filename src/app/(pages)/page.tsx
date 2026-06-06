@@ -1,17 +1,12 @@
 import { Button } from '@/shared/ui/button'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import Gutter from '@shared/ui/gutter'
-import { getSession } from '@/auth'
-import { headers } from 'next/headers'
 import Navbar from '@widgets/navbar'
-import { RiArrowRightLine, RiSparklingLine } from '@remixicon/react'
-import { GithubLoginButton } from '@shared/ui/github-login-button'
+import { SessionButtons } from '@widgets/session-buttons'
+import { RiSparklingLine } from '@remixicon/react'
 
-export default async function HomePage() {
-  const session = await getSession({
-    headers: await headers(),
-  })
-
+export default function HomePage() {
   return (
     <main className="relative flex min-h-screen flex-col overflow-hidden">
       {/* Background layer */}
@@ -41,22 +36,19 @@ export default async function HomePage() {
         </p>
 
         <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-          {session ? (
-            <Button
-              asChild
-              size="lg"
-              className="h-12 w-full px-8 font-semibold sm:w-auto"
-            >
-              <Link href="/dashboard">
-                Go to Dashboard <RiArrowRightLine className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          ) : (
-            <GithubLoginButton
-              className="h-12 w-full px-8 font-semibold sm:w-auto"
-              title="Continue with GitHub"
-            />
-          )}
+          <Suspense
+            fallback={
+              <Button
+                size="lg"
+                className="h-12 w-full px-8 font-semibold sm:w-auto"
+                disabled
+              >
+                Loading...
+              </Button>
+            }
+          >
+            <SessionButtons />
+          </Suspense>
           <Button
             asChild
             variant="outline"

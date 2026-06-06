@@ -20,12 +20,12 @@ function getSessionHeaders() {
   }
 }
 
-export const authHeaders = async ({ user }: { user: User }) => {
-  if (!user?.id) throw new Error('User ID is required for auth headers')
+export const authHeaders = async ({ userId }: { userId: string }) => {
+  if (!userId) throw new Error('User ID is required for auth headers')
 
   const integrationToken = await prisma.integrationToken.findFirstOrThrow({
     where: {
-      userId: user.id,
+      userId: userId,
       provider: Provider.discord,
       status: IntegrationTokenStatus.active,
     },

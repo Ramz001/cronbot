@@ -1,7 +1,7 @@
 import { CreateIntegrationForm } from '@features/create-integration'
 import { IntegrationsList } from './ui/integrations-list'
 
-export const dynamic = 'force-dynamic'
+export const fetchCache = 'default-no-store'
 
 const IntegrationsPage = async () => {
   return (

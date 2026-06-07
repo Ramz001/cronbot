@@ -1,13 +1,20 @@
 'use client'
 
 import ShadcnBigCalendar from '@widgets/calendar'
-import { ComponentType, SetStateAction, useState } from 'react'
+import {
+  ComponentType,
+  SetStateAction,
+  Suspense,
+  useEffect,
+  useState,
+} from 'react'
 import type { CalendarProps } from 'react-big-calendar'
 import { dateFnsLocalizer, SlotInfo, Views } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import { enUS } from 'date-fns/locale/en-US'
 import type { EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import { DashboardSkeleton } from '@widgets/calendar'
 
 const locales = {
   'en-US': enUS,
@@ -109,7 +116,7 @@ const presetEvents: CalendarEvent[] = [
 
 const LandingPage = () => {
   const [view, setView] = useState(Views.WEEK)
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState<Date | undefined>(undefined)
   const [events, setEvents] = useState<CalendarEvent[]>(() => [...presetEvents])
   const [selectedSlot, setSelectedSlot] = useState<SlotInfo | null>(null)
 
@@ -120,18 +127,6 @@ const LandingPage = () => {
     return {
       className: `event-variant-${variant}`,
     }
-  }
-
-  const handleNavigate = (newDate: Date) => {
-    setDate(newDate)
-  }
-
-  const handleViewChange = (newView: SetStateAction<any>) => {
-    setView(newView)
-  }
-
-  const handleSelectSlot = (slotInfo: SlotInfo) => {
-    setSelectedSlot(slotInfo)
   }
 
   const deriveAllDay = (
@@ -215,6 +210,11 @@ const LandingPage = () => {
     setEvents(updatedEvents)
   }
 
+  useEffect(() => {
+    const now = new Date()
+    setDate(now)
+  }, [])
+
   return (
     <DnDCalendar
       localizer={localizer}
@@ -222,15 +222,15 @@ const LandingPage = () => {
       className="border-border border-rounded-md rounded-lg border-2 border-solid"
       selectable
       date={date}
-      onNavigate={handleNavigate}
+      onNavigate={(newDate) => setDate(newDate)}
       view={view}
-      onView={handleViewChange}
+      onView={() => setView(view)}
       resizable
       draggableAccessor={() => true}
       resizableAccessor={() => true}
       events={events}
       eventPropGetter={eventPropGetter}
-      onSelectSlot={handleSelectSlot}
+      onSelectSlot={(info) => setSelectedSlot(info)}
       onEventDrop={handleEventDrop}
       onEventResize={handleEventResize}
     />

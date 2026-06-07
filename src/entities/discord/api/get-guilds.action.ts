@@ -1,5 +1,3 @@
-'use server'
-
 import { DISCORD_API } from '../consts/discord'
 import { authHeaders } from '../utils/auth-headers'
 import { requireAuth } from '@shared/api/auth.guard'
@@ -19,7 +17,6 @@ const fetcher = async (userId: string): Promise<GuildType[]> => {
     headers,
   })
 
-  console.log('Fetched guilds for user', data)
   return data
 }
 

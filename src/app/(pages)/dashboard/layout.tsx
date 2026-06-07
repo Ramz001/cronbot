@@ -1,5 +1,4 @@
-'use client'
-import { SidebarProvider, SidebarTrigger } from '@shared/ui/sidebar'
+import { SidebarProvider } from '@shared/ui/sidebar'
 import { AppSidebar } from './ui/app-sidebar'
 import BackgroundPattern from '@shared/ui/background-pattern'
 

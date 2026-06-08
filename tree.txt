@@ -1,0 +1,40 @@
+.
+|-- Dockerfile
+|-- MIGRATION_PRISMA.md
+|-- README.md
+|-- components.json
+|-- docker-compose.yml
+|-- eslint.config.cjs
+|-- next-env.d.ts
+|-- next.config.ts
+|-- package.json
+|-- playwright.config.ts
+|-- pnpm-lock.yaml
+|-- pnpm-workspace.yaml
+|-- postcss.config.mjs
+|-- prisma
+|   |-- generated
+|   |-- migrations
+|   `-- schema.prisma
+|-- prisma.config.ts
+|-- public
+|   |-- file.svg
+|   |-- globe.svg
+|   |-- next.svg
+|   |-- time.svg
+|   |-- vercel.svg
+|   `-- window.svg
+|-- src
+|   |-- app
+|   |-- auth.ts
+|   |-- entities
+|   |-- features
+|   |-- proxy.ts
+|   |-- shared
+|   `-- widgets
+|-- todo.todo
+|-- tree.txt
+|-- tsconfig.json
+`-- tsconfig.tsbuildinfo
+
+10 directories, 27 files

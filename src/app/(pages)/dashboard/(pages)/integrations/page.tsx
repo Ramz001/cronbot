@@ -1,5 +1,5 @@
 import { CreateIntegrationForm } from '@features/create-integration'
-import { IntegrationsList } from './ui/integrations-list'
+import { IntegrationsList } from './ui/list'
 
 const IntegrationsPage = async () => {
   return (

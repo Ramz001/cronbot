@@ -1,4 +1,4 @@
-import { IntegrationCard } from './integration-card'
+import { IntegrationCard } from './card'
 import { ScrollArea } from '@shared/ui/scroll-area'
 import { getIntegrationTokens } from '@entities/integration-token'
 

@@ -8,7 +8,7 @@ import {
 import {
   CreateIntegrationSchema,
   CreateIntegrationType,
-} from '../models/validator'
+} from '../model/validator'
 import prisma from '@shared/lib/prisma'
 import { encrypt } from '@shared/api/encryption'
 import { revalidateTag } from 'next/cache'

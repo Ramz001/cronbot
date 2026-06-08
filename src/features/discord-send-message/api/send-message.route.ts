@@ -4,7 +4,7 @@ import {
   withRouteErrorHandler,
 } from '@shared/api/server-error-handlers'
 import { DISCORD_API, authHeaders } from '@entities/discord'
-import { SendMessageBody } from '../model/send-message-body'
+import { SendMessageBody } from '../model/validator'
 import { requireAuth } from '@shared/api/auth.guard'
 import axios from 'axios'
 

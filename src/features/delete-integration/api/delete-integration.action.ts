@@ -11,13 +11,11 @@ import {
 } from '../model/validator'
 import prisma from '@shared/lib/prisma'
 import { IntegrationTokenStatus } from '@prisma/generated/enums'
-import { updateTag } from 'next/cache'
-import { CACHE_TAGS } from '@shared/api/cache'
 
 const deleteIntegration = async (
   values: DeleteIntegrationType
 ): Promise<ActionResult> => {
-  const user = await requireAuth()
+  await requireAuth()
 
   const { id } = DeleteIntegrationSchema.parse(values)
 
@@ -28,9 +26,6 @@ const deleteIntegration = async (
       status: IntegrationTokenStatus.revoked,
     },
   })
-
-  updateTag(`${CACHE_TAGS.INTEGRATION_TOKEN}${user.id}`)
-  updateTag(`${CACHE_TAGS.INTEGRATION_TOKEN_COUNT}${user.id}`)
 
   return { success: true }
 }

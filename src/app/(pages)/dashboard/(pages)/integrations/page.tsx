@@ -1,20 +1,20 @@
-import { CreateIntegrationForm } from '@features/create-integration'
+import { CreateIntegrationDialog } from '@features/create-integration'
 import { IntegrationsList } from './ui/list'
 
 const IntegrationsPage = async () => {
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold">Integrations</h1>
-        <p className="text-muted-foreground mt-1">
-          Manage your connected bots and applications.
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Integrations</h1>
+          <p className="text-muted-foreground mt-1">
+            Manage your connected bots and applications.
+          </p>
+        </div>
+        <CreateIntegrationDialog />
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1fr_450px]">
-        <IntegrationsList />
-        <CreateIntegrationForm />
-      </div>
+      <IntegrationsList />
     </div>
   )
 }

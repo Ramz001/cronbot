@@ -22,7 +22,7 @@ export async function IntegrationsList() {
 
   if (tokens.length === 0) {
     return (
-      <div className="bg-muted/20 flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
+      <div className="bg-muted/20 flex min-h-80 flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
         <h3 className="text-foreground text-lg font-medium">
           No integrations yet
         </h3>

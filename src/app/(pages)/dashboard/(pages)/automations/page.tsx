@@ -55,17 +55,11 @@ export default function AutomationsPage() {
 
   return (
     <div className="flex h-full w-full flex-col space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Automations</h1>
-          <p className="text-muted-foreground text-sm">
-            Manage your scheduled workflows and active tasks.
-          </p>
-        </div>
-        <Button className="gap-2">
-          <RiAddLine className="size-4" />
-          Create New Schedule
-        </Button>
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">Automations</h1>
+        <p className="text-muted-foreground text-sm">
+          Manage your scheduled workflows and active tasks.
+        </p>
       </div>
 
       <div className="grid gap-4">

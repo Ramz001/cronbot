@@ -2,7 +2,7 @@ import UserAgent from 'user-agents'
 import prisma from '@shared/lib/prisma'
 import { IntegrationTokenStatus, Provider } from '@prisma/generated/enums'
 import { decrypt } from '@shared/api/encryption'
-import { cacheLife, cacheTag } from 'next/cache'
+import { cache } from '@shared/api/cache'
 
 function getSessionHeaders() {
   const ua = new UserAgent({ deviceCategory: 'desktop' })
@@ -21,22 +21,20 @@ function getSessionHeaders() {
 }
 
 const fetcher = async (userId: string) => {
-  'use cache'
-  cacheLife('custom')
-  cacheTag(`discord-token:${userId}`)
+  return cache.wrap(`discord-token:${userId}`, async () => {
+    const integrationToken = await prisma.integrationToken.findFirstOrThrow({
+      where: {
+        userId: userId,
+        provider: Provider.discord,
+        status: IntegrationTokenStatus.active,
+      },
+      select: {
+        token: true,
+      },
+    })
 
-  const integrationToken = await prisma.integrationToken.findFirstOrThrow({
-    where: {
-      userId: userId,
-      provider: Provider.discord,
-      status: IntegrationTokenStatus.active,
-    },
-    select: {
-      token: true,
-    },
+    return await decrypt(integrationToken.token)
   })
-
-  return await decrypt(integrationToken.token)
 }
 
 export const authHeaders = async ({ userId }: { userId: string }) => {

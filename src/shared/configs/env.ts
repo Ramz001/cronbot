@@ -7,6 +7,7 @@ const envVariables = z.object({
   GITHUB_CLIENT_SECRET: z.string().min(1, 'GITHUB_CLIENT_SECRET is required'),
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
   TOKEN_SECRET: z.string().min(1, 'TOKEN_SECRET is required'),
+  CACHE_WEBHOOK_SECRET: z.string().min(1, 'CACHE_WEBHOOK_SECRET is required'),
 })
 
 export const env = envVariables.parse(process.env)

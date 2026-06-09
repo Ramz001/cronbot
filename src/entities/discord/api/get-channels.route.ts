@@ -3,25 +3,26 @@ import { RouteResult } from '@shared/api/server-error-handlers'
 import { authHeaders } from '../utils/auth-headers'
 import { DISCORD_API } from '../consts/discord'
 import { requireAuth } from '@shared/api/auth.guard'
+import { cache, CACHE_KEYS } from '@shared/api/cache'
 import axios from 'axios'
-import { cacheLife, cacheTag } from 'next/cache'
 import { GuildIdSchema } from '../model/validator'
 import { withRouteErrorHandler } from '@shared/api/server-error-handlers'
 import { ChannelType } from '../model/types'
 
 const fetcher = async (userId: string, guildId: string) => {
-  'use cache'
-  cacheLife('custom')
-  cacheTag('discord-guild-channels', userId, guildId)
+  return cache.wrap(
+    `${CACHE_KEYS.DISCORD_CHANNELS}:${userId}:${guildId}`,
+    async () => {
+      const headers = await authHeaders({ userId })
 
-  const headers = await authHeaders({ userId })
+      const { data } = await axios.get(
+        `${DISCORD_API}/guilds/${guildId}/channels`,
+        { headers }
+      )
 
-  const { data } = await axios.get(
-    `${DISCORD_API}/guilds/${guildId}/channels`,
-    { headers }
+      return data
+    }
   )
-
-  return data
 }
 
 async function getGuildChannels(

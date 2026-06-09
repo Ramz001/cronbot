@@ -2,27 +2,22 @@ import { DISCORD_API } from '../consts/discord'
 import { authHeaders } from '../utils/auth-headers'
 import { requireAuth } from '@shared/api/auth.guard'
 import { withActionErrorHandler } from '@shared/api/server-error-handlers'
+import { cache, CACHE_KEYS } from '@shared/api/cache'
 import axios from 'axios'
-import { cacheLife, cacheTag } from 'next/cache'
 import { GuildType } from '../model/types'
 
-const fetcher = async (userId: string): Promise<GuildType[]> => {
-  'use cache'
-  cacheLife('custom')
-  cacheTag('discord-guilds', userId)
-
-  const headers = await authHeaders({ userId })
-
-  const { data } = await axios.get(`${DISCORD_API}/users/@me/guilds`, {
-    headers,
-  })
-
-  return data
-}
-
-const action = async () => {
+const action = async (): Promise<GuildType[]> => {
   const user = await requireAuth()
-  return fetcher(user.id)
+
+  return cache.wrap(`${CACHE_KEYS.DISCORD_GUILD}:${user.id}`, async () => {
+    const headers = await authHeaders({ userId: user.id })
+
+    const { data } = await axios.get(`${DISCORD_API}/users/@me/guilds`, {
+      headers,
+    })
+
+    return data
+  })
 }
 
 export const getGuilds = withActionErrorHandler(action)

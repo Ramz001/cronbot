@@ -11,7 +11,7 @@ import {
 } from '../model/validator'
 import prisma from '@shared/lib/prisma'
 import { encrypt } from '@shared/api/encryption'
-import { revalidateTag } from 'next/cache'
+import { cache, CACHE_KEYS } from '@shared/api/cache'
 
 const createIntegration = async (
   values: CreateIntegrationType
@@ -33,8 +33,8 @@ const createIntegration = async (
       userId: user.id,
     },
   })
-  revalidateTag(`integration-tokens:${user.id}`, 'max')
-  revalidateTag('integration-tokens-count', 'max')
+  await cache.del(`${CACHE_KEYS.INTEGRATION_TOKEN}:${user.id}`)
+  await cache.del(`${CACHE_KEYS.INTEGRATION_TOKEN_COUNT}:${user.id}`)
 
   return {
     success: true,

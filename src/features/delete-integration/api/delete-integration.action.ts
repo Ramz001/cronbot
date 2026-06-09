@@ -29,8 +29,8 @@ const deleteIntegration = async (
     },
   })
 
-  updateTag(`${CACHE_TAGS.INTEGRATION_TOKEN}-${user.id}`)
-  updateTag(`${CACHE_TAGS.INTEGRATION_TOKEN_COUNT}-${user.id}`)
+  updateTag(`${CACHE_TAGS.INTEGRATION_TOKEN}${user.id}`)
+  updateTag(`${CACHE_TAGS.INTEGRATION_TOKEN_COUNT}${user.id}`)
 
   return { success: true }
 }

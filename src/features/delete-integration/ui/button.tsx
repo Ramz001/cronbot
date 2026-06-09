@@ -1,6 +1,6 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import {
@@ -21,6 +21,7 @@ import { deleteIntegrationAction } from '../api/delete-integration.action'
 
 export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
   const { id } = DeleteIntegrationSchema.parse(props)
+  const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -30,6 +31,7 @@ export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
 
       if (res.success) {
         toast.success('Integration deleted successfully')
+        setOpen(false)
         router.refresh()
       } else {
         toast.error(res.error?.message || 'Failed to delete integration')
@@ -38,7 +40,7 @@ export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
   }
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm" disabled={isPending}>
           {isPending ? 'Deleting...' : 'Delete'}

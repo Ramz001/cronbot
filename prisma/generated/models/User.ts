@@ -233,6 +233,7 @@ export type UserWhereInput = {
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   integrationTokens?: Prisma.IntegrationTokenListRelationFilter
+  automations?: Prisma.AutomationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -250,6 +251,7 @@ export type UserOrderByWithRelationInput = {
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   integrationTokens?: Prisma.IntegrationTokenOrderByRelationAggregateInput
+  automations?: Prisma.AutomationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -270,6 +272,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   integrationTokens?: Prisma.IntegrationTokenListRelationFilter
+  automations?: Prisma.AutomationListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -321,6 +324,7 @@ export type UserCreateInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   integrationTokens?: Prisma.IntegrationTokenCreateNestedManyWithoutUserInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -338,6 +342,7 @@ export type UserUncheckedCreateInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   integrationTokens?: Prisma.IntegrationTokenUncheckedCreateNestedManyWithoutUserInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -355,6 +360,7 @@ export type UserUpdateInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   integrationTokens?: Prisma.IntegrationTokenUpdateManyWithoutUserNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -372,6 +378,7 @@ export type UserUncheckedUpdateInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   integrationTokens?: Prisma.IntegrationTokenUncheckedUpdateManyWithoutUserNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -529,6 +536,20 @@ export type UserUpdateOneRequiredWithoutIntegrationTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutIntegrationTokensInput, Prisma.UserUpdateWithoutIntegrationTokensInput>, Prisma.UserUncheckedUpdateWithoutIntegrationTokensInput>
 }
 
+export type UserCreateNestedOneWithoutAutomationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAutomationsInput, Prisma.UserUncheckedCreateWithoutAutomationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAutomationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAutomationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAutomationsInput, Prisma.UserUncheckedCreateWithoutAutomationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAutomationsInput
+  upsert?: Prisma.UserUpsertWithoutAutomationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAutomationsInput, Prisma.UserUpdateWithoutAutomationsInput>, Prisma.UserUncheckedUpdateWithoutAutomationsInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id: string
   name: string
@@ -543,6 +564,7 @@ export type UserCreateWithoutSessionsInput = {
   banExpires?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   integrationTokens?: Prisma.IntegrationTokenCreateNestedManyWithoutUserInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -559,6 +581,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   banExpires?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   integrationTokens?: Prisma.IntegrationTokenUncheckedCreateNestedManyWithoutUserInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -591,6 +614,7 @@ export type UserUpdateWithoutSessionsInput = {
   banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   integrationTokens?: Prisma.IntegrationTokenUpdateManyWithoutUserNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -607,6 +631,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   integrationTokens?: Prisma.IntegrationTokenUncheckedUpdateManyWithoutUserNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -623,6 +648,7 @@ export type UserCreateWithoutAccountsInput = {
   banExpires?: Date | string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   integrationTokens?: Prisma.IntegrationTokenCreateNestedManyWithoutUserInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -639,6 +665,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   banExpires?: Date | string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   integrationTokens?: Prisma.IntegrationTokenUncheckedCreateNestedManyWithoutUserInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -671,6 +698,7 @@ export type UserUpdateWithoutAccountsInput = {
   banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   integrationTokens?: Prisma.IntegrationTokenUpdateManyWithoutUserNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -687,6 +715,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   integrationTokens?: Prisma.IntegrationTokenUncheckedUpdateManyWithoutUserNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutIntegrationTokensInput = {
@@ -703,6 +732,7 @@ export type UserCreateWithoutIntegrationTokensInput = {
   banExpires?: Date | string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutIntegrationTokensInput = {
@@ -719,6 +749,7 @@ export type UserUncheckedCreateWithoutIntegrationTokensInput = {
   banExpires?: Date | string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutIntegrationTokensInput = {
@@ -751,6 +782,7 @@ export type UserUpdateWithoutIntegrationTokensInput = {
   banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIntegrationTokensInput = {
@@ -767,6 +799,91 @@ export type UserUncheckedUpdateWithoutIntegrationTokensInput = {
   banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAutomationsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  integrationTokens?: Prisma.IntegrationTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAutomationsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  integrationTokens?: Prisma.IntegrationTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAutomationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAutomationsInput, Prisma.UserUncheckedCreateWithoutAutomationsInput>
+}
+
+export type UserUpsertWithoutAutomationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAutomationsInput, Prisma.UserUncheckedUpdateWithoutAutomationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAutomationsInput, Prisma.UserUncheckedCreateWithoutAutomationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAutomationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAutomationsInput, Prisma.UserUncheckedUpdateWithoutAutomationsInput>
+}
+
+export type UserUpdateWithoutAutomationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  integrationTokens?: Prisma.IntegrationTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAutomationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  integrationTokens?: Prisma.IntegrationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -778,12 +895,14 @@ export type UserCountOutputType = {
   sessions: number
   accounts: number
   integrationTokens: number
+  automations: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   integrationTokens?: boolean | UserCountOutputTypeCountIntegrationTokensArgs
+  automations?: boolean | UserCountOutputTypeCountAutomationsArgs
 }
 
 /**
@@ -817,6 +936,13 @@ export type UserCountOutputTypeCountIntegrationTokensArgs<ExtArgs extends runtim
   where?: Prisma.IntegrationTokenWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAutomationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AutomationWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -833,6 +959,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   integrationTokens?: boolean | Prisma.User$integrationTokensArgs<ExtArgs>
+  automations?: boolean | Prisma.User$automationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -883,6 +1010,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   integrationTokens?: boolean | Prisma.User$integrationTokensArgs<ExtArgs>
+  automations?: boolean | Prisma.User$automationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -894,6 +1022,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     integrationTokens: Prisma.$IntegrationTokenPayload<ExtArgs>[]
+    automations: Prisma.$AutomationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1304,6 +1433,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   integrationTokens<T extends Prisma.User$integrationTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$integrationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IntegrationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  automations<T extends Prisma.User$automationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$automationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1806,6 +1936,30 @@ export type User$integrationTokensArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.IntegrationTokenScalarFieldEnum | Prisma.IntegrationTokenScalarFieldEnum[]
+}
+
+/**
+ * User.automations
+ */
+export type User$automationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Automation
+   */
+  select?: Prisma.AutomationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Automation
+   */
+  omit?: Prisma.AutomationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AutomationInclude<ExtArgs> | null
+  where?: Prisma.AutomationWhereInput
+  orderBy?: Prisma.AutomationOrderByWithRelationInput | Prisma.AutomationOrderByWithRelationInput[]
+  cursor?: Prisma.AutomationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AutomationScalarFieldEnum | Prisma.AutomationScalarFieldEnum[]
 }
 
 /**

@@ -1,7 +1,5 @@
-'use server'
-
 import { RateLimiterPrisma, RateLimiterRes } from 'rate-limiter-flexible'
-
+import { TooManyRequestsError } from './errors'
 import z from 'zod'
 import prisma from '@shared/lib/prisma'
 import { headers } from 'next/headers'
@@ -95,7 +93,7 @@ export const handleRateLimit = async (options: RateLimitOptions) => {
     }
   } catch (error: unknown) {
     if (error instanceof RateLimiterRes) {
-      throw new Error(
+      throw new TooManyRequestsError(
         `Rate limit exceeded. Retry in ${Math.ceil(
           error.msBeforeNext / 1000
         )}s.`

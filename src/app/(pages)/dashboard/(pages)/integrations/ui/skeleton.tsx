@@ -15,10 +15,7 @@ export function IntegrationsSkeleton() {
       {/* Cards grid skeleton */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            className="bg-card flex flex-col rounded-xl border p-5"
-          >
+          <div key={i} className="bg-card flex flex-col rounded-xl border p-5">
             {/* Card header */}
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">

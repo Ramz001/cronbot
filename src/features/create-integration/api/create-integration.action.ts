@@ -1,10 +1,7 @@
 'use server'
 
 import { requireAuth } from '@shared/api/auth.guard'
-import {
-  ActionResult,
-  withActionErrorHandler,
-} from '@shared/api/server-error-handlers'
+import { withActionErrorHandler } from '@shared/api/server-error-handlers'
 import {
   CreateIntegrationSchema,
   CreateIntegrationType,
@@ -13,9 +10,7 @@ import prisma from '@shared/lib/prisma'
 import { encrypt } from '@shared/api/encryption'
 import { cache, CACHE_KEYS } from '@shared/api/cache'
 
-const createIntegration = async (
-  values: CreateIntegrationType
-): Promise<ActionResult> => {
+const createIntegration = async (values: CreateIntegrationType) => {
   const user = await requireAuth()
 
   const { provider, title, token, expiresAt } =
@@ -33,12 +28,9 @@ const createIntegration = async (
       userId: user.id,
     },
   })
+
   await cache.del(`${CACHE_KEYS.INTEGRATION_TOKEN}:${user.id}`)
   await cache.del(`${CACHE_KEYS.INTEGRATION_TOKEN_COUNT}:${user.id}`)
-
-  return {
-    success: true,
-  }
 }
 
 export const createIntegrationAction = withActionErrorHandler(createIntegration)

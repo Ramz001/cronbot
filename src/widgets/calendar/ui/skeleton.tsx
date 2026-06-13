@@ -27,7 +27,7 @@ export const DashboardSkeleton = () => {
       {/* Week view grid skeleton — 7 columns × ~12 rows of time slots */}
       <div className="grid flex-1 grid-cols-7 gap-px">
         {/* Time gutter */}
-        <div className="flex flex-col gap-3 pr-2 pt-1">
+        <div className="flex flex-col gap-3 pt-1 pr-2">
           {Array.from({ length: 12 }).map((_, i) => (
             <Skeleton key={`time-${i}`} className="h-4 w-10" />
           ))}
@@ -39,7 +39,9 @@ export const DashboardSkeleton = () => {
               <div key={`slot-${col}-${row}`} className="flex flex-col">
                 <Skeleton className="h-px w-full" />
                 {/* Occasional event blocks */}
-                {(col === 1 && row === 2) || (col === 3 && row === 5) || (col === 5 && row === 8) ? (
+                {(col === 1 && row === 2) ||
+                (col === 3 && row === 5) ||
+                (col === 5 && row === 8) ? (
                   <div className="mt-1 space-y-1 px-1">
                     <Skeleton className="h-4 w-3/4" />
                     <Skeleton className="h-3 w-1/2" />

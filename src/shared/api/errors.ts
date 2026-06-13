@@ -151,4 +151,3 @@ export class GatewayTimeoutError extends HttpError {
     super(504, message)
   }
 }
-

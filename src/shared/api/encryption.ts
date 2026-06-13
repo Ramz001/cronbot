@@ -1,11 +1,12 @@
 import crypto from 'crypto'
+import { UnauthorizedError } from './errors'
 
 const ALGORITHM = 'aes-256-cbc'
 
 function getKey(): Buffer {
   const secret = process.env.TOKEN_SECRET
   if (!secret) {
-    throw new Error('TOKEN_SECRET environment variable is not set')
+    throw new UnauthorizedError('TOKEN_SECRET environment variable is not set')
   }
   return crypto.createHash('sha256').update(secret).digest()
 }

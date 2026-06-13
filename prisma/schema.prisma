@@ -19,10 +19,11 @@ model User {
   accounts          Account[]
   integrationTokens IntegrationToken[]
 
-  role       String?
-  banned     Boolean?  @default(false)
-  banReason  String?
-  banExpires DateTime?
+  role        String?
+  banned      Boolean?     @default(false)
+  banReason   String?
+  banExpires  DateTime?
+  automations Automation[]
 
   @@unique([email])
   @@map("user")
@@ -111,4 +112,18 @@ model IntegrationToken {
 model Settings {
   key   String @id
   value String
+}
+
+model Automation {
+  id         String   @id @default(cuid())
+  name       String?
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider   Provider
+  identifier Json
+  body       Json
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
 }

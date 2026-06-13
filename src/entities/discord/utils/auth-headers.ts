@@ -3,6 +3,7 @@ import prisma from '@shared/lib/prisma'
 import { IntegrationTokenStatus, Provider } from '@prisma/generated/enums'
 import { decrypt } from '@shared/api/encryption'
 import { cache } from '@shared/api/cache'
+import { UnauthorizedError } from '@shared/api/errors'
 
 function getSessionHeaders() {
   const ua = new UserAgent({ deviceCategory: 'desktop' })
@@ -38,7 +39,8 @@ const fetcher = async (userId: string) => {
 }
 
 export const authHeaders = async ({ userId }: { userId: string }) => {
-  if (!userId) throw new Error('User ID is required for auth headers')
+  if (!userId)
+    throw new UnauthorizedError('User ID is required for auth headers')
 
   const decryptedToken = await fetcher(userId)
 

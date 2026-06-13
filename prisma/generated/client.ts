@@ -71,3 +71,8 @@ export type IntegrationToken = Prisma.IntegrationTokenModel
  * 
  */
 export type Settings = Prisma.SettingsModel
+/**
+ * Model Automation
+ * 
+ */
+export type Automation = Prisma.AutomationModel

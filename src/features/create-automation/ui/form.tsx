@@ -21,36 +21,27 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { handleError } from '@shared/utils/handle-error'
+import { CreateAutomationSchema } from '../model/validator'
+import { ChannelType, GuildType } from '@entities/discord/model/types'
 
-const schema = z.object({
-  name: z.string().min(1, 'Automation name is required'),
-  description: z.string().optional(),
-  provider: z.enum(Provider),
-  guildId: z.string().min(1, 'Server is required'),
-  channelId: z.string().min(1, 'Channel is required'),
-  message: z.string().min(1, 'Message is required'),
-})
-
-const validateField = (name: keyof z.infer<typeof schema>, value: any) => {
-  const result = schema.shape[name].safeParse(value)
+const validateField = (
+  name: keyof z.infer<typeof CreateAutomationSchema>,
+  value: any
+) => {
+  const result = CreateAutomationSchema.shape[name].safeParse(value)
   return result.success ? undefined : result.error.issues[0].message
 }
 
-type DiscordGuild = { id: string; name: string }
-type DiscordChannel = { id: string; name: string }
-
-type CreateAutomationFormProps = {
-  guilds: DiscordGuild[]
-}
-
-export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
+export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
   const form = useForm({
     defaultValues: {
       name: '',
       provider: Provider.discord,
-      guildId: '',
-      channelId: '',
-      message: '',
+      identifier: { guildId: '', channelId: '' } as {
+        guildId: string
+        channelId: string
+      },
+      body: { message: '' } as { message: string },
     },
     onSubmit: async ({ value }) => {
       await createMutation.mutateAsync(value)
@@ -59,14 +50,14 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
 
   const selectedGuildId = useStore(
     form.baseStore,
-    (state) => state.values.guildId
+    (state) => state.values.identifier.guildId
   )
 
   const {
     data: channels = [],
     isLoading: isLoadingChannels,
     error: channelsError,
-  } = useQuery<DiscordChannel[]>({
+  } = useQuery<ChannelType[]>({
     queryKey: ['discord-channels', selectedGuildId],
     queryFn: async () => {
       const { data } = await axios.get(`/api/discord/guilds/${selectedGuildId}`)
@@ -76,7 +67,7 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
   })
 
   const createMutation = useMutation({
-    mutationFn: async (values: z.infer<typeof schema>) => {
+    mutationFn: async (values: z.infer<typeof CreateAutomationSchema>) => {
       toast.warning('Creating automation...')
     },
     onSuccess: () => {
@@ -111,16 +102,15 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
 
   const handleTest = () => {
     const values = form.baseStore.state.values
+    const channelId = values.identifier.channelId
+    const message = values.body.message
 
-    if (!values.channelId || !values.message) {
+    if (!channelId || !message) {
       toast.error('Please select a channel and enter a message before testing.')
       return
     }
 
-    testMutation.mutate({
-      channelId: values.channelId,
-      message: values.message,
-    })
+    testMutation.mutate({ channelId, message })
   }
 
   return (
@@ -153,9 +143,11 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
                     onBlur={field.handleBlur}
                   />
                   <FieldError
-                    errors={field.state.meta.errors.map((msg) => ({
-                      message: msg?.toString(),
-                    }))}
+                    errors={(field.state.meta.errors as string[]).map(
+                      (msg) => ({
+                        message: msg?.toString(),
+                      })
+                    )}
                   />
                 </FieldContent>
               </Field>
@@ -186,19 +178,19 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
           </div>
 
           <form.Field
-            name="guildId"
-            validators={{
-              onSubmit: ({ value }) => validateField('guildId', value),
-            }}
+            name="identifier"
             children={(field) => (
               <Field>
                 <FieldLabel>Server</FieldLabel>
                 <FieldContent>
                   <Select
-                    value={field.state.value}
+                    value={field.state.value.guildId}
                     onValueChange={(val) => {
-                      field.handleChange(val)
-                      form.setFieldValue('channelId', '')
+                      field.handleChange({
+                        ...field.state.value,
+                        guildId: val,
+                        channelId: '',
+                      })
                     }}
                   >
                     <SelectTrigger className="w-full">
@@ -213,7 +205,9 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
                     </SelectContent>
                   </Select>
                   <FieldError
-                    errors={field.state.meta.errors.map((msg) => ({
+                    errors={(
+                      field.state.meta.errors as unknown as string[]
+                    ).map((msg) => ({
                       message: msg?.toString(),
                     }))}
                   />
@@ -223,17 +217,19 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
           />
 
           <form.Field
-            name="channelId"
-            validators={{
-              onSubmit: ({ value }) => validateField('channelId', value),
-            }}
+            name="identifier"
             children={(field) => (
               <Field>
                 <FieldLabel>Channel</FieldLabel>
                 <FieldContent>
                   <Select
-                    value={field.state.value}
-                    onValueChange={field.handleChange}
+                    value={field.state.value.channelId}
+                    onValueChange={(val) => {
+                      field.handleChange({
+                        ...field.state.value,
+                        channelId: val,
+                      })
+                    }}
                     disabled={isLoadingChannels || !selectedGuildId}
                   >
                     <SelectTrigger className="w-full">
@@ -258,7 +254,9 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
                     </SelectContent>
                   </Select>
                   <FieldError
-                    errors={field.state.meta.errors.map((msg) => ({
+                    errors={(
+                      field.state.meta.errors as unknown as string[]
+                    ).map((msg) => ({
                       message: msg?.toString(),
                     }))}
                   />
@@ -276,10 +274,7 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
           />
 
           <form.Field
-            name="message"
-            validators={{
-              onSubmit: ({ value }) => validateField('message', value),
-            }}
+            name="body"
             children={(field) => (
               <Field>
                 <FieldLabel htmlFor={field.name}>Message</FieldLabel>
@@ -288,12 +283,19 @@ export const CreateAutomationForm = ({ guilds }: CreateAutomationFormProps) => {
                     id={field.name}
                     className="min-h-32 resize-none"
                     placeholder="Type your message here..."
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    value={field.state.value.message}
+                    onChange={(e) =>
+                      field.handleChange({
+                        ...field.state.value,
+                        message: e.target.value,
+                      })
+                    }
                     onBlur={field.handleBlur}
                   />
                   <FieldError
-                    errors={field.state.meta.errors.map((msg) => ({
+                    errors={(
+                      field.state.meta.errors as unknown as string[]
+                    ).map((msg) => ({
                       message: msg?.toString(),
                     }))}
                   />

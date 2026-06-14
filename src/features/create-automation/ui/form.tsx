@@ -1,7 +1,6 @@
 'use client'
 
-import { useForm } from '@tanstack/react-form'
-import { useStore } from '@tanstack/react-form'
+import { useForm, useStore } from '@tanstack/react-form'
 import { z } from 'zod'
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card'
 import { Button } from '@/shared/ui/button'
@@ -16,7 +15,9 @@ import {
 } from '@/shared/ui/select'
 import { Field, FieldLabel, FieldContent, FieldError } from '@/shared/ui/field'
 import { Provider } from '@prisma/generated/enums'
-import { RiMessage2Line, RiLoader2Line } from '@remixicon/react'
+import { cn } from '@shared/lib/utils'
+import { RiLoader2Line } from '@remixicon/react'
+import { PROVIDER_LIST } from '../consts/provider'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'sonner'
@@ -24,24 +25,13 @@ import { handleError } from '@shared/utils/handle-error'
 import { CreateAutomationSchema } from '../model/validator'
 import { ChannelType, GuildType } from '@entities/discord/model/types'
 
-const validateField = (
-  name: keyof z.infer<typeof CreateAutomationSchema>,
-  value: any
-) => {
-  const result = CreateAutomationSchema.shape[name].safeParse(value)
-  return result.success ? undefined : result.error.issues[0].message
-}
-
 export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
   const form = useForm({
     defaultValues: {
       name: '',
       provider: Provider.discord,
-      identifier: { guildId: '', channelId: '' } as {
-        guildId: string
-        channelId: string
-      },
-      body: { message: '' } as { message: string },
+      identifier: { guildId: '', channelId: '' },
+      body: { message: '' },
     },
     onSubmit: async ({ value }) => {
       await createMutation.mutateAsync(value)
@@ -128,9 +118,6 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
         <CardContent className="space-y-6 pb-6">
           <form.Field
             name="name"
-            validators={{
-              onSubmit: ({ value }) => validateField('name', value),
-            }}
             children={(field) => (
               <Field>
                 <FieldLabel htmlFor={field.name}>Automation Name</FieldLabel>
@@ -142,55 +129,62 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                     onChange={(e) => field.handleChange(e.target.value)}
                     onBlur={field.handleBlur}
                   />
-                  <FieldError
-                    errors={(field.state.meta.errors as string[]).map(
-                      (msg) => ({
-                        message: msg?.toString(),
-                      })
-                    )}
-                  />
+                  <FieldError errors={field.state.meta.errors} />
                 </FieldContent>
               </Field>
             )}
           />
 
+          <form.Field
+            name="provider"
+            children={(field) => (
+              <Field>
+                <FieldLabel>Integrations</FieldLabel>
+                <FieldContent className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  {PROVIDER_LIST.map((provider) => {
+                    const Icon = provider.icon
+                    const isSelected = field.state.value === provider.value
+
+                    return (
+                      <Button
+                        key={provider.value}
+                        type="button"
+                        className={cn(
+                          'flex h-auto flex-col items-center justify-center gap-2 rounded-xl border p-4 transition-colors',
+                          isSelected
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:bg-accent/50'
+                        )}
+                        style={
+                          { '--primary': provider.color } as React.CSSProperties
+                        }
+                        onClick={() => field.handleChange(provider.value)}
+                      >
+                        <Icon className="size-6" />
+                        <span className="text-sm font-medium">
+                          {provider.label}
+                        </span>
+                      </Button>
+                    )
+                  })}
+                </FieldContent>
+              </Field>
+            )}
+          />
           <div className="space-y-4">
             <h3 className="text-sm font-semibold">Integration</h3>
-            <form.Field
-              name="provider"
-              children={(field) => (
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                  <button
-                    type="button"
-                    className={`border-primary flex flex-col items-center justify-center gap-2 rounded-xl border p-4 transition-colors ${
-                      field.state.value === Provider.discord
-                        ? 'bg-primary/5 text-primary'
-                        : 'border-border hover:bg-accent/50'
-                    }`}
-                    onClick={() => field.handleChange(Provider.discord)}
-                  >
-                    <RiMessage2Line className="size-6" />
-                    <span className="text-sm font-medium">Discord</span>
-                  </button>
-                </div>
-              )}
-            />
           </div>
 
           <form.Field
-            name="identifier"
+            name="identifier.guildId"
             children={(field) => (
               <Field>
                 <FieldLabel>Server</FieldLabel>
                 <FieldContent>
                   <Select
-                    value={field.state.value.guildId}
+                    value={field.state.value}
                     onValueChange={(val) => {
-                      field.handleChange({
-                        ...field.state.value,
-                        guildId: val,
-                        channelId: '',
-                      })
+                      field.handleChange(field.state.value)
                     }}
                   >
                     <SelectTrigger className="w-full">
@@ -204,31 +198,22 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FieldError
-                    errors={(
-                      field.state.meta.errors as unknown as string[]
-                    ).map((msg) => ({
-                      message: msg?.toString(),
-                    }))}
-                  />
+                  <FieldError errors={field.state.meta.errors} />
                 </FieldContent>
               </Field>
             )}
           />
 
           <form.Field
-            name="identifier"
+            name="identifier.channelId"
             children={(field) => (
               <Field>
                 <FieldLabel>Channel</FieldLabel>
                 <FieldContent>
                   <Select
-                    value={field.state.value.channelId}
+                    value={field.state.value}
                     onValueChange={(val) => {
-                      field.handleChange({
-                        ...field.state.value,
-                        channelId: val,
-                      })
+                      field.handleChange(field.state.value)
                     }}
                     disabled={isLoadingChannels || !selectedGuildId}
                   >
@@ -248,18 +233,12 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                     <SelectContent>
                       {channels?.map((channel) => (
                         <SelectItem key={channel.id} value={channel.id}>
-                          #{channel.name}
+                          {channel.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  <FieldError
-                    errors={(
-                      field.state.meta.errors as unknown as string[]
-                    ).map((msg) => ({
-                      message: msg?.toString(),
-                    }))}
-                  />
+                  <FieldError errors={field.state.meta.errors} />
                   {channelsError && (
                     <p className="text-destructive mt-1 text-sm">
                       {(channelsError as any)?.error?.message ??
@@ -292,13 +271,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                     }
                     onBlur={field.handleBlur}
                   />
-                  <FieldError
-                    errors={(
-                      field.state.meta.errors as unknown as string[]
-                    ).map((msg) => ({
-                      message: msg?.toString(),
-                    }))}
-                  />
+                  <FieldError errors={field.state.meta.errors} />
                 </FieldContent>
               </Field>
             )}

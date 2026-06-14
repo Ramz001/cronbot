@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { Dialog as SheetPrimitive } from 'radix-ui'
 
-import { cn } from '@/shared/lib/utils'
+import { cn } from '@shared/utils/cn'
 import { Button } from '@/shared/ui/button'
 import { RiCloseLine } from '@remixicon/react'
 

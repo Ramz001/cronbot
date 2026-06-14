@@ -1,7 +1,7 @@
 import { RateLimiterPrisma, RateLimiterRes } from 'rate-limiter-flexible'
 import { TooManyRequestsError } from './errors'
 import z from 'zod'
-import prisma from '@shared/lib/prisma'
+import prisma from '@shared/utils/prisma'
 import { headers } from 'next/headers'
 
 export enum RATE_LIMIT_METHODS {

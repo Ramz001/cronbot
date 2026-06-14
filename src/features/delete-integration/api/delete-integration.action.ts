@@ -9,7 +9,7 @@ import {
   DeleteIntegrationSchema,
   DeleteIntegrationType,
 } from '../model/validator'
-import prisma from '@shared/lib/prisma'
+import prisma from '@shared/utils/prisma'
 import { cache, CACHE_KEYS } from '@shared/api/cache'
 import { IntegrationTokenStatus } from '@prisma/generated/enums'
 

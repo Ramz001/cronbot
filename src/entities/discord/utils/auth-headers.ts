@@ -1,5 +1,5 @@
 import UserAgent from 'user-agents'
-import prisma from '@shared/lib/prisma'
+import prisma from '@shared/utils/prisma'
 import { IntegrationTokenStatus, Provider } from '@prisma/generated/enums'
 import { decrypt } from '@shared/api/encryption'
 import { cache } from '@shared/api/cache'

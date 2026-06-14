@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { Select as SelectPrimitive } from 'radix-ui'
 
-import { cn } from '@/shared/lib/utils'
+import { cn } from '@shared/utils/cn'
 import { RiArrowDownSLine, RiCheckLine, RiArrowUpSLine } from '@remixicon/react'
 
 function Select({

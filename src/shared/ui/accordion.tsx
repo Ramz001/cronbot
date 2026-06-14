@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { Accordion as AccordionPrimitive } from 'radix-ui'
 
-import { cn } from '@/shared/lib/utils'
+import { cn } from '@shared/utils/cn'
 import { RiArrowDownSLine, RiArrowUpSLine } from '@remixicon/react'
 
 function Accordion({

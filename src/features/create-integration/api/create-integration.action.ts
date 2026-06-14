@@ -6,7 +6,7 @@ import {
   CreateIntegrationSchema,
   CreateIntegrationType,
 } from '../model/validator'
-import prisma from '@shared/lib/prisma'
+import prisma from '@shared/utils/prisma'
 import { encrypt } from '@shared/api/encryption'
 import { cache, CACHE_KEYS } from '@shared/api/cache'
 

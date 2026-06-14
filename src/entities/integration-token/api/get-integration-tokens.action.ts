@@ -3,7 +3,7 @@
 import { requireAuth } from '@shared/api/auth.guard'
 import { withActionErrorHandler } from '@shared/api/server-error-handlers'
 import { cache, CACHE_KEYS } from '@shared/api/cache'
-import prisma from '@shared/lib/prisma'
+import prisma from '@shared/utils/prisma'
 import { IntegrationTokenStatus } from '@prisma/generated/enums'
 
 const getTokens = async () => {

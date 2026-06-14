@@ -1,4 +1,4 @@
-import { DISCORD_API } from '../consts/discord'
+import { DISCORD_API } from '../consts/api'
 import { authHeaders } from '../utils/auth-headers'
 import { requireAuth } from '@shared/api/auth.guard'
 import { withActionErrorHandler } from '@shared/api/server-error-handlers'

@@ -3,6 +3,7 @@ export const CACHE_KEYS = {
   INTEGRATION_TOKEN_COUNT: 'integration-tokens-count',
   DISCORD_GUILD: 'discord-guilds',
   DISCORD_CHANNELS: 'discord-channels',
+  AUTOMATION: 'automations',
 } as const
 
 import { createCache } from 'cache-manager'

@@ -1,4 +1,4 @@
-import { AutomationsList } from './ui/automations-list'
+import { AutomationsList } from './ui/list'
 
 export default function AutomationsPage() {
   return (

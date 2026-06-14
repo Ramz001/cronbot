@@ -171,8 +171,11 @@ export const AutomationScalarFieldEnum = {
   provider: 'provider',
   identifier: 'identifier',
   body: 'body',
+  isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  lastRunAt: 'lastRunAt'
 } as const
 
 export type AutomationScalarFieldEnum = (typeof AutomationScalarFieldEnum)[keyof typeof AutomationScalarFieldEnum]

@@ -29,8 +29,11 @@ export type AutomationMinAggregateOutputType = {
   name: string | null
   userId: string | null
   provider: $Enums.Provider | null
+  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
+  lastRunAt: Date | null
 }
 
 export type AutomationMaxAggregateOutputType = {
@@ -38,8 +41,11 @@ export type AutomationMaxAggregateOutputType = {
   name: string | null
   userId: string | null
   provider: $Enums.Provider | null
+  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
+  lastRunAt: Date | null
 }
 
 export type AutomationCountAggregateOutputType = {
@@ -49,8 +55,11 @@ export type AutomationCountAggregateOutputType = {
   provider: number
   identifier: number
   body: number
+  isActive: number
   createdAt: number
   updatedAt: number
+  deletedAt: number
+  lastRunAt: number
   _all: number
 }
 
@@ -60,8 +69,11 @@ export type AutomationMinAggregateInputType = {
   name?: true
   userId?: true
   provider?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  lastRunAt?: true
 }
 
 export type AutomationMaxAggregateInputType = {
@@ -69,8 +81,11 @@ export type AutomationMaxAggregateInputType = {
   name?: true
   userId?: true
   provider?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  lastRunAt?: true
 }
 
 export type AutomationCountAggregateInputType = {
@@ -80,8 +95,11 @@ export type AutomationCountAggregateInputType = {
   provider?: true
   identifier?: true
   body?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  lastRunAt?: true
   _all?: true
 }
 
@@ -159,13 +177,16 @@ export type AutomationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type AutomationGroupByOutputType = {
   id: string
-  name: string
+  name: string | null
   userId: string
   provider: $Enums.Provider
   identifier: runtime.JsonValue
   body: runtime.JsonValue
+  isActive: boolean
   createdAt: Date
   updatedAt: Date
+  deletedAt: Date | null
+  lastRunAt: Date | null
   _count: AutomationCountAggregateOutputType | null
   _min: AutomationMinAggregateOutputType | null
   _max: AutomationMaxAggregateOutputType | null
@@ -191,25 +212,31 @@ export type AutomationWhereInput = {
   OR?: Prisma.AutomationWhereInput[]
   NOT?: Prisma.AutomationWhereInput | Prisma.AutomationWhereInput[]
   id?: Prisma.StringFilter<"Automation"> | string
-  name?: Prisma.StringFilter<"Automation"> | string
+  name?: Prisma.StringNullableFilter<"Automation"> | string | null
   userId?: Prisma.StringFilter<"Automation"> | string
   provider?: Prisma.EnumProviderFilter<"Automation"> | $Enums.Provider
   identifier?: Prisma.JsonFilter<"Automation">
   body?: Prisma.JsonFilter<"Automation">
+  isActive?: Prisma.BoolFilter<"Automation"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Automation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Automation"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
+  lastRunAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type AutomationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
   body?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastRunAt?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -218,25 +245,31 @@ export type AutomationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AutomationWhereInput | Prisma.AutomationWhereInput[]
   OR?: Prisma.AutomationWhereInput[]
   NOT?: Prisma.AutomationWhereInput | Prisma.AutomationWhereInput[]
-  name?: Prisma.StringFilter<"Automation"> | string
+  name?: Prisma.StringNullableFilter<"Automation"> | string | null
   userId?: Prisma.StringFilter<"Automation"> | string
   provider?: Prisma.EnumProviderFilter<"Automation"> | $Enums.Provider
   identifier?: Prisma.JsonFilter<"Automation">
   body?: Prisma.JsonFilter<"Automation">
+  isActive?: Prisma.BoolFilter<"Automation"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Automation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Automation"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
+  lastRunAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type AutomationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
   body?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastRunAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AutomationCountOrderByAggregateInput
   _max?: Prisma.AutomationMaxOrderByAggregateInput
   _min?: Prisma.AutomationMinOrderByAggregateInput
@@ -247,89 +280,113 @@ export type AutomationScalarWhereWithAggregatesInput = {
   OR?: Prisma.AutomationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AutomationScalarWhereWithAggregatesInput | Prisma.AutomationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Automation"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Automation"> | string
+  name?: Prisma.StringNullableWithAggregatesFilter<"Automation"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Automation"> | string
   provider?: Prisma.EnumProviderWithAggregatesFilter<"Automation"> | $Enums.Provider
   identifier?: Prisma.JsonWithAggregatesFilter<"Automation">
   body?: Prisma.JsonWithAggregatesFilter<"Automation">
+  isActive?: Prisma.BoolWithAggregatesFilter<"Automation"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Automation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Automation"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Automation"> | Date | string | null
+  lastRunAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Automation"> | Date | string | null
 }
 
 export type AutomationCreateInput = {
   id?: string
-  name: string
+  name?: string | null
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  lastRunAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutAutomationsInput
 }
 
 export type AutomationUncheckedCreateInput = {
   id?: string
-  name: string
+  name?: string | null
   userId: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  lastRunAt?: Date | string | null
 }
 
 export type AutomationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutAutomationsNestedInput
 }
 
 export type AutomationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AutomationCreateManyInput = {
   id?: string
-  name: string
+  name?: string | null
   userId: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  lastRunAt?: Date | string | null
 }
 
 export type AutomationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AutomationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AutomationListRelationFilter = {
@@ -349,8 +406,11 @@ export type AutomationCountOrderByAggregateInput = {
   provider?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
   body?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  lastRunAt?: Prisma.SortOrder
 }
 
 export type AutomationMaxOrderByAggregateInput = {
@@ -358,8 +418,11 @@ export type AutomationMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  lastRunAt?: Prisma.SortOrder
 }
 
 export type AutomationMinOrderByAggregateInput = {
@@ -367,8 +430,11 @@ export type AutomationMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  lastRunAt?: Prisma.SortOrder
 }
 
 export type AutomationCreateNestedManyWithoutUserInput = {
@@ -415,22 +481,28 @@ export type AutomationUncheckedUpdateManyWithoutUserNestedInput = {
 
 export type AutomationCreateWithoutUserInput = {
   id?: string
-  name: string
+  name?: string | null
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  lastRunAt?: Date | string | null
 }
 
 export type AutomationUncheckedCreateWithoutUserInput = {
   id?: string
-  name: string
+  name?: string | null
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  lastRunAt?: Date | string | null
 }
 
 export type AutomationCreateOrConnectWithoutUserInput = {
@@ -464,53 +536,68 @@ export type AutomationScalarWhereInput = {
   OR?: Prisma.AutomationScalarWhereInput[]
   NOT?: Prisma.AutomationScalarWhereInput | Prisma.AutomationScalarWhereInput[]
   id?: Prisma.StringFilter<"Automation"> | string
-  name?: Prisma.StringFilter<"Automation"> | string
+  name?: Prisma.StringNullableFilter<"Automation"> | string | null
   userId?: Prisma.StringFilter<"Automation"> | string
   provider?: Prisma.EnumProviderFilter<"Automation"> | $Enums.Provider
   identifier?: Prisma.JsonFilter<"Automation">
   body?: Prisma.JsonFilter<"Automation">
+  isActive?: Prisma.BoolFilter<"Automation"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Automation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Automation"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
+  lastRunAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
 }
 
 export type AutomationCreateManyUserInput = {
   id?: string
-  name: string
+  name?: string | null
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  lastRunAt?: Date | string | null
 }
 
 export type AutomationUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AutomationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AutomationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -522,8 +609,11 @@ export type AutomationSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   provider?: boolean
   identifier?: boolean
   body?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  lastRunAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["automation"]>
 
@@ -534,8 +624,11 @@ export type AutomationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   provider?: boolean
   identifier?: boolean
   body?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  lastRunAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["automation"]>
 
@@ -546,8 +639,11 @@ export type AutomationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   provider?: boolean
   identifier?: boolean
   body?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  lastRunAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["automation"]>
 
@@ -558,11 +654,14 @@ export type AutomationSelectScalar = {
   provider?: boolean
   identifier?: boolean
   body?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  lastRunAt?: boolean
 }
 
-export type AutomationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "userId" | "provider" | "identifier" | "body" | "createdAt" | "updatedAt", ExtArgs["result"]["automation"]>
+export type AutomationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "userId" | "provider" | "identifier" | "body" | "isActive" | "createdAt" | "updatedAt" | "deletedAt" | "lastRunAt", ExtArgs["result"]["automation"]>
 export type AutomationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -580,13 +679,16 @@ export type $AutomationPayload<ExtArgs extends runtime.Types.Extensions.Internal
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string
+    name: string | null
     userId: string
     provider: $Enums.Provider
     identifier: runtime.JsonValue
     body: runtime.JsonValue
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
+    lastRunAt: Date | null
   }, ExtArgs["result"]["automation"]>
   composites: {}
 }
@@ -1017,8 +1119,11 @@ export interface AutomationFieldRefs {
   readonly provider: Prisma.FieldRef<"Automation", 'Provider'>
   readonly identifier: Prisma.FieldRef<"Automation", 'Json'>
   readonly body: Prisma.FieldRef<"Automation", 'Json'>
+  readonly isActive: Prisma.FieldRef<"Automation", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Automation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Automation", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Automation", 'DateTime'>
+  readonly lastRunAt: Prisma.FieldRef<"Automation", 'DateTime'>
 }
     
 

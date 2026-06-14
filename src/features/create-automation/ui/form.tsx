@@ -1,7 +1,6 @@
 'use client'
 
 import { useForm, useStore } from '@tanstack/react-form'
-import { z } from 'zod'
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
@@ -15,14 +14,15 @@ import {
 } from '@/shared/ui/select'
 import { Field, FieldLabel, FieldContent, FieldError } from '@/shared/ui/field'
 import { Provider } from '@prisma/generated/enums'
-import { cn } from '@shared/lib/utils'
-import { RiLoader2Line } from '@remixicon/react'
-import { PROVIDER_LIST } from '../consts/provider'
+import { cn } from '@shared/utils/cn'
+import { RiHashtag, RiLoader2Line } from '@remixicon/react'
+import { PROVIDERS } from '@entities/provider-registry'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { handleError } from '@shared/utils/handle-error'
-import { CreateAutomationSchema } from '../model/validator'
+import { createAutomation } from '../api/create-automation.action'
+import { CreateAutomationType } from '../model/validator'
 import { ChannelType, GuildType } from '@entities/discord/model/types'
 
 export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
@@ -43,6 +43,23 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
     (state) => state.values.identifier.guildId
   )
 
+  const createMutation = useMutation({
+    mutationFn: async (values: CreateAutomationType) => {
+      const result = await createAutomation(values)
+      if (!result.success) {
+        throw new Error(result.error.message)
+      }
+      return result
+    },
+    onSuccess: () => {
+      toast.success('Automation created successfully!')
+      form.reset()
+    },
+    onError: (err) => {
+      handleError(err)
+    },
+  })
+
   const {
     data: channels = [],
     isLoading: isLoadingChannels,
@@ -54,18 +71,6 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
       return data.data ?? []
     },
     enabled: !!selectedGuildId,
-  })
-
-  const createMutation = useMutation({
-    mutationFn: async (values: z.infer<typeof CreateAutomationSchema>) => {
-      toast.warning('Creating automation...')
-    },
-    onSuccess: () => {
-      toast.success('Automation created successfully!')
-    },
-    onError: (err) => {
-      handleError(err)
-    },
   })
 
   const testMutation = useMutation({
@@ -141,7 +146,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
               <Field>
                 <FieldLabel>Integrations</FieldLabel>
                 <FieldContent className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                  {PROVIDER_LIST.map((provider) => {
+                  {PROVIDERS.map((provider) => {
                     const Icon = provider.icon
                     const isSelected = field.state.value === provider.value
 
@@ -181,7 +186,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                   <Select
                     value={field.state.value}
                     onValueChange={(val) => {
-                      field.handleChange(field.state.value)
+                      field.handleChange(val)
                     }}
                   >
                     <SelectTrigger className="w-full">
@@ -210,7 +215,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                   <Select
                     value={field.state.value}
                     onValueChange={(val) => {
-                      field.handleChange(field.state.value)
+                      field.handleChange(val)
                     }}
                     disabled={isLoadingChannels || !selectedGuildId}
                   >
@@ -228,8 +233,11 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      {channels?.map((channel) => (
+                      {channels
+                        ?.filter((channel) => channel.type === 0)
+                        .map((channel) => (
                         <SelectItem key={channel.id} value={channel.id}>
+                          <RiHashtag className="mr-1 inline size-3 shrink-0" />
                           {channel.name}
                         </SelectItem>
                       ))}

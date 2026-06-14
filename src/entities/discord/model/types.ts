@@ -1,4 +1,5 @@
 import z from 'zod'
+import { Provider } from '@prisma/generated/enums'
 
 const PermissionOverwriteSchema = z.object({
   id: z.string(),
@@ -37,39 +38,10 @@ const GuildSchema = z.object({
 })
 
 export type GuildType = z.infer<typeof GuildSchema>
-
-//  {
-//     id: '1487166703812087991',
-//     type: 0,
-//     last_message_id: null,
-//     flags: 0,
-//     guild_id: '1308004810154577951',
-//     name: 'hbo-hooks',
-//     parent_id: '1308004810154577952',
-//     rate_limit_per_user: 0,
-//     topic: null,
-//     position: 6,
-//     permission_overwrites: [ [Object], [Object] ],
-//     nsfw: false
-//   },
-
-// user [
-//   {
-//     id: '1071376204705312798',
-//     name: "Ramz001's server",
-//     icon: null,
-//     banner: null,
-//     owner: true,
-//     permissions: '18014398509481983',
-//     features: []
-//   },
-//   {
-//     id: '1308004810154577951',
-//     name: 'Kardeşler Çiçekçilik',
-//     icon: '8a473fba1dcc659b211337519201b1ff',
-//     banner: null,
-//     owner: false,
-//     permissions: '2248473465835073',
-//     features: [ 'TIERLESS_BOOSTING_SYSTEM_MESSAGE' ]
-//   }
-// ]
+ 
+export type ProviderInfo = {
+  value: Provider
+  label: string
+  icon: React.ComponentType<{ className?: string }>
+  color: string
+}

@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { authHeaders } from '../utils/auth-headers'
-import { DISCORD_API } from '../consts/discord'
+import { DISCORD_API } from '../consts/api'
 import { requireAuth } from '@shared/api/auth.guard'
 import { cache, CACHE_KEYS } from '@shared/api/cache'
 import { GuildIdSchema } from '../model/validator'

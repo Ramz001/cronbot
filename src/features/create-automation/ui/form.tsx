@@ -120,7 +120,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
             name="name"
             children={(field) => (
               <Field>
-                <FieldLabel htmlFor={field.name}>Automation Name</FieldLabel>
+                <FieldLabel htmlFor={field.name}>Name</FieldLabel>
                 <FieldContent>
                   <Input
                     id={field.name}
@@ -274,7 +274,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
             )}
           />
         </CardContent>
-        <CardFooter className="flex flex-col items-center justify-end gap-4 border-t sm:flex-row">
+        <CardFooter className="flex flex-col items-center justify-end gap-2 border-t sm:flex-row">
           <Button
             type="button"
             variant="secondary"

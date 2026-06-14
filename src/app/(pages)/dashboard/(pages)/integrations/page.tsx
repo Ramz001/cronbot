@@ -3,7 +3,7 @@ import { IntegrationsList } from './ui/list'
 
 const IntegrationsPage = async () => {
   return (
-    <div className="space-y-4">
+    <>
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold">Integrations</h1>
@@ -15,7 +15,7 @@ const IntegrationsPage = async () => {
       </div>
 
       <IntegrationsList />
-    </div>
+    </>
   )
 }
 

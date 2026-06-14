@@ -115,15 +115,18 @@ model Settings {
 }
 
 model Automation {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   name       String?
   userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   provider   Provider
   identifier Json
   body       Json
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  isActive   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+  lastRunAt  DateTime?
 
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId])
 }

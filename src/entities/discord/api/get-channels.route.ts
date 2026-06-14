@@ -3,10 +3,13 @@ import { authHeaders } from '../utils/auth-headers'
 import { DISCORD_API } from '../consts/discord'
 import { requireAuth } from '@shared/api/auth.guard'
 import { cache, CACHE_KEYS } from '@shared/api/cache'
-import axios from 'axios'
 import { GuildIdSchema } from '../model/validator'
-import { withRouteErrorHandler, RouteResult } from '@shared/api/server-error-handlers'
+import {
+  withRouteErrorHandler,
+  RouteResult,
+} from '@shared/api/server-error-handlers'
 import { ChannelType } from '../model/types'
+import axios from 'axios'
 
 async function getGuildChannels(
   req: NextRequest,

@@ -1,5 +1,5 @@
 import { SidebarProvider } from '@shared/ui/sidebar'
-import { AppSidebar } from './ui/app-sidebar'
+import { AppSidebar } from '@widgets/sidebar'
 import BackgroundPattern from '@shared/ui/background-pattern'
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {

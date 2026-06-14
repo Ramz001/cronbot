@@ -8,9 +8,9 @@ import {
   SidebarGroupContent,
   SidebarHeader,
 } from '@shared/ui/sidebar'
-import SidebarTitle from './sidebar-title'
-import { SidebarLinks } from './sidebar-links'
-import { SidebarUser } from './sidebar-user'
+import SidebarTitle from './title'
+import { SidebarLinks } from './links'
+import { SidebarUser } from './user'
 
 export function AppSidebar() {
   return (

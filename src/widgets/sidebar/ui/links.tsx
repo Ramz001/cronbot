@@ -7,25 +7,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@shared/ui/sidebar'
-import {
-  RiCalendarLine,
-  RiStackLine,
-  RiRobot2Line,
-  RiFileListLine,
-  RiFlowChart,
-} from '@remixicon/react'
-
-const tabs = [
-  { title: 'Calendar', url: '', icon: RiCalendarLine },
-  {
-    title: 'Automation Builder',
-    url: '/automations-builder',
-    icon: RiFlowChart,
-  },
-  { title: 'Automations', url: '/automations', icon: RiRobot2Line },
-  { title: 'Integrations', url: '/integrations', icon: RiStackLine },
-  { title: 'Logs', url: '/logs', icon: RiFileListLine },
-]
+import { tabs } from '../consts/tabs'
 
 export function SidebarLinks() {
   const pathname = usePathname()

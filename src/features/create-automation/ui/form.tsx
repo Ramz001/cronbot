@@ -171,9 +171,6 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
               </Field>
             )}
           />
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold">Integration</h3>
-          </div>
 
           <form.Field
             name="identifier.guildId"

@@ -1,6 +1,6 @@
 'use client'
 
-import { signOut } from '@shared/utils/auth-client'
+import { signOut } from '@entities/auth'
 import { RiLogoutBoxFill } from '@remixicon/react'
 import { Button } from '@shared/ui/button'
 import {

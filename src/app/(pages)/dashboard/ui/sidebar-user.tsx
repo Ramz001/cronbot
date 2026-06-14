@@ -5,10 +5,9 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@shared/ui/sidebar'
-import { signOut } from '@shared/utils/auth-client'
 import { Avatar, AvatarFallback, AvatarImage } from '@shared/ui/avatar'
 import { RiLogoutBoxRLine } from '@remixicon/react'
-import { useSession } from '@shared/utils/auth-client'
+import { signOut, useSession } from '@entities/auth'
 
 export function SidebarUser() {
   const { data } = useSession()

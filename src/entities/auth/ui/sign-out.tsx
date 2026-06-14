@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/shared/ui/button'
-import { signOut } from '@shared/utils/auth-client'
+import { signOut } from '../lib/auth.client'
 
 export function SignOutButton() {
   return (

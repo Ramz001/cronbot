@@ -2,7 +2,7 @@
 
 import { Button } from '@/shared/ui/button'
 import { handleError } from '@shared/utils/handle-error'
-import { signIn } from '@shared/utils/auth-client'
+import { signIn } from '../lib/auth.client'
 import { RiGithubFill } from '@remixicon/react'
 
 export const GithubLoginButton = ({
@@ -16,9 +16,8 @@ export const GithubLoginButton = ({
     try {
       const result = await signIn.social({ provider: 'github' })
       if (result.error) {
-        throw new Error(
-          result.error?.message || 'Failed to sign in with GitHub'
-        )
+        const { message, status, statusText } = result.error
+        throw new Error(message || `${status} ${statusText}`)
       }
     } catch (error) {
       handleError(error)

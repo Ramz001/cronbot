@@ -13,11 +13,19 @@ export function handleError(error: unknown, showToast = true) {
   if (error instanceof ZodError) {
     // Zod v4: error.issues is typed as ZodIssue[]
     message = error.issues.map((issue) => issue.message).join(', ')
-  } else if (error instanceof PrismaClientKnownRequestError) {
+  }
+
+  if (error instanceof PrismaClientKnownRequestError) {
     const prismaError = error as PrismaClientKnownRequestError
     message = `Database error: ${prismaError.message}`
-  } else if (error instanceof Error) {
+  }
+
+  if (error instanceof Error) {
     message = error.message
+  }
+
+  if (typeof error === 'string') {
+    message = error
   }
 
   if (showToast) {

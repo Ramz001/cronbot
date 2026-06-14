@@ -14,7 +14,8 @@ export const GithubLoginButton = ({
 }) => {
   const handleLogin = async () => {
     try {
-      await signIn.social({ provider: 'github' })
+      const result = await signIn.social({ provider: 'github' })
+      result.error && handleError(result.error?.message || result.error?.code)
     } catch (error) {
       handleError(error)
     }

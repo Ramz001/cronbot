@@ -1,6 +1,6 @@
 import { Provider } from '@prisma/generated/enums'
 import { DISCORD_PROVIDER } from '@entities/discord/client'
-import { ProviderType } from '@entities/discord'
+import { ProviderType } from '@entities/discord/client'
 
 /**
  * Central registry of all supported providers.

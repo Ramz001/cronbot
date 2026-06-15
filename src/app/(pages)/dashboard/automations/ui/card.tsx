@@ -1,8 +1,12 @@
+'use client'
+
 import {
   RiPlayLine,
   RiPauseLine,
   RiDeleteBin2Line,
   RiTimeLine,
+  RiLoader2Line,
+  RiPlayCircleLine,
 } from '@remixicon/react'
 import { Button } from '@/shared/ui/button'
 import { Card, CardContent } from '@/shared/ui/card'
@@ -10,8 +14,55 @@ import { Badge } from '@/shared/ui/badge'
 import { Automation } from '@prisma/generated/client'
 import { cn } from '@shared/utils/cn'
 import { getProvider } from '@entities/provider-registry'
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
+import { toast } from 'sonner'
+import { handleError } from '@shared/utils/handle-error'
+import { BodySchema, IdentifierSchema } from '@entities/discord/client'
+import { InfoModal } from './info-modal'
+import { useState } from 'react'
 
 function AutomationCard({ automation }: { automation: Automation }) {
+  const [infoModal, setInfoModal] = useState(false)
+
+  const { data: identifierData, success: identifierSuccess } =
+    IdentifierSchema.safeParse(automation.identifier)
+
+  const { data: bodyData, success: bodySuccess } = BodySchema.safeParse(
+    automation.body
+  )
+
+  const canTest = identifierSuccess && bodySuccess
+
+  const testMutation = useMutation({
+    mutationFn: async ({
+      channelId,
+      message,
+    }: {
+      channelId: string
+      message: string
+    }) =>
+      await axios.post('/api/discord/send', {
+        channelId,
+        message,
+      }),
+    onSuccess: () => {
+      toast.success('Test message sent successfully!')
+    },
+    onError: (err) => {
+      handleError(err)
+    },
+  })
+  const handleSendTest = () => {
+    if (!identifierSuccess || !bodySuccess)
+      return toast.warning('Incomplete configuration for testing')
+
+    testMutation.mutate({
+      channelId: identifierData.channelId,
+      message: bodyData.message,
+    })
+  }
+
   const provider = getProvider(automation.provider)
 
   if (!provider) {
@@ -32,14 +83,15 @@ function AutomationCard({ automation }: { automation: Automation }) {
     <Card
       size="sm"
       className={cn(
-        'relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
+        'relative overflow-hidden transition-all duration-200 hover:shadow-lg',
         automation.isActive && 'border-l-[3px]'
       )}
       style={
         automation.isActive
           ? ({ borderLeftColor: color } as React.CSSProperties)
-          : undefined
+          : {}
       }
+      onClick={() => setInfoModal(true)}
     >
       {/* Subtle gradient accent on hover */}
       <div
@@ -102,7 +154,10 @@ function AutomationCard({ automation }: { automation: Automation }) {
         </div>
 
         {/* Action buttons */}
-        <div className="flex shrink-0 items-center gap-1.5">
+        <div
+          className="flex shrink-0 items-center gap-1.5"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Button
             variant="outline"
             size="icon-sm"
@@ -115,6 +170,25 @@ function AutomationCard({ automation }: { automation: Automation }) {
               <RiPlayLine className="size-4" />
             )}
           </Button>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            onClick={handleSendTest}
+            disabled={testMutation.isPending || !canTest}
+            title={canTest ? 'Test automation' : 'Incomplete configuration'}
+          >
+            {testMutation.isPending ? (
+              <RiLoader2Line className="size-4 animate-spin" />
+            ) : (
+              <RiPlayCircleLine className="size-4" />
+            )}
+          </Button>
+          <InfoModal
+            provider={provider}
+            automation={automation}
+            open={infoModal}
+            onOpenChange={setInfoModal}
+          />
           <Button
             variant="ghost"
             size="icon-sm"

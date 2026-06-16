@@ -11,10 +11,10 @@ import { Separator } from '@/shared/ui/separator'
 import {
   RiCheckLine,
   RiCloseLine,
-  RiTimeLine,
   RiDownloadLine,
   RiFileListLine,
 } from '@remixicon/react'
+import { getAutomationRuns } from '@entities/automation-run'
 
 const MOCK_STATS = [
   { label: 'Active', value: '12' },
@@ -76,7 +76,7 @@ function StatCard({ label, value }: { label: string; value: string }) {
   )
 }
 
-function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
+async function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
   const isSuccess = log.status === 'success'
 
   return (
@@ -182,7 +182,9 @@ function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
   )
 }
 
-const StatsPage = () => {
+const StatsPage = async () => {
+  const result = await getAutomationRuns({ id: '' })
+
   return (
     <div className="flex w-full flex-col gap-6 py-6">
       <div className="flex items-center justify-between">

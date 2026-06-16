@@ -112,6 +112,8 @@ model IntegrationToken {
 model Settings {
   key   String @id
   value String
+
+  @@map("settings")
 }
 
 model Automation {
@@ -131,6 +133,7 @@ model Automation {
   automationRuns AutomationRun[]
 
   @@index([userId])
+  @@map("automation")
 }
 
 enum AutomationRunStatus {
@@ -153,6 +156,7 @@ model AutomationRun {
   finishedAt  DateTime?
   durationMs  Int? // finishedAt - startedAt in ms, denormalized for easy querying
 
+  retries  Int     @default(0)
   logs     String? // plain text or structured log output
   error    String? // error message if status = failed
   metadata Json?

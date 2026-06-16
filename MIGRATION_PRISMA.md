@@ -6,8 +6,8 @@ npx prisma migrate dev --name <name>
 
 **Flags:**
 
-* `--create-only` → create SQL only, don’t run it
-* `--schema` → custom schema path
+- `--create-only` → create SQL only, don’t run it
+- `--schema` → custom schema path
 
 ---
 
@@ -27,8 +27,8 @@ npx prisma migrate reset
 
 **Flags:**
 
-* `--force` → skip prompt
-* `--skip-seed` → don’t run seed
+- `--force` → skip prompt
+- `--skip-seed` → don’t run seed
 
 ---
 
@@ -59,8 +59,19 @@ npx prisma db push
 
 ## 🔑 Rule
 
-* dev → `migrate dev`
-* prod → `migrate deploy`
-* avoid `db push` for SaaS
+- dev → `migrate dev`
+- prod → `migrate deploy`
+- avoid `db push` for SaaS
 
 ---
+
+merge empty schema with current schema to generate baseline migration:
+
+```bash
+
+npx prisma migrate diff `
+  --from-empty `
+  --to-schema prisma\schema.prisma `
+  --script `
+  --output prisma\migrations\0001_baseline\migration.sql
+```

@@ -1,20 +1,13 @@
 'use client'
 
 import ShadcnBigCalendar from '@widgets/calendar'
-import {
-  ComponentType,
-  SetStateAction,
-  Suspense,
-  useEffect,
-  useState,
-} from 'react'
+import { ComponentType, useEffect, useState } from 'react'
 import type { CalendarProps } from 'react-big-calendar'
 import { dateFnsLocalizer, SlotInfo, Views } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import { enUS } from 'date-fns/locale/en-US'
 import type { EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-import { DashboardSkeleton } from '@widgets/calendar'
 
 const locales = {
   'en-US': enUS,

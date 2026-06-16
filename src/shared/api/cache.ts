@@ -4,6 +4,7 @@ export const CACHE_KEYS = {
   DISCORD_GUILD: 'discord-guilds',
   DISCORD_CHANNELS: 'discord-channels',
   AUTOMATION: 'automations',
+  AUTOMATION_RUN: 'automation-runs',
 } as const
 
 import { createCache } from 'cache-manager'

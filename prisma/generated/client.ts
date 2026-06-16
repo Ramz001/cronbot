@@ -76,3 +76,8 @@ export type Settings = Prisma.SettingsModel
  * 
  */
 export type Automation = Prisma.AutomationModel
+/**
+ * Model AutomationRun
+ * 
+ */
+export type AutomationRun = Prisma.AutomationRunModel

@@ -223,6 +223,7 @@ export type AutomationWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
   lastRunAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  automationRuns?: Prisma.AutomationRunListRelationFilter
 }
 
 export type AutomationOrderByWithRelationInput = {
@@ -238,6 +239,7 @@ export type AutomationOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastRunAt?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  automationRuns?: Prisma.AutomationRunOrderByRelationAggregateInput
 }
 
 export type AutomationWhereUniqueInput = Prisma.AtLeast<{
@@ -256,6 +258,7 @@ export type AutomationWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
   lastRunAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  automationRuns?: Prisma.AutomationRunListRelationFilter
 }, "id">
 
 export type AutomationOrderByWithAggregationInput = {
@@ -304,6 +307,7 @@ export type AutomationCreateInput = {
   deletedAt?: Date | string | null
   lastRunAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutAutomationsInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationUncheckedCreateInput = {
@@ -318,6 +322,7 @@ export type AutomationUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   lastRunAt?: Date | string | null
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationUpdateInput = {
@@ -332,6 +337,7 @@ export type AutomationUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutAutomationsNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationUncheckedUpdateInput = {
@@ -346,6 +352,7 @@ export type AutomationUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationCreateManyInput = {
@@ -437,6 +444,11 @@ export type AutomationMinOrderByAggregateInput = {
   lastRunAt?: Prisma.SortOrder
 }
 
+export type AutomationScalarRelationFilter = {
+  is?: Prisma.AutomationWhereInput
+  isNot?: Prisma.AutomationWhereInput
+}
+
 export type AutomationCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.AutomationCreateWithoutUserInput, Prisma.AutomationUncheckedCreateWithoutUserInput> | Prisma.AutomationCreateWithoutUserInput[] | Prisma.AutomationUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.AutomationCreateOrConnectWithoutUserInput | Prisma.AutomationCreateOrConnectWithoutUserInput[]
@@ -479,6 +491,20 @@ export type AutomationUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.AutomationScalarWhereInput | Prisma.AutomationScalarWhereInput[]
 }
 
+export type AutomationCreateNestedOneWithoutAutomationRunsInput = {
+  create?: Prisma.XOR<Prisma.AutomationCreateWithoutAutomationRunsInput, Prisma.AutomationUncheckedCreateWithoutAutomationRunsInput>
+  connectOrCreate?: Prisma.AutomationCreateOrConnectWithoutAutomationRunsInput
+  connect?: Prisma.AutomationWhereUniqueInput
+}
+
+export type AutomationUpdateOneRequiredWithoutAutomationRunsNestedInput = {
+  create?: Prisma.XOR<Prisma.AutomationCreateWithoutAutomationRunsInput, Prisma.AutomationUncheckedCreateWithoutAutomationRunsInput>
+  connectOrCreate?: Prisma.AutomationCreateOrConnectWithoutAutomationRunsInput
+  upsert?: Prisma.AutomationUpsertWithoutAutomationRunsInput
+  connect?: Prisma.AutomationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AutomationUpdateToOneWithWhereWithoutAutomationRunsInput, Prisma.AutomationUpdateWithoutAutomationRunsInput>, Prisma.AutomationUncheckedUpdateWithoutAutomationRunsInput>
+}
+
 export type AutomationCreateWithoutUserInput = {
   id?: string
   name?: string | null
@@ -490,6 +516,7 @@ export type AutomationCreateWithoutUserInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   lastRunAt?: Date | string | null
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationUncheckedCreateWithoutUserInput = {
@@ -503,6 +530,7 @@ export type AutomationUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   lastRunAt?: Date | string | null
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationCreateOrConnectWithoutUserInput = {
@@ -548,6 +576,78 @@ export type AutomationScalarWhereInput = {
   lastRunAt?: Prisma.DateTimeNullableFilter<"Automation"> | Date | string | null
 }
 
+export type AutomationCreateWithoutAutomationRunsInput = {
+  id?: string
+  name?: string | null
+  provider: $Enums.Provider
+  identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  body: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  lastRunAt?: Date | string | null
+  user: Prisma.UserCreateNestedOneWithoutAutomationsInput
+}
+
+export type AutomationUncheckedCreateWithoutAutomationRunsInput = {
+  id?: string
+  name?: string | null
+  userId: string
+  provider: $Enums.Provider
+  identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  body: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  lastRunAt?: Date | string | null
+}
+
+export type AutomationCreateOrConnectWithoutAutomationRunsInput = {
+  where: Prisma.AutomationWhereUniqueInput
+  create: Prisma.XOR<Prisma.AutomationCreateWithoutAutomationRunsInput, Prisma.AutomationUncheckedCreateWithoutAutomationRunsInput>
+}
+
+export type AutomationUpsertWithoutAutomationRunsInput = {
+  update: Prisma.XOR<Prisma.AutomationUpdateWithoutAutomationRunsInput, Prisma.AutomationUncheckedUpdateWithoutAutomationRunsInput>
+  create: Prisma.XOR<Prisma.AutomationCreateWithoutAutomationRunsInput, Prisma.AutomationUncheckedCreateWithoutAutomationRunsInput>
+  where?: Prisma.AutomationWhereInput
+}
+
+export type AutomationUpdateToOneWithWhereWithoutAutomationRunsInput = {
+  where?: Prisma.AutomationWhereInput
+  data: Prisma.XOR<Prisma.AutomationUpdateWithoutAutomationRunsInput, Prisma.AutomationUncheckedUpdateWithoutAutomationRunsInput>
+}
+
+export type AutomationUpdateWithoutAutomationRunsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutAutomationsNestedInput
+}
+
+export type AutomationUncheckedUpdateWithoutAutomationRunsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
 export type AutomationCreateManyUserInput = {
   id?: string
   name?: string | null
@@ -572,6 +672,7 @@ export type AutomationUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationUncheckedUpdateWithoutUserInput = {
@@ -585,6 +686,7 @@ export type AutomationUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationUncheckedUpdateManyWithoutUserInput = {
@@ -601,6 +703,35 @@ export type AutomationUncheckedUpdateManyWithoutUserInput = {
 }
 
 
+/**
+ * Count Type AutomationCountOutputType
+ */
+
+export type AutomationCountOutputType = {
+  automationRuns: number
+}
+
+export type AutomationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  automationRuns?: boolean | AutomationCountOutputTypeCountAutomationRunsArgs
+}
+
+/**
+ * AutomationCountOutputType without action
+ */
+export type AutomationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AutomationCountOutputType
+   */
+  select?: Prisma.AutomationCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * AutomationCountOutputType without action
+ */
+export type AutomationCountOutputTypeCountAutomationRunsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AutomationRunWhereInput
+}
+
 
 export type AutomationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -615,6 +746,8 @@ export type AutomationSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   deletedAt?: boolean
   lastRunAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  automationRuns?: boolean | Prisma.Automation$automationRunsArgs<ExtArgs>
+  _count?: boolean | Prisma.AutomationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["automation"]>
 
 export type AutomationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -664,6 +797,8 @@ export type AutomationSelectScalar = {
 export type AutomationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "userId" | "provider" | "identifier" | "body" | "isActive" | "createdAt" | "updatedAt" | "deletedAt" | "lastRunAt", ExtArgs["result"]["automation"]>
 export type AutomationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  automationRuns?: boolean | Prisma.Automation$automationRunsArgs<ExtArgs>
+  _count?: boolean | Prisma.AutomationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AutomationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -676,6 +811,7 @@ export type $AutomationPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "Automation"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    automationRuns: Prisma.$AutomationRunPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1084,6 +1220,7 @@ readonly fields: AutomationFieldRefs;
 export interface Prisma__AutomationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  automationRuns<T extends Prisma.Automation$automationRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Automation$automationRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1522,6 +1659,30 @@ export type AutomationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Automations to delete.
    */
   limit?: number
+}
+
+/**
+ * Automation.automationRuns
+ */
+export type Automation$automationRunsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AutomationRun
+   */
+  select?: Prisma.AutomationRunSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AutomationRun
+   */
+  omit?: Prisma.AutomationRunOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AutomationRunInclude<ExtArgs> | null
+  where?: Prisma.AutomationRunWhereInput
+  orderBy?: Prisma.AutomationRunOrderByWithRelationInput | Prisma.AutomationRunOrderByWithRelationInput[]
+  cursor?: Prisma.AutomationRunWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AutomationRunScalarFieldEnum | Prisma.AutomationRunScalarFieldEnum[]
 }
 
 /**

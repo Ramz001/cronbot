@@ -127,6 +127,43 @@ model Automation {
   deletedAt  DateTime?
   lastRunAt  DateTime?
 
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  automationRuns AutomationRun[]
+
   @@index([userId])
+}
+
+enum AutomationRunStatus {
+  pending
+  running
+  success
+  failed
+  skipped
+}
+
+model AutomationRun {
+  id           String     @id @default(cuid())
+  automationId String
+  automation   Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
+
+  status      AutomationRunStatus @default(pending)
+  triggeredBy String? // e.g. "cron", "manual", "webhook"
+  scheduledAt DateTime? // when the cron intended to fire it
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  durationMs  Int? // finishedAt - startedAt in ms, denormalized for easy querying
+
+  logs     String? // plain text or structured log output
+  error    String? // error message if status = failed
+  metadata Json?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([automationId])
+  @@index([automationId, status])
+  @@index([scheduledAt])
+  @@index([status, scheduledAt]) // useful for querying pending/running runs globally
+  @@map("automation_run")
 }

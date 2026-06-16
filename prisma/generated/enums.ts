@@ -23,3 +23,14 @@ export const IntegrationTokenStatus = {
 } as const
 
 export type IntegrationTokenStatus = (typeof IntegrationTokenStatus)[keyof typeof IntegrationTokenStatus]
+
+
+export const AutomationRunStatus = {
+  pending: 'pending',
+  running: 'running',
+  success: 'success',
+  failed: 'failed',
+  skipped: 'skipped'
+} as const
+
+export type AutomationRunStatus = (typeof AutomationRunStatus)[keyof typeof AutomationRunStatus]

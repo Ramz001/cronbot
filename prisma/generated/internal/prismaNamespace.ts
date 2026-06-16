@@ -390,7 +390,8 @@ export const ModelName = {
   Verification: 'Verification',
   IntegrationToken: 'IntegrationToken',
   Settings: 'Settings',
-  Automation: 'Automation'
+  Automation: 'Automation',
+  AutomationRun: 'AutomationRun'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "integrationToken" | "settings" | "automation"
+    modelProps: "user" | "session" | "account" | "verification" | "integrationToken" | "settings" | "automation" | "automationRun"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AutomationRun: {
+      payload: Prisma.$AutomationRunPayload<ExtArgs>
+      fields: Prisma.AutomationRunFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AutomationRunFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AutomationRunFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        findFirst: {
+          args: Prisma.AutomationRunFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AutomationRunFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        findMany: {
+          args: Prisma.AutomationRunFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+        }
+        create: {
+          args: Prisma.AutomationRunCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        createMany: {
+          args: Prisma.AutomationRunCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AutomationRunCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+        }
+        delete: {
+          args: Prisma.AutomationRunDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        update: {
+          args: Prisma.AutomationRunUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        deleteMany: {
+          args: Prisma.AutomationRunDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AutomationRunUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AutomationRunUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+        }
+        upsert: {
+          args: Prisma.AutomationRunUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        aggregate: {
+          args: Prisma.AutomationRunAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAutomationRun>
+        }
+        groupBy: {
+          args: Prisma.AutomationRunGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutomationRunGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AutomationRunCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutomationRunCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1072,6 +1147,26 @@ export const AutomationScalarFieldEnum = {
 export type AutomationScalarFieldEnum = (typeof AutomationScalarFieldEnum)[keyof typeof AutomationScalarFieldEnum]
 
 
+export const AutomationRunScalarFieldEnum = {
+  id: 'id',
+  automationId: 'automationId',
+  status: 'status',
+  triggeredBy: 'triggeredBy',
+  scheduledAt: 'scheduledAt',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  durationMs: 'durationMs',
+  logs: 'logs',
+  error: 'error',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type AutomationRunScalarFieldEnum = (typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1085,6 +1180,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1196,6 +1299,20 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'AutomationRunStatus'
+ */
+export type EnumAutomationRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationRunStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AutomationRunStatus[]'
+ */
+export type ListEnumAutomationRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationRunStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1206,6 +1323,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1325,6 +1456,7 @@ export type GlobalOmitConfig = {
   integrationToken?: Prisma.IntegrationTokenOmit
   settings?: Prisma.SettingsOmit
   automation?: Prisma.AutomationOmit
+  automationRun?: Prisma.AutomationRunOmit
 }
 
 /* Types for Logging */

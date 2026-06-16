@@ -57,7 +57,8 @@ export const ModelName = {
   Verification: 'Verification',
   IntegrationToken: 'IntegrationToken',
   Settings: 'Settings',
-  Automation: 'Automation'
+  Automation: 'Automation',
+  AutomationRun: 'AutomationRun'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -181,6 +182,26 @@ export const AutomationScalarFieldEnum = {
 export type AutomationScalarFieldEnum = (typeof AutomationScalarFieldEnum)[keyof typeof AutomationScalarFieldEnum]
 
 
+export const AutomationRunScalarFieldEnum = {
+  id: 'id',
+  automationId: 'automationId',
+  status: 'status',
+  triggeredBy: 'triggeredBy',
+  scheduledAt: 'scheduledAt',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  durationMs: 'durationMs',
+  logs: 'logs',
+  error: 'error',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type AutomationRunScalarFieldEnum = (typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -194,6 +215,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {

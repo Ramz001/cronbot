@@ -811,31 +811,45 @@ button.rbc-input::-moz-focus-inner {
   --event-bg: color-mix(in oklab, var(--primary) 85%, transparent);
   box-shadow: 0 1px 2px 0 color-mix(in oklab, black 12%, transparent);
 }
-.rbc-event.event-variant-primary {
+.rbc-event.event-status-success {
   --event-bg: var(--primary);
   --event-color: var(--primary-foreground);
   --event-border: color-mix(in oklab, var(--primary) 90%, transparent);
 }
-.rbc-event.event-variant-primary:hover {
+.rbc-event.event-status-success:hover {
   --event-bg: color-mix(in oklab, var(--primary) 85%, transparent);
 }
-.rbc-event.event-variant-secondary {
-  --event-bg: var(--secondary);
-  --event-color: var(--secondary-foreground);
-  --event-border: var(--border);
+.rbc-event.event-status-running {
+  --event-bg: hsl(217 91% 60%);
+  --event-color: hsl(0 0% 100%);
+  --event-border: hsl(217 91% 52%);
 }
-.rbc-event.event-variant-secondary:hover {
-  --event-bg: color-mix(in oklab, var(--secondary) 80%, transparent);
+.rbc-event.event-status-running:hover {
+  --event-bg: hsl(217 91% 52%);
 }
-.rbc-event.event-variant-outline {
-  --event-bg: var(--background);
-  --event-color: var(--foreground);
-  --event-border: var(--border);
+.rbc-event.event-status-failed {
+  --event-bg: var(--destructive);
+  --event-color: var(--destructive-foreground);
+  --event-border: color-mix(in oklab, var(--destructive) 85%, transparent);
 }
-.rbc-event.event-variant-outline:hover {
+.rbc-event.event-status-failed:hover {
+  --event-bg: color-mix(in oklab, var(--destructive) 80%, transparent);
+}
+.rbc-event.event-status-skipped {
+  --event-bg: hsl(38 92% 50%);
+  --event-color: hsl(38 92% 10%);
+  --event-border: hsl(38 92% 42%);
+}
+.rbc-event.event-status-skipped:hover {
+  --event-bg: hsl(38 92% 42%);
+}
+.rbc-event.event-status-pending {
   --event-bg: var(--muted);
-  --event-color: var(--foreground);
+  --event-color: var(--muted-foreground);
   --event-border: var(--border);
+}
+.rbc-event.event-status-pending:hover {
+  --event-bg: color-mix(in oklab, var(--muted) 85%, transparent);
 }
 .event-component {
   background-color: var(--primary);

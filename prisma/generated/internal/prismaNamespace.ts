@@ -1156,6 +1156,7 @@ export const AutomationRunScalarFieldEnum = {
   startedAt: 'startedAt',
   finishedAt: 'finishedAt',
   durationMs: 'durationMs',
+  retries: 'retries',
   logs: 'logs',
   error: 'error',
   metadata: 'metadata',

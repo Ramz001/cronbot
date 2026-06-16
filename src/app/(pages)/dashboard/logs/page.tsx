@@ -17,47 +17,100 @@ import {
 import { getAutomationRuns } from '@entities/automation-run'
 
 const MOCK_STATS = [
-  { label: 'Active', value: '12' },
-  { label: 'Success Rate', value: '99.2%' },
-  { label: 'Last 24h', value: '47' },
-  { label: 'Failures', value: '1' },
+  { label: 'Active Automations', value: '8' },
+  { label: 'Success Rate', value: '94.7%' },
+  { label: 'Runs (24h)', value: '47' },
+  { label: 'Failed', value: '3' },
 ]
 
 const MOCK_LOGS = [
   {
-    id: '1',
-    name: 'Image Optimization',
-    status: 'success',
-    retries: 1,
-    startTime: '2024-05-15 09:58:12',
-    duration: '18.7s',
-    output: `Processed 342 images
-Successfully optimized 340 images
-Skipped 2 (unsupported format)
-Total space saved: 245MB`,
-  },
-  {
-    id: '2',
-    name: 'Database Backup',
+    id: 'run-001',
+    automationId: 'auto-001',
+    name: 'Daily standup → #general',
+    provider: 'discord',
     status: 'success',
     retries: 0,
-    startTime: '2024-05-15 03:00:00',
-    duration: '45.2s',
-    output: `Starting full database backup...
-Compressing tables...
-Backup completed successfully.
-Size: 1.2GB`,
+    scheduledAt: '2026-06-16 09:00:00',
+    startedAt: '2026-06-16 09:00:02',
+    finishedAt: '2026-06-16 09:00:03',
+    duration: '1.2s',
+    output: `[discord] Connecting to gateway...
+[discord] Authenticated as CronBot#0001
+[discord] Sending message to #general (channelId: 123456789)
+[discord] Message delivered — id: 1111222233334444
+✅ Automation "Daily standup" completed`,
   },
   {
-    id: '3',
-    name: 'Sync Analytics Data',
-    status: 'failure',
+    id: 'run-002',
+    automationId: 'auto-002',
+    name: 'Weekly report → #team-leads',
+    provider: 'discord',
+    status: 'success',
+    retries: 0,
+    scheduledAt: '2026-06-16 10:00:00',
+    startedAt: '2026-06-16 10:00:01',
+    finishedAt: '2026-06-16 10:00:12',
+    duration: '11.8s',
+    output: `[discord] Fetching sprint metrics...
+[discord] Aggregating team stats for week 24
+[discord] Generating embed with 6 fields
+[discord] Sending to #team-leads...
+[discord] Embed posted — id: 9999888877776666
+✅ Automation "Weekly report" completed`,
+  },
+  {
+    id: 'run-003',
+    automationId: 'auto-006',
+    name: 'Analytics snapshot → #metrics',
+    provider: 'discord',
+    status: 'failed',
     retries: 3,
-    startTime: '2024-05-15 10:15:00',
-    duration: '5.4s',
-    output: `Connecting to analytics provider...
-Error: 503 Service Unavailable
-Failed to sync data after 4 attempts.`,
+    scheduledAt: '2026-06-16 08:00:00',
+    startedAt: '2026-06-16 08:00:00',
+    finishedAt: '2026-06-16 08:01:23',
+    duration: '83.4s',
+    output: `[discord] Fetching analytics from provider...
+[discord] Attempt 1/4 — HTTP 503 Service Unavailable
+[discord] Retrying in 5s...
+[discord] Attempt 2/4 — HTTP 503 Service Unavailable
+[discord] Retrying in 10s...
+[discord] Attempt 3/4 — HTTP 503 Service Unavailable
+[discord] Retrying in 20s...
+[discord] Attempt 4/4 — HTTP 503 Service Unavailable
+❌ Automation "Analytics snapshot" failed after 4 attempts`,
+  },
+  {
+    id: 'run-004',
+    automationId: 'auto-009',
+    name: 'Audit log export',
+    provider: 'discord',
+    status: 'skipped',
+    retries: 0,
+    scheduledAt: '2026-06-16 01:00:00',
+    startedAt: null,
+    finishedAt: null,
+    duration: '—',
+    output: `⏭️ Automation "Audit log export" was skipped.
+Reason: No audit events recorded since last run.
+Last successful run: 2026-06-15 01:00:05`,
+  },
+  {
+    id: 'run-005',
+    automationId: 'auto-004',
+    name: 'Welcome DM → new members',
+    provider: 'discord',
+    status: 'success',
+    retries: 0,
+    scheduledAt: '2026-06-16 00:00:00',
+    startedAt: '2026-06-16 00:00:01',
+    finishedAt: '2026-06-16 00:00:04',
+    duration: '3.1s',
+    output: `[discord] Scanning guild members...
+[discord] Found 2 new members since last check
+[discord] Sending welcome DM to user: alice#1234
+[discord] Sending welcome DM to user: bob#5678
+✅ Automation "Welcome DM" completed — 2 messages sent`,
   },
 ]
 
@@ -78,6 +131,22 @@ function StatCard({ label, value }: { label: string; value: string }) {
 
 async function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
   const isSuccess = log.status === 'success'
+  const isFailed = log.status === 'failed'
+  const isSkipped = log.status === 'skipped'
+
+  const statusIcon = isSuccess ? (
+    <RiCheckLine className="size-4" />
+  ) : isSkipped ? (
+    <RiDownloadLine className="size-4" />
+  ) : (
+    <RiCloseLine className="size-4" />
+  )
+
+  const statusColor = isSuccess
+    ? 'bg-emerald-500/10 text-emerald-500'
+    : isSkipped
+      ? 'bg-amber-500/10 text-amber-500'
+      : 'bg-red-500/10 text-red-500'
 
   return (
     <AccordionItem
@@ -88,13 +157,9 @@ async function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
         <div className="mr-4 flex flex-1 items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div
-              className={`flex h-8 w-8 items-center justify-center rounded-full ${isSuccess ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}
+              className={`flex h-8 w-8 items-center justify-center rounded-full ${statusColor}`}
             >
-              {isSuccess ? (
-                <RiCheckLine className="size-4" />
-              ) : (
-                <RiCloseLine className="size-4" />
-              )}
+              {statusIcon}
             </div>
             <span className="font-semibold">{log.name}</span>
           </div>
@@ -102,9 +167,9 @@ async function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
             <span className="hidden sm:inline-block">
               {log.retries} retries
             </span>
-            <span className="hidden sm:inline-block">{log.startTime}</span>
+            <span className="hidden sm:inline-block">{log.scheduledAt}</span>
             <Badge
-              variant={isSuccess ? 'default' : 'destructive'}
+              variant={isSuccess ? 'default' : isSkipped ? 'secondary' : 'destructive'}
               className="capitalize"
             >
               {log.status}
@@ -130,9 +195,9 @@ async function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
             <div className="grid grid-cols-2 gap-x-4 gap-y-5">
               <div className="flex flex-col gap-1.5">
                 <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
-                  Start Time
+                  Scheduled At
                 </span>
-                <span className="text-sm font-medium">{log.startTime}</span>
+                <span className="text-sm font-medium">{log.scheduledAt}</span>
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
@@ -142,10 +207,42 @@ async function WorkerLogItem({ log }: { log: (typeof MOCK_LOGS)[number] }) {
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  Provider
+                </span>
+                <span className="text-sm font-medium capitalize">
+                  {log.provider}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
                   Status
                 </span>
                 <span className="text-sm font-medium capitalize">
                   {log.status}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  Started At
+                </span>
+                <span className="text-sm font-medium">
+                  {log.startedAt ?? '—'}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  Finished At
+                </span>
+                <span className="text-sm font-medium">
+                  {log.finishedAt ?? '—'}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  Automation ID
+                </span>
+                <span className="font-medium font-mono text-xs">
+                  {log.automationId}
                 </span>
               </div>
               <div className="flex flex-col gap-1.5">

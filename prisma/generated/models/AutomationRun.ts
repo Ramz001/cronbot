@@ -28,10 +28,12 @@ export type AggregateAutomationRun = {
 
 export type AutomationRunAvgAggregateOutputType = {
   durationMs: number | null
+  retries: number | null
 }
 
 export type AutomationRunSumAggregateOutputType = {
   durationMs: number | null
+  retries: number | null
 }
 
 export type AutomationRunMinAggregateOutputType = {
@@ -43,6 +45,7 @@ export type AutomationRunMinAggregateOutputType = {
   startedAt: Date | null
   finishedAt: Date | null
   durationMs: number | null
+  retries: number | null
   logs: string | null
   error: string | null
   createdAt: Date | null
@@ -59,6 +62,7 @@ export type AutomationRunMaxAggregateOutputType = {
   startedAt: Date | null
   finishedAt: Date | null
   durationMs: number | null
+  retries: number | null
   logs: string | null
   error: string | null
   createdAt: Date | null
@@ -75,6 +79,7 @@ export type AutomationRunCountAggregateOutputType = {
   startedAt: number
   finishedAt: number
   durationMs: number
+  retries: number
   logs: number
   error: number
   metadata: number
@@ -87,10 +92,12 @@ export type AutomationRunCountAggregateOutputType = {
 
 export type AutomationRunAvgAggregateInputType = {
   durationMs?: true
+  retries?: true
 }
 
 export type AutomationRunSumAggregateInputType = {
   durationMs?: true
+  retries?: true
 }
 
 export type AutomationRunMinAggregateInputType = {
@@ -102,6 +109,7 @@ export type AutomationRunMinAggregateInputType = {
   startedAt?: true
   finishedAt?: true
   durationMs?: true
+  retries?: true
   logs?: true
   error?: true
   createdAt?: true
@@ -118,6 +126,7 @@ export type AutomationRunMaxAggregateInputType = {
   startedAt?: true
   finishedAt?: true
   durationMs?: true
+  retries?: true
   logs?: true
   error?: true
   createdAt?: true
@@ -134,6 +143,7 @@ export type AutomationRunCountAggregateInputType = {
   startedAt?: true
   finishedAt?: true
   durationMs?: true
+  retries?: true
   logs?: true
   error?: true
   metadata?: true
@@ -238,6 +248,7 @@ export type AutomationRunGroupByOutputType = {
   startedAt: Date | null
   finishedAt: Date | null
   durationMs: number | null
+  retries: number
   logs: string | null
   error: string | null
   metadata: runtime.JsonValue | null
@@ -278,6 +289,7 @@ export type AutomationRunWhereInput = {
   startedAt?: Prisma.DateTimeNullableFilter<"AutomationRun"> | Date | string | null
   finishedAt?: Prisma.DateTimeNullableFilter<"AutomationRun"> | Date | string | null
   durationMs?: Prisma.IntNullableFilter<"AutomationRun"> | number | null
+  retries?: Prisma.IntFilter<"AutomationRun"> | number
   logs?: Prisma.StringNullableFilter<"AutomationRun"> | string | null
   error?: Prisma.StringNullableFilter<"AutomationRun"> | string | null
   metadata?: Prisma.JsonNullableFilter<"AutomationRun">
@@ -296,6 +308,7 @@ export type AutomationRunOrderByWithRelationInput = {
   startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   durationMs?: Prisma.SortOrderInput | Prisma.SortOrder
+  retries?: Prisma.SortOrder
   logs?: Prisma.SortOrderInput | Prisma.SortOrder
   error?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -317,6 +330,7 @@ export type AutomationRunWhereUniqueInput = Prisma.AtLeast<{
   startedAt?: Prisma.DateTimeNullableFilter<"AutomationRun"> | Date | string | null
   finishedAt?: Prisma.DateTimeNullableFilter<"AutomationRun"> | Date | string | null
   durationMs?: Prisma.IntNullableFilter<"AutomationRun"> | number | null
+  retries?: Prisma.IntFilter<"AutomationRun"> | number
   logs?: Prisma.StringNullableFilter<"AutomationRun"> | string | null
   error?: Prisma.StringNullableFilter<"AutomationRun"> | string | null
   metadata?: Prisma.JsonNullableFilter<"AutomationRun">
@@ -335,6 +349,7 @@ export type AutomationRunOrderByWithAggregationInput = {
   startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   durationMs?: Prisma.SortOrderInput | Prisma.SortOrder
+  retries?: Prisma.SortOrder
   logs?: Prisma.SortOrderInput | Prisma.SortOrder
   error?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -360,6 +375,7 @@ export type AutomationRunScalarWhereWithAggregatesInput = {
   startedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AutomationRun"> | Date | string | null
   finishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AutomationRun"> | Date | string | null
   durationMs?: Prisma.IntNullableWithAggregatesFilter<"AutomationRun"> | number | null
+  retries?: Prisma.IntWithAggregatesFilter<"AutomationRun"> | number
   logs?: Prisma.StringNullableWithAggregatesFilter<"AutomationRun"> | string | null
   error?: Prisma.StringNullableWithAggregatesFilter<"AutomationRun"> | string | null
   metadata?: Prisma.JsonNullableWithAggregatesFilter<"AutomationRun">
@@ -376,6 +392,7 @@ export type AutomationRunCreateInput = {
   startedAt?: Date | string | null
   finishedAt?: Date | string | null
   durationMs?: number | null
+  retries?: number
   logs?: string | null
   error?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -394,6 +411,7 @@ export type AutomationRunUncheckedCreateInput = {
   startedAt?: Date | string | null
   finishedAt?: Date | string | null
   durationMs?: number | null
+  retries?: number
   logs?: string | null
   error?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -410,6 +428,7 @@ export type AutomationRunUpdateInput = {
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  retries?: Prisma.IntFieldUpdateOperationsInput | number
   logs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -428,6 +447,7 @@ export type AutomationRunUncheckedUpdateInput = {
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  retries?: Prisma.IntFieldUpdateOperationsInput | number
   logs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -445,6 +465,7 @@ export type AutomationRunCreateManyInput = {
   startedAt?: Date | string | null
   finishedAt?: Date | string | null
   durationMs?: number | null
+  retries?: number
   logs?: string | null
   error?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -461,6 +482,7 @@ export type AutomationRunUpdateManyMutationInput = {
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  retries?: Prisma.IntFieldUpdateOperationsInput | number
   logs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -478,6 +500,7 @@ export type AutomationRunUncheckedUpdateManyInput = {
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  retries?: Prisma.IntFieldUpdateOperationsInput | number
   logs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -505,6 +528,7 @@ export type AutomationRunCountOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
   durationMs?: Prisma.SortOrder
+  retries?: Prisma.SortOrder
   logs?: Prisma.SortOrder
   error?: Prisma.SortOrder
   metadata?: Prisma.SortOrder
@@ -515,6 +539,7 @@ export type AutomationRunCountOrderByAggregateInput = {
 
 export type AutomationRunAvgOrderByAggregateInput = {
   durationMs?: Prisma.SortOrder
+  retries?: Prisma.SortOrder
 }
 
 export type AutomationRunMaxOrderByAggregateInput = {
@@ -526,6 +551,7 @@ export type AutomationRunMaxOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
   durationMs?: Prisma.SortOrder
+  retries?: Prisma.SortOrder
   logs?: Prisma.SortOrder
   error?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -542,6 +568,7 @@ export type AutomationRunMinOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
   durationMs?: Prisma.SortOrder
+  retries?: Prisma.SortOrder
   logs?: Prisma.SortOrder
   error?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -551,6 +578,7 @@ export type AutomationRunMinOrderByAggregateInput = {
 
 export type AutomationRunSumOrderByAggregateInput = {
   durationMs?: Prisma.SortOrder
+  retries?: Prisma.SortOrder
 }
 
 export type AutomationRunCreateNestedManyWithoutAutomationInput = {
@@ -607,6 +635,14 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type AutomationRunCreateWithoutAutomationInput = {
   id?: string
   status?: $Enums.AutomationRunStatus
@@ -615,6 +651,7 @@ export type AutomationRunCreateWithoutAutomationInput = {
   startedAt?: Date | string | null
   finishedAt?: Date | string | null
   durationMs?: number | null
+  retries?: number
   logs?: string | null
   error?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -631,6 +668,7 @@ export type AutomationRunUncheckedCreateWithoutAutomationInput = {
   startedAt?: Date | string | null
   finishedAt?: Date | string | null
   durationMs?: number | null
+  retries?: number
   logs?: string | null
   error?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -677,6 +715,7 @@ export type AutomationRunScalarWhereInput = {
   startedAt?: Prisma.DateTimeNullableFilter<"AutomationRun"> | Date | string | null
   finishedAt?: Prisma.DateTimeNullableFilter<"AutomationRun"> | Date | string | null
   durationMs?: Prisma.IntNullableFilter<"AutomationRun"> | number | null
+  retries?: Prisma.IntFilter<"AutomationRun"> | number
   logs?: Prisma.StringNullableFilter<"AutomationRun"> | string | null
   error?: Prisma.StringNullableFilter<"AutomationRun"> | string | null
   metadata?: Prisma.JsonNullableFilter<"AutomationRun">
@@ -693,6 +732,7 @@ export type AutomationRunCreateManyAutomationInput = {
   startedAt?: Date | string | null
   finishedAt?: Date | string | null
   durationMs?: number | null
+  retries?: number
   logs?: string | null
   error?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -709,6 +749,7 @@ export type AutomationRunUpdateWithoutAutomationInput = {
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  retries?: Prisma.IntFieldUpdateOperationsInput | number
   logs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -725,6 +766,7 @@ export type AutomationRunUncheckedUpdateWithoutAutomationInput = {
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  retries?: Prisma.IntFieldUpdateOperationsInput | number
   logs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -741,6 +783,7 @@ export type AutomationRunUncheckedUpdateManyWithoutAutomationInput = {
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  retries?: Prisma.IntFieldUpdateOperationsInput | number
   logs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -760,6 +803,7 @@ export type AutomationRunSelect<ExtArgs extends runtime.Types.Extensions.Interna
   startedAt?: boolean
   finishedAt?: boolean
   durationMs?: boolean
+  retries?: boolean
   logs?: boolean
   error?: boolean
   metadata?: boolean
@@ -778,6 +822,7 @@ export type AutomationRunSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   startedAt?: boolean
   finishedAt?: boolean
   durationMs?: boolean
+  retries?: boolean
   logs?: boolean
   error?: boolean
   metadata?: boolean
@@ -796,6 +841,7 @@ export type AutomationRunSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   startedAt?: boolean
   finishedAt?: boolean
   durationMs?: boolean
+  retries?: boolean
   logs?: boolean
   error?: boolean
   metadata?: boolean
@@ -814,6 +860,7 @@ export type AutomationRunSelectScalar = {
   startedAt?: boolean
   finishedAt?: boolean
   durationMs?: boolean
+  retries?: boolean
   logs?: boolean
   error?: boolean
   metadata?: boolean
@@ -822,7 +869,7 @@ export type AutomationRunSelectScalar = {
   deletedAt?: boolean
 }
 
-export type AutomationRunOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "automationId" | "status" | "triggeredBy" | "scheduledAt" | "startedAt" | "finishedAt" | "durationMs" | "logs" | "error" | "metadata" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["automationRun"]>
+export type AutomationRunOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "automationId" | "status" | "triggeredBy" | "scheduledAt" | "startedAt" | "finishedAt" | "durationMs" | "retries" | "logs" | "error" | "metadata" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["automationRun"]>
 export type AutomationRunInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   automation?: boolean | Prisma.AutomationDefaultArgs<ExtArgs>
 }
@@ -847,6 +894,7 @@ export type $AutomationRunPayload<ExtArgs extends runtime.Types.Extensions.Inter
     startedAt: Date | null
     finishedAt: Date | null
     durationMs: number | null
+    retries: number
     logs: string | null
     error: string | null
     metadata: runtime.JsonValue | null
@@ -1285,6 +1333,7 @@ export interface AutomationRunFieldRefs {
   readonly startedAt: Prisma.FieldRef<"AutomationRun", 'DateTime'>
   readonly finishedAt: Prisma.FieldRef<"AutomationRun", 'DateTime'>
   readonly durationMs: Prisma.FieldRef<"AutomationRun", 'Int'>
+  readonly retries: Prisma.FieldRef<"AutomationRun", 'Int'>
   readonly logs: Prisma.FieldRef<"AutomationRun", 'String'>
   readonly error: Prisma.FieldRef<"AutomationRun", 'String'>
   readonly metadata: Prisma.FieldRef<"AutomationRun", 'Json'>

@@ -4,6 +4,7 @@ import ShadcnBigCalendar from '@widgets/calendar'
 import { ComponentType, useEffect, useState } from 'react'
 import type { CalendarProps } from 'react-big-calendar'
 import { dateFnsLocalizer, SlotInfo, Views } from 'react-big-calendar'
+import type { View } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import { enUS } from 'date-fns/locale/en-US'
 import type { EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
@@ -31,6 +32,9 @@ type CalendarEvent = {
   end: Date
   allDay?: boolean
   variant?: 'primary' | 'secondary' | 'outline'
+  automationId?: string
+  status?: 'pending' | 'running' | 'success' | 'failed' | 'skipped'
+  provider?: 'discord'
 }
 
 const startOfToday = new Date()
@@ -43,72 +47,99 @@ const createDate = (dayOffset: number, hours: number, minutes = 0) => {
   return date
 }
 
+const FIXED_DURATION_MINUTES = 5
+
 const presetEvents: CalendarEvent[] = [
   {
-    title: 'Product design sync',
-    start: createDate(0, 9, 30),
-    end: createDate(0, 12, 30),
+    title: 'Daily standup — #general',
+    start: createDate(0, 9, 0),
+    end: createDate(0, 9, FIXED_DURATION_MINUTES),
     variant: 'primary',
+    provider: 'discord',
+    status: 'success',
+    automationId: 'auto-001',
   },
   {
-    title: 'Customer onboarding',
-    start: createDate(1, 13),
-    end: createDate(1, 14, 30),
+    title: 'Weekly report — #team-leads',
+    start: createDate(1, 10, 0),
+    end: createDate(1, 10, FIXED_DURATION_MINUTES),
     variant: 'secondary',
+    provider: 'discord',
+    status: 'success',
+    automationId: 'auto-002',
   },
   {
-    title: 'Deep work block',
-    start: createDate(2, 11),
-    end: createDate(2, 13),
+    title: 'DB cleanup — maintenance',
+    start: createDate(2, 3, 0),
+    end: createDate(2, 3, FIXED_DURATION_MINUTES),
     variant: 'outline',
+    status: 'running',
+    automationId: 'auto-003',
   },
   {
-    title: 'Prepare Presentation',
-    start: createDate(-2, 9),
-    end: createDate(-2, 13),
+    title: 'Welcome DM — new members',
+    start: createDate(-2, 8, 30),
+    end: createDate(-2, 8, 30 + FIXED_DURATION_MINUTES),
     variant: 'secondary',
+    provider: 'discord',
+    status: 'success',
+    automationId: 'auto-004',
   },
   {
-    title: 'Team offsite',
-    start: createDate(-1, 0),
-    end: createDate(1, 0),
-    allDay: true,
+    title: 'Reminder: meeting in 10 min — #engineering',
+    start: createDate(-1, 9, 50),
+    end: createDate(-1, 9, 50 + FIXED_DURATION_MINUTES),
     variant: 'secondary',
+    provider: 'discord',
+    status: 'success',
+    automationId: 'auto-005',
   },
   {
-    title: 'Retro & planning',
-    start: createDate(3, 15),
-    end: createDate(3, 16, 30),
+    title: 'Analytics snapshot — #metrics',
+    start: createDate(3, 8, 0),
+    end: createDate(3, 8, FIXED_DURATION_MINUTES),
     variant: 'primary',
+    provider: 'discord',
+    status: 'failed',
+    automationId: 'auto-006',
   },
   {
-    title: 'Quarterly roadmap',
-    start: createDate(30, 10),
-    end: createDate(30, 11, 30),
+    title: 'Backup — full snapshot',
+    start: createDate(30, 2, 0),
+    end: createDate(30, 2, FIXED_DURATION_MINUTES),
     variant: 'primary',
+    status: 'success',
+    automationId: 'auto-007',
   },
   {
-    title: 'Partner demo',
-    start: createDate(32, 14),
-    end: createDate(32, 15),
+    title: 'Role sync — server members',
+    start: createDate(32, 6, 0),
+    end: createDate(32, 6, FIXED_DURATION_MINUTES),
     variant: 'secondary',
+    provider: 'discord',
+    status: 'success',
+    automationId: 'auto-008',
   },
   {
-    title: 'Billing review',
-    start: createDate(34, 9),
-    end: createDate(34, 11),
+    title: 'Audit log export',
+    start: createDate(34, 1, 0),
+    end: createDate(34, 1, FIXED_DURATION_MINUTES),
     variant: 'outline',
+    status: 'skipped',
+    automationId: 'auto-009',
   },
   {
-    title: 'Security tabletop',
-    start: createDate(36, 13),
-    end: createDate(36, 14, 30),
+    title: 'Security scan — tokens & perms',
+    start: createDate(36, 4, 0),
+    end: createDate(36, 4, FIXED_DURATION_MINUTES),
     variant: 'primary',
+    status: 'success',
+    automationId: 'auto-010',
   },
 ]
 
 const LandingPage = () => {
-  const [view, setView] = useState(Views.WEEK)
+  const [view, setView] = useState<View>(Views.WEEK)
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [events, setEvents] = useState<CalendarEvent[]>(() => [...presetEvents])
   const [selectedSlot, setSelectedSlot] = useState<SlotInfo | null>(null)
@@ -116,87 +147,27 @@ const LandingPage = () => {
   const eventPropGetter: CalendarProps<CalendarEvent>['eventPropGetter'] = (
     event
   ) => {
-    const variant = event.variant ?? 'primary'
+    const status = event.status ?? 'pending'
     return {
-      className: `event-variant-${variant}`,
+      className: `event-status-${status}`,
     }
-  }
-
-  const deriveAllDay = (
-    startDate: Date,
-    endDate: Date,
-    isAllDay?: boolean,
-    fallback?: boolean
-  ) => {
-    if (typeof isAllDay === 'boolean') return isAllDay
-    const dayDiff = endDate.getTime() - startDate.getTime()
-    const startsAtMidnight =
-      startDate.getHours() === 0 &&
-      startDate.getMinutes() === 0 &&
-      startDate.getSeconds() === 0
-    const endsAtMidnight =
-      endDate.getHours() === 0 &&
-      endDate.getMinutes() === 0 &&
-      endDate.getSeconds() === 0
-    if (startsAtMidnight && endsAtMidnight && dayDiff >= 24 * 60 * 60 * 1000) {
-      return true
-    }
-    if (!startsAtMidnight || dayDiff < 24 * 60 * 60 * 1000) {
-      return false
-    }
-    return fallback ?? false
-  }
-
-  const clampToSingleDay = (startDate: Date) => {
-    const endOfDay = new Date(startDate)
-    endOfDay.setHours(23, 59, 59, 999)
-    return endOfDay
   }
 
   const handleEventDrop = ({
     event,
     start,
-    end,
-    isAllDay,
   }: EventInteractionArgs<CalendarEvent>) => {
     const nextStart = new Date(start)
-    const nextEnd = new Date(end)
-    const nextAllDay = deriveAllDay(nextStart, nextEnd, isAllDay, event.allDay)
-    const normalizedEnd =
-      !nextAllDay &&
-      event.allDay &&
-      event.end.getTime() - event.start.getTime() >= 24 * 60 * 60 * 1000
-        ? clampToSingleDay(nextStart)
-        : nextEnd
-    const updatedEvents = events.map((existingEvent) =>
-      existingEvent === event
-        ? {
-            ...existingEvent,
-            start: nextStart,
-            end: normalizedEnd,
-            allDay: nextAllDay,
-          }
-        : existingEvent
-    )
-    setEvents(updatedEvents)
-  }
+    const nextEnd = new Date(nextStart)
+    nextEnd.setMinutes(nextEnd.getMinutes() + FIXED_DURATION_MINUTES)
 
-  const handleEventResize = ({
-    event,
-    start,
-    end,
-    isAllDay,
-  }: EventInteractionArgs<CalendarEvent>) => {
-    const nextStart = new Date(start)
-    const nextEnd = new Date(end)
-    const nextAllDay = deriveAllDay(nextStart, nextEnd, isAllDay, event.allDay)
     const updatedEvents = events.map((existingEvent) =>
       existingEvent === event
         ? {
             ...existingEvent,
             start: nextStart,
             end: nextEnd,
-            allDay: nextAllDay,
+            allDay: false,
           }
         : existingEvent
     )
@@ -217,15 +188,12 @@ const LandingPage = () => {
       date={date}
       onNavigate={(newDate) => setDate(newDate)}
       view={view}
-      onView={() => setView(view)}
-      resizable
+      onView={(newView) => setView(newView)}
       draggableAccessor={() => true}
-      resizableAccessor={() => true}
       events={events}
       eventPropGetter={eventPropGetter}
       onSelectSlot={(info) => setSelectedSlot(info)}
       onEventDrop={handleEventDrop}
-      onEventResize={handleEventResize}
     />
   )
 }

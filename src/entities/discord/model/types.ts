@@ -38,10 +38,3 @@ const GuildSchema = z.object({
 })
 
 export type GuildType = z.infer<typeof GuildSchema>
- 
-export type ProviderType = {
-  value: Provider
-  label: string
-  icon: React.ComponentType<{ className?: string }>
-  color: string
-}

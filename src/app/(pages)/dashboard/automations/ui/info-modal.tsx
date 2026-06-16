@@ -3,18 +3,13 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogFooter,
   DialogTrigger,
 } from '@/shared/ui/dialog'
 import { Button } from '@shared/ui/button'
 import { Automation } from '@prisma/generated/client'
 import { RiFileTextLine } from '@remixicon/react'
-import {
-  IdentifierSchema,
-  ProviderType,
-  BodySchema,
-} from '@entities/discord/client'
+import { IdentifierSchema, BodySchema } from '@entities/discord/client'
+import { ProviderType } from '@entities/provider-registry'
 
 export const InfoModal = ({
   automation,

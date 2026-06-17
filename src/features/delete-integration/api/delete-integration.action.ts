@@ -1,10 +1,7 @@
 'use server'
 
 import { requireAuth } from '@shared/api/auth.guard'
-import {
-  ActionResult,
-  withActionErrorHandler,
-} from '@shared/api/server-error-handlers'
+import { withActionErrorHandler } from '@shared/api/server-error-handlers'
 import {
   DeleteIntegrationSchema,
   DeleteIntegrationType,
@@ -13,9 +10,7 @@ import prisma from '@shared/utils/prisma'
 import { cache, CACHE_KEYS } from '@shared/api/cache'
 import { IntegrationTokenStatus } from '@prisma/generated/enums'
 
-const deleteIntegration = async (
-  values: DeleteIntegrationType
-): Promise<ActionResult> => {
+const deleteIntegration = async (values: DeleteIntegrationType) => {
   const user = await requireAuth()
 
   const { id } = DeleteIntegrationSchema.parse(values)
@@ -30,8 +25,6 @@ const deleteIntegration = async (
 
   await cache.del(`${CACHE_KEYS.INTEGRATION_TOKEN}:${user.id}`)
   await cache.del(`${CACHE_KEYS.INTEGRATION_TOKEN_COUNT}:${user.id}`)
-
-  return { success: true }
 }
 
 export const deleteIntegrationAction = withActionErrorHandler(deleteIntegration)

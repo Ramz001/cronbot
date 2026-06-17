@@ -13,7 +13,7 @@ const action = async () => {
     prisma.automation.findMany({
       where: {
         userId: user.id,
-        isActive: true,
+        deletedAt: null,
       },
       orderBy: {
         createdAt: 'desc',

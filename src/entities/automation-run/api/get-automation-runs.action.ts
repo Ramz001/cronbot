@@ -15,8 +15,10 @@ const action = async (values: AutomationRunType) => {
     prisma.automationRun.findMany({
       where: {
         automationId: id,
+        deletedAt: null,
         automation: {
           userId: user.id,
+          deletedAt: null,
         },
       },
       orderBy: {

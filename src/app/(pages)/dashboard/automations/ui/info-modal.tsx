@@ -33,7 +33,7 @@ export const InfoModal = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon-sm" title="View message body">
+        <Button variant="outline" size="icon-sm" title="View message body">
           <RiFileTextLine className="size-4" />
         </Button>
       </DialogTrigger>

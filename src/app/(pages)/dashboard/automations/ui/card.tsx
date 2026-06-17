@@ -21,6 +21,8 @@ import { handleError } from '@shared/utils/handle-error'
 import { BodySchema, IdentifierSchema } from '@entities/discord/client'
 import { InfoModal } from './info-modal'
 import { useState } from 'react'
+import { DeleteAutomationButton } from '@features/delete-automation'
+import { ToggleAutomationStatusButton } from '@features/toggle-automation-status'
 
 function AutomationCard({ automation }: { automation: Automation }) {
   const [infoModal, setInfoModal] = useState(false)
@@ -158,18 +160,14 @@ function AutomationCard({ automation }: { automation: Automation }) {
           className="flex shrink-0 items-center gap-1.5"
           onClick={(e) => e.stopPropagation()}
         >
-          <Button
+          <ToggleAutomationStatusButton
+            isActive={automation.isActive}
+            id={automation.id}
             variant="outline"
             size="icon-sm"
-            // onClick={() => onToggle(automation.id)}
             title={automation.isActive ? 'Pause' : 'Resume'}
-          >
-            {automation.isActive ? (
-              <RiPauseLine className="size-4" />
-            ) : (
-              <RiPlayLine className="size-4" />
-            )}
-          </Button>
+          />
+
           <Button
             variant="outline"
             size="icon-sm"
@@ -189,14 +187,7 @@ function AutomationCard({ automation }: { automation: Automation }) {
             open={infoModal}
             onOpenChange={setInfoModal}
           />
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-            title="Delete"
-          >
-            <RiDeleteBin2Line className="size-4" />
-          </Button>
+          <DeleteAutomationButton id={automation.id} />
         </div>
       </CardContent>
     </Card>

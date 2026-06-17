@@ -2,14 +2,15 @@
 
 import { requireAuth } from '@shared/api/auth.guard'
 import { withActionErrorHandler } from '@shared/api/server-error-handlers'
-import { cache, CACHE_KEYS } from '@shared/api/cache'
+import { cache } from '@shared/api/cache'
 import prisma from '@shared/utils/prisma'
 import { AutomationRunSchema, AutomationRunType } from '../model/validator'
+import { cacheKeys } from '@shared/consts/cache'
 
 const action = async (values: AutomationRunType) => {
   const user = await requireAuth()
-  const cacheKey = `${CACHE_KEYS.AUTOMATION_RUN}:${user.id}`
   const { id } = AutomationRunSchema.parse(values)
+  const cacheKey = cacheKeys.automationRun(user.id, id)
 
   return await cache.wrap(cacheKey, () =>
     prisma.automationRun.findMany({

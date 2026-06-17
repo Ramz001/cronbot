@@ -7,7 +7,8 @@ import {
   ToggleAutomationStatusType,
 } from '../model/validator'
 import prisma from '@shared/utils/prisma'
-import { cache, CACHE_KEYS } from '@shared/api/cache'
+import { cache } from '@shared/api/cache'
+import { cacheKeys } from '@shared/consts/cache'
 import { NotFoundError } from '@shared/api/errors'
 
 const toggleAutomationStatus = async (values: ToggleAutomationStatusType) => {
@@ -31,7 +32,7 @@ const toggleAutomationStatus = async (values: ToggleAutomationStatusType) => {
     },
   })
 
-  await cache.del(`${CACHE_KEYS.AUTOMATION}:${user.id}`)
+  await cache.del(cacheKeys.automation(user.id))
 }
 
 export const toggleAutomationStatusAction = withActionErrorHandler(

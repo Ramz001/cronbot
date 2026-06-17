@@ -2,12 +2,13 @@
 
 import { requireAuth } from '@shared/api/auth.guard'
 import { withActionErrorHandler } from '@shared/api/server-error-handlers'
-import { cache, CACHE_KEYS } from '@shared/api/cache'
+import { cache } from '@shared/api/cache'
 import prisma from '@shared/utils/prisma'
+import { cacheKeys } from '@shared/consts/cache'
 
 const action = async () => {
   const user = await requireAuth()
-  const cacheKey = `${CACHE_KEYS.AUTOMATION}:${user.id}`
+  const cacheKey = cacheKeys.automation(user.id)
 
   return await cache.wrap(cacheKey, () =>
     prisma.automation.findMany({

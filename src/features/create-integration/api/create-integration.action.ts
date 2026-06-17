@@ -8,7 +8,8 @@ import {
 } from '../model/validator'
 import prisma from '@shared/utils/prisma'
 import { encrypt } from '@shared/api/encryption'
-import { cache, CACHE_KEYS } from '@shared/api/cache'
+import { cache } from '@shared/api/cache'
+import { cacheKeys } from '@shared/consts/cache'
 
 const createIntegration = async (values: CreateIntegrationType) => {
   const user = await requireAuth()
@@ -29,8 +30,8 @@ const createIntegration = async (values: CreateIntegrationType) => {
     },
   })
 
-  await cache.del(`${CACHE_KEYS.INTEGRATION_TOKEN}:${user.id}`)
-  await cache.del(`${CACHE_KEYS.INTEGRATION_TOKEN_COUNT}:${user.id}`)
+  await cache.del(cacheKeys.integrationToken(user.id))
+  await cache.del(cacheKeys.integrationTokenCount(user.id))
 }
 
 export const createIntegrationAction = withActionErrorHandler(createIntegration)

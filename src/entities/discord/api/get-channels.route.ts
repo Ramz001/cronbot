@@ -2,7 +2,8 @@ import { NextRequest } from 'next/server'
 import { authHeaders } from '../utils/auth-headers'
 import { DISCORD_API } from '../consts/api'
 import { requireAuth } from '@shared/api/auth.guard'
-import { cache, CACHE_KEYS } from '@shared/api/cache'
+import { cache } from '@shared/api/cache'
+import { cacheKeys } from '@shared/consts/cache'
 import { GuildIdSchema } from '../model/validator'
 import {
   withRouteErrorHandler,
@@ -20,7 +21,7 @@ async function getGuildChannels(
   const guildId = GuildIdSchema.parse(id)
 
   return await cache.wrap(
-    `${CACHE_KEYS.DISCORD_CHANNELS}:${user.id}:${guildId}`,
+    cacheKeys.discordChannel(guildId),
     async () => {
       const headers = await authHeaders({ userId: user.id })
 

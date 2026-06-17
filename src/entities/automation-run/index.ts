@@ -1,1 +1,1 @@
-export * from "./api/get-automation-runs.action"
+export * from './api/get-automation-runs.action'

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { env } from '@shared/configs/env'
-import { cache, CACHE_KEYS } from '@shared/api/cache'
+import { cache } from '@shared/api/cache'
 import { withRouteErrorHandler } from '@shared/api/server-error-handlers'
 import z from 'zod'
+import { CACHE_KEYS } from '@shared/consts/cache'
 
 const AuthHeader = z
   .string()

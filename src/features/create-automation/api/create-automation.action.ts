@@ -5,7 +5,8 @@ import { AutomationCreateInput } from '@prisma/generated/models'
 import { requireAuth } from '@shared/api/auth.guard'
 import { CreateAutomationSchema, CreateAutomationType } from '../model/validator'
 import prisma from '@shared/utils/prisma'
-import { cache, CACHE_KEYS } from '@shared/api/cache'
+import { cache } from '@shared/api/cache'
+import { cacheKeys } from '@shared/consts/cache'
 
 const action = async (values: CreateAutomationType) => {
   const user = await requireAuth()
@@ -22,7 +23,7 @@ const action = async (values: CreateAutomationType) => {
     },
   })
 
-  await cache.del(`${CACHE_KEYS.AUTOMATION}:${user.id}`)
+  await cache.del(cacheKeys.automation(user.id))
 }
 
 export const createAutomation = withActionErrorHandler(action)

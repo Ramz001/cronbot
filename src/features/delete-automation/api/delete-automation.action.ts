@@ -10,7 +10,8 @@ import {
   DeleteAutomationType,
 } from '../model/validator'
 import prisma from '@shared/utils/prisma'
-import { cache, CACHE_KEYS } from '@shared/api/cache'
+import { cache } from '@shared/api/cache'
+import { cacheKeys } from '@shared/consts/cache'
 
 const deleteAutomation = async (
   values: DeleteAutomationType
@@ -26,7 +27,7 @@ const deleteAutomation = async (
     },
   })
 
-  await cache.del(`${CACHE_KEYS.AUTOMATION}:${user.id}`)
+  await cache.del(cacheKeys.automation(user.id))
 
   return { success: true }
 }

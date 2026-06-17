@@ -11,7 +11,7 @@ import {
 import { toggleAutomationStatusAction } from '../api/toggle-automation-status.action'
 import { RiLoader2Fill, RiPauseLine, RiPlayLine } from '@remixicon/react'
 
-export const ToggleAutomationStatusButton = (
+export const ToggleStatusButton = (
   props: ToggleAutomationStatusType & {
     isActive: boolean
     variant?: 'outline' | 'ghost'

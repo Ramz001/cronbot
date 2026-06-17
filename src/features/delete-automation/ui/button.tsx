@@ -20,7 +20,7 @@ import {
 import { deleteAutomationAction } from '../api/delete-automation.action'
 import { RiDeleteBin2Line, RiLoader2Fill } from '@remixicon/react'
 
-export const DeleteAutomationButton = (props: DeleteAutomationType) => {
+export const DeleteButton = (props: DeleteAutomationType) => {
   const { id } = DeleteAutomationSchema.parse(props)
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()

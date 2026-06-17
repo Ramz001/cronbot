@@ -21,8 +21,8 @@ import { handleError } from '@shared/utils/handle-error'
 import { BodySchema, IdentifierSchema } from '@entities/discord/client'
 import { InfoModal } from './info-modal'
 import { useState } from 'react'
-import { DeleteAutomationButton } from '@features/delete-automation'
-import { ToggleAutomationStatusButton } from '@features/toggle-automation-status'
+import { DeleteButton } from '@features/delete-automation'
+import { ToggleStatusButton } from '@features/toggle-automation-status'
 
 function AutomationCard({ automation }: { automation: Automation }) {
   const [infoModal, setInfoModal] = useState(false)
@@ -160,7 +160,7 @@ function AutomationCard({ automation }: { automation: Automation }) {
           className="flex shrink-0 items-center gap-1.5"
           onClick={(e) => e.stopPropagation()}
         >
-          <ToggleAutomationStatusButton
+          <ToggleStatusButton
             isActive={automation.isActive}
             id={automation.id}
             variant="outline"
@@ -187,7 +187,7 @@ function AutomationCard({ automation }: { automation: Automation }) {
             open={infoModal}
             onOpenChange={setInfoModal}
           />
-          <DeleteAutomationButton id={automation.id} />
+          <DeleteButton id={automation.id} />
         </div>
       </CardContent>
     </Card>

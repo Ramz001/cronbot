@@ -23,7 +23,8 @@ import { toast } from 'sonner'
 import { handleError } from '@shared/utils/handle-error'
 import { createAutomation } from '../api/create-automation.action'
 import { CreateAutomationType } from '../model/validator'
-import { ChannelType, GuildType } from '@entities/discord/model/types'
+import { ChannelType, GuildType, CHANNEL_TYPE } from '@entities/discord/client'
+import { SendMessageBodyType } from '@features/discord-send-message'
 
 export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
   const form = useForm({
@@ -74,13 +75,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
   })
 
   const testMutation = useMutation({
-    mutationFn: async ({
-      channelId,
-      message,
-    }: {
-      channelId: string
-      message: string
-    }) => {
+    mutationFn: async ({ channelId, message }: SendMessageBodyType) => {
       const { data } = await axios.post('/api/discord/send', {
         channelId,
         message,
@@ -99,11 +94,6 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
     const values = form.baseStore.state.values
     const channelId = values.identifier.channelId
     const message = values.body.message
-
-    if (!channelId || !message) {
-      toast.error('Please select a channel and enter a message before testing.')
-      return
-    }
 
     testMutation.mutate({ channelId, message })
   }
@@ -234,13 +224,15 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                     </SelectTrigger>
                     <SelectContent>
                       {channels
-                        ?.filter((channel) => channel.type === 0)
+                        ?.filter(
+                          (channel) => channel.type === CHANNEL_TYPE.GUILD_TEXT
+                        )
                         .map((channel) => (
-                        <SelectItem key={channel.id} value={channel.id}>
-                          <RiHashtag className="mr-1 inline size-3 shrink-0" />
-                          {channel.name}
-                        </SelectItem>
-                      ))}
+                          <SelectItem key={channel.id} value={channel.id}>
+                            <RiHashtag className="mr-1 inline size-3 shrink-0" />
+                            {channel.name}
+                          </SelectItem>
+                        ))}
                     </SelectContent>
                   </Select>
                   <FieldError errors={field.state.meta.errors} />

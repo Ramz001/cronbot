@@ -101,7 +101,7 @@ CREATE TABLE "settings" (
 -- CreateTable
 CREATE TABLE "automation" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
+    "name" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "provider" "Provider" NOT NULL,
     "identifier" JSONB NOT NULL,

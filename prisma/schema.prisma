@@ -118,7 +118,7 @@ model Settings {
 
 model Automation {
   id         String    @id @default(cuid())
-  name       String?
+  name       String
   userId     String
   provider   Provider
   identifier Json

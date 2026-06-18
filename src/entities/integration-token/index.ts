@@ -1,1 +1,1 @@
-export * from './api/get-integration-tokens.action'
+export * from "./api/get-integration-tokens.action";

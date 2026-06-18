@@ -1,28 +1,28 @@
-import '@shared/configs/env'
-import ToastProvider from './toast.provider'
-import ThemeProvider from './theme.provider'
-import { TooltipProvider } from '@shared/ui/tooltip'
-import NuqsProvider from './nuqs.provider'
-import { Analytics } from '@vercel/analytics/next'
-import QueryProvider from './query.provider'
+import "@shared/configs/env";
+import ToastProvider from "./toast.provider";
+import ThemeProvider from "./theme.provider";
+import { TooltipProvider } from "@shared/ui/tooltip";
+import NuqsProvider from "./nuqs.provider";
+import { Analytics } from "@vercel/analytics/next";
+import QueryProvider from "./query.provider";
 
 export default function RootProvider({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode;
 }) {
-  return (
-    <>
-      <Analytics />
-      <TooltipProvider>
-        <ThemeProvider>
-          <NuqsProvider>
-            <QueryProvider>
-              <ToastProvider>{children}</ToastProvider>
-            </QueryProvider>
-          </NuqsProvider>
-        </ThemeProvider>
-      </TooltipProvider>
-    </>
-  )
+	return (
+		<>
+			<Analytics />
+			<TooltipProvider>
+				<ThemeProvider>
+					<NuqsProvider>
+						<QueryProvider>
+							<ToastProvider>{children}</ToastProvider>
+						</QueryProvider>
+					</NuqsProvider>
+				</ThemeProvider>
+			</TooltipProvider>
+		</>
+	);
 }

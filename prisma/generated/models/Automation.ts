@@ -177,7 +177,7 @@ export type AutomationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type AutomationGroupByOutputType = {
   id: string
-  name: string | null
+  name: string
   userId: string
   provider: $Enums.Provider
   identifier: runtime.JsonValue
@@ -212,7 +212,7 @@ export type AutomationWhereInput = {
   OR?: Prisma.AutomationWhereInput[]
   NOT?: Prisma.AutomationWhereInput | Prisma.AutomationWhereInput[]
   id?: Prisma.StringFilter<"Automation"> | string
-  name?: Prisma.StringNullableFilter<"Automation"> | string | null
+  name?: Prisma.StringFilter<"Automation"> | string
   userId?: Prisma.StringFilter<"Automation"> | string
   provider?: Prisma.EnumProviderFilter<"Automation"> | $Enums.Provider
   identifier?: Prisma.JsonFilter<"Automation">
@@ -228,7 +228,7 @@ export type AutomationWhereInput = {
 
 export type AutomationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
@@ -247,7 +247,7 @@ export type AutomationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AutomationWhereInput | Prisma.AutomationWhereInput[]
   OR?: Prisma.AutomationWhereInput[]
   NOT?: Prisma.AutomationWhereInput | Prisma.AutomationWhereInput[]
-  name?: Prisma.StringNullableFilter<"Automation"> | string | null
+  name?: Prisma.StringFilter<"Automation"> | string
   userId?: Prisma.StringFilter<"Automation"> | string
   provider?: Prisma.EnumProviderFilter<"Automation"> | $Enums.Provider
   identifier?: Prisma.JsonFilter<"Automation">
@@ -263,7 +263,7 @@ export type AutomationWhereUniqueInput = Prisma.AtLeast<{
 
 export type AutomationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
@@ -283,7 +283,7 @@ export type AutomationScalarWhereWithAggregatesInput = {
   OR?: Prisma.AutomationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AutomationScalarWhereWithAggregatesInput | Prisma.AutomationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Automation"> | string
-  name?: Prisma.StringNullableWithAggregatesFilter<"Automation"> | string | null
+  name?: Prisma.StringWithAggregatesFilter<"Automation"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Automation"> | string
   provider?: Prisma.EnumProviderWithAggregatesFilter<"Automation"> | $Enums.Provider
   identifier?: Prisma.JsonWithAggregatesFilter<"Automation">
@@ -297,7 +297,7 @@ export type AutomationScalarWhereWithAggregatesInput = {
 
 export type AutomationCreateInput = {
   id?: string
-  name?: string | null
+  name: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -312,7 +312,7 @@ export type AutomationCreateInput = {
 
 export type AutomationUncheckedCreateInput = {
   id?: string
-  name?: string | null
+  name: string
   userId: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -327,7 +327,7 @@ export type AutomationUncheckedCreateInput = {
 
 export type AutomationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -342,7 +342,7 @@ export type AutomationUpdateInput = {
 
 export type AutomationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -357,7 +357,7 @@ export type AutomationUncheckedUpdateInput = {
 
 export type AutomationCreateManyInput = {
   id?: string
-  name?: string | null
+  name: string
   userId: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -371,7 +371,7 @@ export type AutomationCreateManyInput = {
 
 export type AutomationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -384,7 +384,7 @@ export type AutomationUpdateManyMutationInput = {
 
 export type AutomationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -507,7 +507,7 @@ export type AutomationUpdateOneRequiredWithoutAutomationRunsNestedInput = {
 
 export type AutomationCreateWithoutUserInput = {
   id?: string
-  name?: string | null
+  name: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -521,7 +521,7 @@ export type AutomationCreateWithoutUserInput = {
 
 export type AutomationUncheckedCreateWithoutUserInput = {
   id?: string
-  name?: string | null
+  name: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -564,7 +564,7 @@ export type AutomationScalarWhereInput = {
   OR?: Prisma.AutomationScalarWhereInput[]
   NOT?: Prisma.AutomationScalarWhereInput | Prisma.AutomationScalarWhereInput[]
   id?: Prisma.StringFilter<"Automation"> | string
-  name?: Prisma.StringNullableFilter<"Automation"> | string | null
+  name?: Prisma.StringFilter<"Automation"> | string
   userId?: Prisma.StringFilter<"Automation"> | string
   provider?: Prisma.EnumProviderFilter<"Automation"> | $Enums.Provider
   identifier?: Prisma.JsonFilter<"Automation">
@@ -578,7 +578,7 @@ export type AutomationScalarWhereInput = {
 
 export type AutomationCreateWithoutAutomationRunsInput = {
   id?: string
-  name?: string | null
+  name: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -592,7 +592,7 @@ export type AutomationCreateWithoutAutomationRunsInput = {
 
 export type AutomationUncheckedCreateWithoutAutomationRunsInput = {
   id?: string
-  name?: string | null
+  name: string
   userId: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -622,7 +622,7 @@ export type AutomationUpdateToOneWithWhereWithoutAutomationRunsInput = {
 
 export type AutomationUpdateWithoutAutomationRunsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -636,7 +636,7 @@ export type AutomationUpdateWithoutAutomationRunsInput = {
 
 export type AutomationUncheckedUpdateWithoutAutomationRunsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -650,7 +650,7 @@ export type AutomationUncheckedUpdateWithoutAutomationRunsInput = {
 
 export type AutomationCreateManyUserInput = {
   id?: string
-  name?: string | null
+  name: string
   provider: $Enums.Provider
   identifier: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -663,7 +663,7 @@ export type AutomationCreateManyUserInput = {
 
 export type AutomationUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -677,7 +677,7 @@ export type AutomationUpdateWithoutUserInput = {
 
 export type AutomationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -691,7 +691,7 @@ export type AutomationUncheckedUpdateWithoutUserInput = {
 
 export type AutomationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   identifier?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   body?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -815,7 +815,7 @@ export type $AutomationPayload<ExtArgs extends runtime.Types.Extensions.Internal
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string | null
+    name: string
     userId: string
     provider: $Enums.Provider
     identifier: runtime.JsonValue

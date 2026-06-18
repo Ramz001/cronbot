@@ -1,61 +1,61 @@
-import { mapError, type MapErrorResult } from './map-error'
-import { NextResponse, type NextRequest } from 'next/server'
+import { mapError, type MapErrorResult } from "./map-error";
+import { NextResponse, type NextRequest } from "next/server";
 
 export type ActionSuccess<T = void> = {
-  success: true
-  data?: T
-}
+	success: true;
+	data?: T;
+};
 
 export type ActionError = MapErrorResult & {
-  success: false
-}
+	success: false;
+};
 
-export type ActionResult<T = void> = ActionSuccess<T> | ActionError
+export type ActionResult<T = void> = ActionSuccess<T> | ActionError;
 
 export type RouteSuccess<T = void> = NextResponse<{
-  success: true
-  data?: T
-}>
+	success: true;
+	data?: T;
+}>;
 
 export type RouteError = MapErrorResult &
-  NextResponse<{
-    success: false
-  }>
+	NextResponse<{
+		success: false;
+	}>;
 
-export type RouteResult<T = void> = RouteSuccess<T> | RouteError
+export type RouteResult<T = void> = RouteSuccess<T> | RouteError;
 
 /**
  * Wrap any async server handler to catch errors.
  * Ignores the handler's normal return value — only ensures errors are handled consistently.
  */
 export function withActionErrorHandler<Args extends unknown[], T>(
-  handler: (...args: Args) => Promise<T>
+	handler: (...args: Args) => Promise<T>,
 ) {
-  return async (...args: Args): Promise<ActionResult<T>> => {
-    try {
-      const data = await handler(...args)
+	return async (...args: Args): Promise<ActionResult<T>> => {
+		try {
+			const data = await handler(...args);
 
-      return {
-        success: true,
-        data,
-      }
-    } catch (error: unknown) {
-      const { error: mappedError, status } = mapError(error)
+			return {
+				success: true,
+				data,
+			};
+		} catch (error: unknown) {
+			const { error: mappedError, status } = mapError(error);
 
-      const logInfo =
-        error instanceof Error
-          ? { message: error.message, response: (error as any).response?.data }
-          : error
+			const logInfo =
+				error instanceof Error
+					? { message: error.message, response: (error as any).response?.data }
+					: error;
 
-      console.error('[Server Action Error]:', logInfo)
+			console.error("[Server Action Error]:", logInfo);
 
-      return {
-        success: false,
-        error: mappedError,
-        status,
-      }
-    }
-  }
+			return {
+				success: false,
+				error: mappedError,
+				status,
+			};
+		}
+	};
 }
 
 /**
@@ -63,28 +63,28 @@ export function withActionErrorHandler<Args extends unknown[], T>(
  * Ignores the handler's normal return value — only ensures errors are handled consistently.
  */
 export const withRouteErrorHandler = <TContext extends unknown[]>(
-  handler: (req: NextRequest, ...args: TContext) => Promise<NextResponse>
+	handler: (req: NextRequest, ...args: TContext) => Promise<NextResponse>,
 ) => {
-  return async (req: NextRequest, ...args: TContext): Promise<NextResponse> => {
-    try {
-      const data = await handler(req, ...args)
+	return async (req: NextRequest, ...args: TContext): Promise<NextResponse> => {
+		try {
+			const data = await handler(req, ...args);
 
-      return NextResponse.json({ success: true, data })
-    } catch (error) {
-      const { error: mappedError, status } = mapError(error)
+			return NextResponse.json({ success: true, data });
+		} catch (error) {
+			const { error: mappedError, status } = mapError(error);
 
-      console.error(`[Route Error] ${(error as Error)?.message}`)
+			console.error(`[Route Error] ${(error as Error)?.message}`);
 
-      return NextResponse.json(
-        { success: false, error: mappedError },
-        { status }
-      )
-    }
-  }
-}
+			return NextResponse.json(
+				{ success: false, error: mappedError },
+				{ status },
+			);
+		}
+	};
+};
 
 export function isSuccess<T = void>(
-  res: ActionResult<T>
+	res: ActionResult<T>,
 ): res is ActionSuccess<T> {
-  return res.success === true
+	return res.success === true;
 }

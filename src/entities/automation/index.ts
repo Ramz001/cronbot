@@ -1,1 +1,1 @@
-export * from "./api/get-automations.action"
+export * from "./api/get-automations.action";

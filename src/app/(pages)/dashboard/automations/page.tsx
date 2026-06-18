@@ -1,15 +1,15 @@
-import { AutomationsList } from './ui/list'
+import { AutomationsList } from "./ui/list";
 
 export default function AutomationsPage() {
-  return (
-    <>
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Automations</h1>
-        <p className="text-muted-foreground text-sm">
-          Manage your scheduled workflows and active tasks.
-        </p>
-      </div>
-      <AutomationsList />
-    </>
-  )
+	return (
+		<>
+			<div>
+				<h1 className="text-2xl font-bold tracking-tight">Automations</h1>
+				<p className="text-muted-foreground text-sm">
+					Manage your scheduled workflows and active tasks.
+				</p>
+			</div>
+			<AutomationsList />
+		</>
+	);
 }

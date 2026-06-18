@@ -13,20 +13,10 @@ import { Automation } from '@prisma/generated/client'
 import { RiFileTextLine, RiTimeLine, RiLoader2Line } from '@remixicon/react'
 import { IdentifierSchema, BodySchema } from '@entities/discord/client'
 import { ProviderType } from '@entities/provider-registry'
-import { getAutomationRuns } from '@entities/automation-run'
+import { getAutomationRunsById } from '@entities/automation-run'
 import { RUN_STATUS_CONFIG } from '@entities/automation-run/client'
 import { useQuery } from '@tanstack/react-query'
 import { cn } from '@shared/utils/cn'
-
-function formatDuration(ms: number): string {
-  if (ms >= 60000) {
-    const m = Math.floor(ms / 60000)
-    const s = Math.round((ms % 60000) / 1000)
-    return `${m}m ${s}s`
-  }
-  if (ms >= 1000) return `${(ms / 1000).toFixed(1)}s`
-  return `${ms}ms`
-}
 
 export const InfoModal = ({
   automation,
@@ -47,6 +37,10 @@ export const InfoModal = ({
   const bodyResult = BodySchema.safeParse(automation.body)
   const bodyData = bodyResult.success ? bodyResult.data : { message: '' }
 
+  const formatter = new Intl.DurationFormat('en', {
+    style: 'short',
+  })
+
   const {
     data: runs = [],
     isLoading: runsLoading,
@@ -55,10 +49,10 @@ export const InfoModal = ({
   } = useQuery({
     queryKey: ['automation-runs', automation.id],
     queryFn: async () => {
-      const result = await getAutomationRuns({ id: automation.id })
+      const result = await getAutomationRunsById({ id: automation.id })
       if (!result.success)
         throw new Error(result.error?.message ?? 'Failed to load runs')
-      return (result.data ?? []).slice(0, 5)
+      return result.data ?? []
     },
     enabled: !!open,
   })
@@ -211,7 +205,10 @@ export const InfoModal = ({
                         )}
                         {run.durationMs != null && (
                           <span>
-                            Duration: {formatDuration(run.durationMs)}
+                            Duration:{' '}
+                            {formatter.format({
+                              seconds: Math.floor(run.durationMs / 1000),
+                            })}
                           </span>
                         )}
                         {run.scheduledAt && (

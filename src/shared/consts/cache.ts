@@ -13,7 +13,8 @@ export const cacheKeys = {
   integrationTokenCount: (userId: string) =>
     `${CACHE_KEYS.INTEGRATION_TOKEN_COUNT}:${userId}`,
   automation: (userId: string) => `${CACHE_KEYS.AUTOMATION}:${userId}`,
-  automationRun: (userId: string, automationId: string) =>
+  automationRun: (userId: string) => `${CACHE_KEYS.AUTOMATION_RUN}:${userId}`,
+  automationRunById: (userId: string, automationId: string) =>
     `${CACHE_KEYS.AUTOMATION_RUN}:${userId}:${automationId}`,
   discordGuild: (userId: string) => `${CACHE_KEYS.DISCORD_GUILD}:${userId}`,
   discordChannel: (guildId: string) =>

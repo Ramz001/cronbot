@@ -1,9 +1,9 @@
 "use client";
 
 import ShadcnBigCalendar from "@widgets/calendar";
-import { ComponentType, useEffect, useState } from "react";
+import { type ComponentType, useEffect, useState } from "react";
 import type { CalendarProps } from "react-big-calendar";
-import { dateFnsLocalizer, SlotInfo, Views } from "react-big-calendar";
+import { dateFnsLocalizer, type SlotInfo, Views } from "react-big-calendar";
 import type { View } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { enUS } from "date-fns/locale/en-US";

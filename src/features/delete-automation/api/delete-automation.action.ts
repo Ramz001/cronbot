@@ -2,12 +2,12 @@
 
 import { requireAuth } from "@shared/api/auth.guard";
 import {
-	ActionResult,
+	type ActionResult,
 	withActionErrorHandler,
 } from "@shared/api/server-error-handlers";
 import {
 	DeleteAutomationSchema,
-	DeleteAutomationType,
+	type DeleteAutomationType,
 } from "../model/validator";
 import prisma from "@shared/utils/prisma";
 import { cache } from "@shared/api/cache";

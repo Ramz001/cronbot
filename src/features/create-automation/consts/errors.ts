@@ -1,5 +1,5 @@
 import {
-	RiErrorWarningLine,
+	type RiErrorWarningLine,
 	RiLockLine,
 	RiKeyLine,
 	RiServerLine,

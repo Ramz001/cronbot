@@ -1,4 +1,4 @@
-import { type IntegrationToken } from "@prisma/generated/client";
+import type { IntegrationToken } from "@prisma/generated/client";
 import {
 	Card,
 	CardContent,

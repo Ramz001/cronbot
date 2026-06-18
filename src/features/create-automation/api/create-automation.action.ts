@@ -5,7 +5,7 @@ import { AutomationCreateInput } from "@prisma/generated/models";
 import { requireAuth } from "@shared/api/auth.guard";
 import {
 	CreateAutomationSchema,
-	CreateAutomationType,
+	type CreateAutomationType,
 } from "../model/validator";
 import prisma from "@shared/utils/prisma";
 import { cache } from "@shared/api/cache";

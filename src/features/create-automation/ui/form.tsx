@@ -22,9 +22,9 @@ import axios from "axios";
 import { toast } from "sonner";
 import { handleError } from "@shared/utils/handle-error";
 import { createAutomation } from "../api/create-automation.action";
-import { CreateAutomationType } from "../model/validator";
-import { ChannelType, GuildType, CHANNEL_TYPE } from "@entities/discord/client";
-import { SendMessageBodyType } from "@features/discord-send-message";
+import type { CreateAutomationType } from "../model/validator";
+import { type ChannelType, type GuildType, CHANNEL_TYPE } from "@entities/discord/client";
+import type { SendMessageBodyType } from "@features/discord-send-message";
 
 export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
 	const form = useForm({

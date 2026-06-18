@@ -4,7 +4,7 @@ import { requireAuth } from "@shared/api/auth.guard";
 import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import { cache } from "@shared/api/cache";
 import prisma from "@shared/utils/prisma";
-import { AutomationRunSchema, AutomationRunType } from "../model/validator";
+import { AutomationRunSchema, type AutomationRunType } from "../model/validator";
 import { cacheKeys } from "@shared/consts/cache";
 
 const action = async (values: AutomationRunType) => {

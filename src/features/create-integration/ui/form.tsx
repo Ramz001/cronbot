@@ -43,7 +43,7 @@ function CreateIntegrationForm() {
 				provider: value.provider as Provider,
 				title: value.title || undefined,
 				token: value.token,
-				// @ts-ignore
+				// @ts-expect-error
 				expiresAt: expiresAt,
 			});
 

@@ -1,6 +1,6 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import {
-	RouteResult,
+	type RouteResult,
 	withRouteErrorHandler,
 } from "@shared/api/server-error-handlers";
 import { DISCORD_API, authHeaders } from "@entities/discord";

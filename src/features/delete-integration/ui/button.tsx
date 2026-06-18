@@ -15,7 +15,7 @@ import {
 import { Button } from "@shared/ui/button";
 import {
 	DeleteIntegrationSchema,
-	DeleteIntegrationType,
+	type DeleteIntegrationType,
 } from "../model/validator";
 import { deleteIntegrationAction } from "../api/delete-integration.action";
 

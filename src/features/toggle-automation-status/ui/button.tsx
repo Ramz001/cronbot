@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@shared/ui/button";
 import {
 	ToggleAutomationStatusSchema,
-	ToggleAutomationStatusType,
+	type ToggleAutomationStatusType,
 } from "../model/validator";
 import { toggleAutomationStatusAction } from "../api/toggle-automation-status.action";
 import { RiLoader2Fill, RiPauseLine, RiPlayLine } from "@remixicon/react";

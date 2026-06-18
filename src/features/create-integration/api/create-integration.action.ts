@@ -4,7 +4,7 @@ import { requireAuth } from "@shared/api/auth.guard";
 import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import {
 	CreateIntegrationSchema,
-	CreateIntegrationType,
+	type CreateIntegrationType,
 } from "../model/validator";
 import prisma from "@shared/utils/prisma";
 import { encrypt } from "@shared/api/encryption";

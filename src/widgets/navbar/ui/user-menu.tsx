@@ -11,7 +11,7 @@ import {
 	DropdownMenuTrigger,
 } from "@shared/ui/dropdown-menu";
 import { cn } from "@shared/utils/cn";
-import { User } from "better-auth";
+import type { User } from "better-auth";
 
 type UserMenuProps = {
 	user: User;

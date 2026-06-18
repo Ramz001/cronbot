@@ -15,7 +15,7 @@ import {
 import { Button } from "@shared/ui/button";
 import {
 	DeleteAutomationSchema,
-	DeleteAutomationType,
+	type DeleteAutomationType,
 } from "../model/validator";
 import { deleteAutomationAction } from "../api/delete-automation.action";
 import { RiDeleteBin2Line, RiLoader2Fill } from "@remixicon/react";

@@ -11,7 +11,7 @@ import {
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { Badge } from "@/shared/ui/badge";
-import { Automation } from "@prisma/generated/client";
+import type { Automation } from "@prisma/generated/client";
 import { cn } from "@shared/utils/cn";
 import { getProvider } from "@entities/provider-registry";
 import { useMutation } from "@tanstack/react-query";

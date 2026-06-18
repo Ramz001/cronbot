@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { User } from "better-auth";
+import type { User } from "better-auth";
 import { headers } from "next/headers";
 import { UnauthorizedError } from "./errors";
 

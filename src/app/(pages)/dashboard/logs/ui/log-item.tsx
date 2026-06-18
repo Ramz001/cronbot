@@ -13,8 +13,8 @@ import {
 	RiFileListLine,
 } from "@remixicon/react";
 import {
-	Automation,
-	AutomationRun,
+	type Automation,
+	type AutomationRun,
 	AutomationRunStatus,
 } from "@prisma/generated/client";
 

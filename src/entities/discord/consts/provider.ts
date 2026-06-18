@@ -1,6 +1,6 @@
 import { Provider } from "@prisma/generated/enums";
 import { Icon } from "../client";
-import { ProviderType } from "@entities/provider-registry";
+import type { ProviderType } from "@entities/provider-registry";
 
 export const DISCORD_PROVIDER: ProviderType = {
 	value: Provider.discord,

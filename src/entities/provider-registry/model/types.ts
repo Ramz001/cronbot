@@ -1,4 +1,4 @@
-import { Provider } from "@prisma/generated/enums";
+import type { Provider } from "@prisma/generated/enums";
 
 export type ProviderType = {
 	value: Provider;

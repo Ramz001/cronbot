@@ -9,10 +9,10 @@ import {
 } from "@/shared/ui/dialog";
 import { Button } from "@shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
-import { Automation } from "@prisma/generated/client";
+import type { Automation } from "@prisma/generated/client";
 import { RiFileTextLine, RiTimeLine, RiLoader2Line } from "@remixicon/react";
 import { IdentifierSchema, BodySchema } from "@entities/discord/client";
-import { ProviderType } from "@entities/provider-registry";
+import type { ProviderType } from "@entities/provider-registry";
 import { getAutomationRunsById } from "@entities/automation-run";
 import { RUN_STATUS_CONFIG } from "@entities/automation-run/client";
 import { useQuery } from "@tanstack/react-query";

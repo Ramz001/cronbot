@@ -5,7 +5,7 @@ import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import { cache } from "@shared/api/cache";
 import { cacheKeys } from "@shared/consts/cache";
 import axios from "axios";
-import { GuildType } from "../model/types";
+import type { GuildType } from "../model/types";
 
 const action = async (): Promise<GuildType[]> => {
 	const user = await requireAuth();

@@ -4,7 +4,7 @@ import { requireAuth } from "@shared/api/auth.guard";
 import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import {
 	ToggleAutomationStatusSchema,
-	ToggleAutomationStatusType,
+	type ToggleAutomationStatusType,
 } from "../model/validator";
 import prisma from "@shared/utils/prisma";
 import { cache } from "@shared/api/cache";

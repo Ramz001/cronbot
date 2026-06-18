@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { authHeaders } from "../utils/auth-headers";
 import { DISCORD_API } from "../consts/api";
 import { requireAuth } from "@shared/api/auth.guard";
@@ -7,9 +7,9 @@ import { cacheKeys } from "@shared/consts/cache";
 import { GuildIdSchema } from "../model/validator";
 import {
 	withRouteErrorHandler,
-	RouteResult,
+	type RouteResult,
 } from "@shared/api/server-error-handlers";
-import { ChannelType } from "../model/types";
+import type { ChannelType } from "../model/types";
 import axios from "axios";
 
 async function getGuildChannels(

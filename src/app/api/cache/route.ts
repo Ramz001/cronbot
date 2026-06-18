@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { env } from "@shared/configs/env";
 import { cache } from "@shared/api/cache";
 import { withRouteErrorHandler } from "@shared/api/server-error-handlers";

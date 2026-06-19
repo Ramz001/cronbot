@@ -6,12 +6,17 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": [
+			"src/**/*.{js,jsx,ts,tsx}",
+			"src/**/*.css",
+			"src/**/*.json",
+			"src/**/*.mdx"
+		]
 	},
 	"formatter": {
 		"enabled": true,
-		"indentStyle": "tab",
-		"includes": ["src"]
+		"indentStyle": "tab"
 	},
 	"linter": {
 		"enabled": true,

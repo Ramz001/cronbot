@@ -1,11 +1,14 @@
 "use server";
 
 import { requireAuth } from "@shared/api/auth.guard";
-import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import { cache } from "@shared/api/cache";
-import prisma from "@shared/utils/prisma";
-import { AutomationRunSchema, type AutomationRunType } from "../model/validator";
+import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import { cacheKeys } from "@shared/consts/cache";
+import prisma from "@shared/utils/prisma";
+import {
+	AutomationRunSchema,
+	type AutomationRunType,
+} from "../model/validator";
 
 const action = async (values: AutomationRunType) => {
 	const user = await requireAuth();

@@ -1,6 +1,8 @@
 "use client";
 
-import { useForm } from "@tanstack/react-form";
+import { Provider } from "@prisma/generated/enums";
+import { RiAddLine } from "@remixicon/react";
+import { Button } from "@shared/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -8,7 +10,6 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@shared/ui/dialog";
-import { Button } from "@shared/ui/button";
 import { Input } from "@shared/ui/input";
 import { Label } from "@shared/ui/label";
 import {
@@ -18,11 +19,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@shared/ui/select";
-import { RiAddLine } from "@remixicon/react";
-import { createIntegrationAction } from "../api/create-integration.action";
-import { Provider } from "@prisma/generated/enums";
-import { toast } from "sonner";
+import { useForm } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { createIntegrationAction } from "../api/create-integration.action";
 
 function CreateIntegrationForm() {
 	const router = useRouter();
@@ -40,10 +40,10 @@ function CreateIntegrationForm() {
 			expiresAt.setDate(expiresAt.getDate() + expiresInDays);
 
 			const res = await createIntegrationAction({
-				provider: value.provider as Provider,
+				provider: value.provider,
 				title: value.title || undefined,
 				token: value.token,
-				expiresAt: expiresAt,
+				expiresAt,
 			});
 
 			if (res.success) {

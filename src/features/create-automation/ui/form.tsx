@@ -23,7 +23,11 @@ import { toast } from "sonner";
 import { handleError } from "@shared/utils/handle-error";
 import { createAutomation } from "../api/create-automation.action";
 import type { CreateAutomationType } from "../model/validator";
-import { type ChannelType, type GuildType, CHANNEL_TYPE } from "@entities/discord/client";
+import {
+	type ChannelType,
+	type GuildType,
+	CHANNEL_TYPE,
+} from "@entities/discord/client";
 import type { SendMessageBodyType } from "@features/discord-send-message";
 
 export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {

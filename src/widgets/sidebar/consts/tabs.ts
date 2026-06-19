@@ -1,9 +1,9 @@
 import {
 	RiCalendarLine,
-	RiStackLine,
-	RiRobot2Line,
 	RiFileListLine,
 	RiFlowChart,
+	RiRobot2Line,
+	RiStackLine,
 } from "@remixicon/react";
 
 export const tabs = [

@@ -1,10 +1,10 @@
 "use server";
 
 import { requireAuth } from "@shared/api/auth.guard";
-import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import { cache } from "@shared/api/cache";
-import prisma from "@shared/utils/prisma";
+import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import { cacheKeys } from "@shared/consts/cache";
+import prisma from "@shared/utils/prisma";
 
 const action = async () => {
 	const user = await requireAuth();

@@ -1,11 +1,68 @@
 services:
-  build:
+  # -----------------------------------------------------------
+  # PostgreSQL — database for Prisma
+  # -----------------------------------------------------------
+  postgres:
+    image: postgres:17-alpine
+    container_name: cronbot-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cronbot}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cronbot}
+      POSTGRES_DB: ${POSTGRES_DB:-cronbot}
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # -----------------------------------------------------------
+  # Redis — job queue backend for BullMQ (worker)
+  # -----------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: cronbot-redis
+    restart: unless-stopped
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    volumes:
+      - redis-data:/data
+
+  # -----------------------------------------------------------
+  # Dashboard — Next.js app
+  # -----------------------------------------------------------
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: standalone
-    ports:
-      - '${APP_PORT:-3000}:3000' # choose a different host port if needed
+    container_name: cronbot-app
     restart: unless-stopped
+    ports:
+      - '${APP_PORT:-3000}:3000'
     env_file:
-      - ./.env
+      - .env
+    depends_on:
+      postgres:
+        condition: service_started
+
+  # -----------------------------------------------------------
+  # Worker — NestJS job processor (BullMQ)
+  # -----------------------------------------------------------
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: cronbot-worker
+    restart: unless-stopped
+    ports:
+      - '${WORKER_PORT:-3001}:3000'
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+
+volumes:
+  postgres-data:
+  redis-data:

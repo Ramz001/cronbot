@@ -1,39 +1,32 @@
-# Node modules
+# Dependencies
 node_modules
-static
-# Build output
+
+# Build outputs
 .next
 dist
 build
 out
 
+# Turbo
+.turbo
+
 # Git
 .git
 .gitignore
+.github
 
 # Logs
 *.log
 logs/
 
-# Environment files (optional, include only what’s needed)
-*.env
-.env.runtime
+# Env
 .env
-.env.development
-.env.production
+.env.*.local
 
-# Docker-related files
-Dockerfile
-.dockerignore
-# Miscellaneous
-coverage
-*.md
-
-.github
-.husky
-scripts
-node_modules
-npm-debug.log
-.DS_Store 
+# IDE
+.idea
 .vscode
-.well-known
+
+# OS
+.DS_Store
+Thumbs.db

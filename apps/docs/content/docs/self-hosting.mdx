@@ -1,0 +1,85 @@
+---
+title: Self-Hosting
+description: Guide to self-host Cronbot
+---
+
+# Self-Hosting
+
+Prefer complete control? Host it yourself. Good for privacy & local testing. 
+Alternative to our [Cloud Service](/docs/cloud).
+
+## Prerequisites
+
+- Docker & Docker Compose
+- Discord Auth Token
+
+## Architecture
+
+Self-hosted stack runs via Docker:
+- **Next.js** → Web dashboard.
+- **NestJS** → Worker for task execution.
+- **PostgreSQL** → Database.
+- **Redis (BullMQ)** → Job queue.
+
+## Configuration
+
+Create `.env` file:
+
+```bash
+DISCORD_TOKEN=your_token_here
+POSTGRES_USER=cronbot
+POSTGRES_PASSWORD=cronbot
+POSTGRES_DB=cronbot
+REDIS_HOST=redis
+REDIS_PORT=6379
+```
+
+## Installation
+
+Create `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+services:
+  web:
+    image: ghcr.io/ramz001/cronbot-web:latest
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      - db
+      - redis
+  
+  worker:
+    image: ghcr.io/ramz001/cronbot-worker:latest
+    env_file: .env
+    depends_on:
+      - db
+      - redis
+  
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: cronbot
+      POSTGRES_PASSWORD: cronbot
+      POSTGRES_DB: cronbot
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:
+```
+
+## Run
+
+Start stack:
+
+```bash
+docker compose up -d
+```

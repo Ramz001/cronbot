@@ -3,3 +3,6 @@ allowBuilds:
   msw: true
   prisma: true
   sharp: true
+  
+packages:
+  - "apps/*"

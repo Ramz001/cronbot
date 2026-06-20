@@ -22,15 +22,9 @@ export type * from "./prismaNamespace";
 export const Decimal = runtime.Decimal;
 
 export const NullTypes = {
-	DbNull: runtime.NullTypes.DbNull as new (
-		secret: never,
-	) => typeof runtime.DbNull,
-	JsonNull: runtime.NullTypes.JsonNull as new (
-		secret: never,
-	) => typeof runtime.JsonNull,
-	AnyNull: runtime.NullTypes.AnyNull as new (
-		secret: never,
-	) => typeof runtime.AnyNull,
+  DbNull: runtime.NullTypes.DbNull as new (secret: never) => typeof runtime.DbNull,
+  JsonNull: runtime.NullTypes.JsonNull as new (secret: never) => typeof runtime.JsonNull,
+  AnyNull: runtime.NullTypes.AnyNull as new (secret: never) => typeof runtime.AnyNull,
 };
 /**
  * Helper for filtering JSON entries that have `null` on the database (empty on the db)
@@ -54,14 +48,14 @@ export const JsonNull = runtime.JsonNull;
 export const AnyNull = runtime.AnyNull;
 
 export const ModelName = {
-	User: "User",
-	Session: "Session",
-	Account: "Account",
-	Verification: "Verification",
-	IntegrationToken: "IntegrationToken",
-	Settings: "Settings",
-	Automation: "Automation",
-	AutomationRun: "AutomationRun",
+  User: "User",
+  Session: "Session",
+  Account: "Account",
+  Verification: "Verification",
+  IntegrationToken: "IntegrationToken",
+  Settings: "Settings",
+  Automation: "Automation",
+  AutomationRun: "AutomationRun",
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -71,182 +65,179 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName];
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
-	ReadUncommitted: "ReadUncommitted",
-	ReadCommitted: "ReadCommitted",
-	RepeatableRead: "RepeatableRead",
-	Serializable: "Serializable",
+  ReadUncommitted: "ReadUncommitted",
+  ReadCommitted: "ReadCommitted",
+  RepeatableRead: "RepeatableRead",
+  Serializable: "Serializable",
 } as const);
 
 export type TransactionIsolationLevel =
-	(typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
+  (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
 
 export const UserScalarFieldEnum = {
-	id: "id",
-	name: "name",
-	email: "email",
-	emailVerified: "emailVerified",
-	image: "image",
-	createdAt: "createdAt",
-	updatedAt: "updatedAt",
-	role: "role",
-	banned: "banned",
-	banReason: "banReason",
-	banExpires: "banExpires",
+  id: "id",
+  name: "name",
+  email: "email",
+  emailVerified: "emailVerified",
+  image: "image",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  role: "role",
+  banned: "banned",
+  banReason: "banReason",
+  banExpires: "banExpires",
 } as const;
 
-export type UserScalarFieldEnum =
-	(typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 
 export const SessionScalarFieldEnum = {
-	id: "id",
-	expiresAt: "expiresAt",
-	token: "token",
-	createdAt: "createdAt",
-	updatedAt: "updatedAt",
-	ipAddress: "ipAddress",
-	userAgent: "userAgent",
-	userId: "userId",
-	impersonatedBy: "impersonatedBy",
+  id: "id",
+  expiresAt: "expiresAt",
+  token: "token",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  ipAddress: "ipAddress",
+  userAgent: "userAgent",
+  userId: "userId",
+  impersonatedBy: "impersonatedBy",
 } as const;
 
 export type SessionScalarFieldEnum =
-	(typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum];
+  (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum];
 
 export const AccountScalarFieldEnum = {
-	id: "id",
-	accountId: "accountId",
-	providerId: "providerId",
-	userId: "userId",
-	accessToken: "accessToken",
-	refreshToken: "refreshToken",
-	idToken: "idToken",
-	accessTokenExpiresAt: "accessTokenExpiresAt",
-	refreshTokenExpiresAt: "refreshTokenExpiresAt",
-	scope: "scope",
-	password: "password",
-	createdAt: "createdAt",
-	updatedAt: "updatedAt",
+  id: "id",
+  accountId: "accountId",
+  providerId: "providerId",
+  userId: "userId",
+  accessToken: "accessToken",
+  refreshToken: "refreshToken",
+  idToken: "idToken",
+  accessTokenExpiresAt: "accessTokenExpiresAt",
+  refreshTokenExpiresAt: "refreshTokenExpiresAt",
+  scope: "scope",
+  password: "password",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
 } as const;
 
 export type AccountScalarFieldEnum =
-	(typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum];
+  (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum];
 
 export const VerificationScalarFieldEnum = {
-	id: "id",
-	identifier: "identifier",
-	value: "value",
-	expiresAt: "expiresAt",
-	createdAt: "createdAt",
-	updatedAt: "updatedAt",
+  id: "id",
+  identifier: "identifier",
+  value: "value",
+  expiresAt: "expiresAt",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
 } as const;
 
 export type VerificationScalarFieldEnum =
-	(typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum];
+  (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum];
 
 export const IntegrationTokenScalarFieldEnum = {
-	id: "id",
-	userId: "userId",
-	provider: "provider",
-	title: "title",
-	tokenPreview: "tokenPreview",
-	token: "token",
-	expiresAt: "expiresAt",
-	createdAt: "createdAt",
-	updatedAt: "updatedAt",
-	revokedAt: "revokedAt",
-	status: "status",
+  id: "id",
+  userId: "userId",
+  provider: "provider",
+  title: "title",
+  tokenPreview: "tokenPreview",
+  token: "token",
+  expiresAt: "expiresAt",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  revokedAt: "revokedAt",
+  status: "status",
 } as const;
 
 export type IntegrationTokenScalarFieldEnum =
-	(typeof IntegrationTokenScalarFieldEnum)[keyof typeof IntegrationTokenScalarFieldEnum];
+  (typeof IntegrationTokenScalarFieldEnum)[keyof typeof IntegrationTokenScalarFieldEnum];
 
 export const SettingsScalarFieldEnum = {
-	key: "key",
-	value: "value",
+  key: "key",
+  value: "value",
 } as const;
 
 export type SettingsScalarFieldEnum =
-	(typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum];
+  (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum];
 
 export const AutomationScalarFieldEnum = {
-	id: "id",
-	name: "name",
-	userId: "userId",
-	provider: "provider",
-	identifier: "identifier",
-	body: "body",
-	isActive: "isActive",
-	createdAt: "createdAt",
-	updatedAt: "updatedAt",
-	deletedAt: "deletedAt",
-	lastRunAt: "lastRunAt",
+  id: "id",
+  name: "name",
+  userId: "userId",
+  provider: "provider",
+  identifier: "identifier",
+  body: "body",
+  isActive: "isActive",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  deletedAt: "deletedAt",
+  lastRunAt: "lastRunAt",
 } as const;
 
 export type AutomationScalarFieldEnum =
-	(typeof AutomationScalarFieldEnum)[keyof typeof AutomationScalarFieldEnum];
+  (typeof AutomationScalarFieldEnum)[keyof typeof AutomationScalarFieldEnum];
 
 export const AutomationRunScalarFieldEnum = {
-	id: "id",
-	automationId: "automationId",
-	status: "status",
-	triggeredBy: "triggeredBy",
-	scheduledAt: "scheduledAt",
-	startedAt: "startedAt",
-	finishedAt: "finishedAt",
-	durationMs: "durationMs",
-	retries: "retries",
-	logs: "logs",
-	error: "error",
-	metadata: "metadata",
-	createdAt: "createdAt",
-	updatedAt: "updatedAt",
-	deletedAt: "deletedAt",
+  id: "id",
+  automationId: "automationId",
+  status: "status",
+  triggeredBy: "triggeredBy",
+  scheduledAt: "scheduledAt",
+  startedAt: "startedAt",
+  finishedAt: "finishedAt",
+  durationMs: "durationMs",
+  retries: "retries",
+  logs: "logs",
+  error: "error",
+  metadata: "metadata",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  deletedAt: "deletedAt",
 } as const;
 
 export type AutomationRunScalarFieldEnum =
-	(typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum];
+  (typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum];
 
 export const SortOrder = {
-	asc: "asc",
-	desc: "desc",
+  asc: "asc",
+  desc: "desc",
 } as const;
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
 
 export const JsonNullValueInput = {
-	JsonNull: JsonNull,
+  JsonNull: JsonNull,
 } as const;
 
-export type JsonNullValueInput =
-	(typeof JsonNullValueInput)[keyof typeof JsonNullValueInput];
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput];
 
 export const NullableJsonNullValueInput = {
-	DbNull: DbNull,
-	JsonNull: JsonNull,
+  DbNull: DbNull,
+  JsonNull: JsonNull,
 } as const;
 
 export type NullableJsonNullValueInput =
-	(typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
+  (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
 
 export const QueryMode = {
-	default: "default",
-	insensitive: "insensitive",
+  default: "default",
+  insensitive: "insensitive",
 } as const;
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode];
 
 export const NullsOrder = {
-	first: "first",
-	last: "last",
+  first: "first",
+  last: "last",
 } as const;
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder];
 
 export const JsonNullValueFilter = {
-	DbNull: DbNull,
-	JsonNull: JsonNull,
-	AnyNull: AnyNull,
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull,
 } as const;
 
-export type JsonNullValueFilter =
-	(typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter];
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter];

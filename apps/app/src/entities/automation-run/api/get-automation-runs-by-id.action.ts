@@ -5,31 +5,28 @@ import { cache } from "@shared/api/cache";
 import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import { cacheKeys } from "@shared/consts/cache";
 import prisma from "@shared/utils/prisma";
-import {
-	AutomationRunSchema,
-	type AutomationRunType,
-} from "../model/validator";
+import { AutomationRunSchema, type AutomationRunType } from "../model/validator";
 
 const action = async (values: AutomationRunType) => {
-	const user = await requireAuth();
-	const { id } = AutomationRunSchema.parse(values);
-	const cacheKey = cacheKeys.automationRunById(user.id, id);
+  const user = await requireAuth();
+  const { id } = AutomationRunSchema.parse(values);
+  const cacheKey = cacheKeys.automationRunById(user.id, id);
 
-	return await cache.wrap(cacheKey, () =>
-		prisma.automationRun.findMany({
-			where: {
-				automationId: id,
-				deletedAt: null,
-				automation: {
-					userId: user.id,
-					deletedAt: null,
-				},
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-		}),
-	);
+  return await cache.wrap(cacheKey, () =>
+    prisma.automationRun.findMany({
+      where: {
+        automationId: id,
+        deletedAt: null,
+        automation: {
+          userId: user.id,
+          deletedAt: null,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+  );
 };
 
 export const getAutomationRunsById = withActionErrorHandler(action);

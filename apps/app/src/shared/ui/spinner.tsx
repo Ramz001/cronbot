@@ -2,16 +2,16 @@ import { cn } from "@shared/utils/cn";
 import { RiLoaderLine } from "@remixicon/react";
 
 function Spinner(props: React.ComponentProps<typeof RiLoaderLine>) {
-	const { className, ...rest } = props;
+  const { className, ...rest } = props;
 
-	return (
-		<RiLoaderLine
-			role="status"
-			aria-label="Loading"
-			className={cn("size-4 animate-spin", className)}
-			{...rest}
-		/>
-	);
+  return (
+    <RiLoaderLine
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...rest}
+    />
+  );
 }
 
 export { Spinner };

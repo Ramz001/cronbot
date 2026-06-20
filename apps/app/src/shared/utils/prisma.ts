@@ -2,18 +2,18 @@ import { PrismaClient } from "@prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 const globalForPrisma = globalThis as typeof globalThis & {
-	prisma?: PrismaClient;
+  prisma?: PrismaClient;
 };
 
 const adapter: PrismaPg = new PrismaPg({
-	connectionString: process.env.DATABASE_URL!,
+  connectionString: process.env.DATABASE_URL!,
 });
 
 const prisma: PrismaClient =
-	globalForPrisma.prisma ||
-	new PrismaClient({
-		adapter,
-	});
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    adapter,
+  });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 

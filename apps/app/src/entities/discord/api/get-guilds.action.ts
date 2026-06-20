@@ -8,17 +8,17 @@ import axios from "axios";
 import type { GuildType } from "../model/types";
 
 const action = async (): Promise<GuildType[]> => {
-	const user = await requireAuth();
+  const user = await requireAuth();
 
-	return cache.wrap(cacheKeys.discordGuild(user.id), async () => {
-		const headers = await authHeaders({ userId: user.id });
+  return cache.wrap(cacheKeys.discordGuild(user.id), async () => {
+    const headers = await authHeaders({ userId: user.id });
 
-		const { data } = await axios.get(`${DISCORD_API}/users/@me/guilds`, {
-			headers,
-		});
+    const { data } = await axios.get(`${DISCORD_API}/users/@me/guilds`, {
+      headers,
+    });
 
-		return data;
-	});
+    return data;
+  });
 };
 
 export const getGuilds = withActionErrorHandler(action);

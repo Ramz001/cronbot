@@ -6,15 +6,15 @@ import { useSession } from "@entities/auth";
 import { GithubLoginButton } from "@entities/auth";
 
 const ClientSection = () => {
-	const { data } = useSession();
+  const { data } = useSession();
 
-	return (
-		<div className="flex items-center gap-1">
-			<ThemeToggle />
+  return (
+    <div className="flex items-center gap-1">
+      <ThemeToggle />
 
-			{data?.user ? <UserMenu user={data?.user} /> : <GithubLoginButton />}
-		</div>
-	);
+      {data?.user ? <UserMenu user={data?.user} /> : <GithubLoginButton />}
+    </div>
+  );
 };
 
 export default ClientSection;

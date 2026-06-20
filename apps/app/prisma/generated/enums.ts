@@ -9,27 +9,26 @@
  */
 
 export const Provider = {
-	discord: "discord",
+  discord: "discord",
 } as const;
 
 export type Provider = (typeof Provider)[keyof typeof Provider];
 
 export const IntegrationTokenStatus = {
-	active: "active",
-	revoked: "revoked",
-	expired: "expired",
+  active: "active",
+  revoked: "revoked",
+  expired: "expired",
 } as const;
 
 export type IntegrationTokenStatus =
-	(typeof IntegrationTokenStatus)[keyof typeof IntegrationTokenStatus];
+  (typeof IntegrationTokenStatus)[keyof typeof IntegrationTokenStatus];
 
 export const AutomationRunStatus = {
-	pending: "pending",
-	running: "running",
-	success: "success",
-	failed: "failed",
-	skipped: "skipped",
+  pending: "pending",
+  running: "running",
+  success: "success",
+  failed: "failed",
+  skipped: "skipped",
 } as const;
 
-export type AutomationRunStatus =
-	(typeof AutomationRunStatus)[keyof typeof AutomationRunStatus];
+export type AutomationRunStatus = (typeof AutomationRunStatus)[keyof typeof AutomationRunStatus];

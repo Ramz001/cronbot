@@ -7,20 +7,20 @@ import prisma from "@shared/utils/prisma";
 import { cacheKeys } from "@shared/consts/cache";
 
 const action = async () => {
-	const user = await requireAuth();
-	const cacheKey = cacheKeys.automation(user.id);
+  const user = await requireAuth();
+  const cacheKey = cacheKeys.automation(user.id);
 
-	return await cache.wrap(cacheKey, () =>
-		prisma.automation.findMany({
-			where: {
-				userId: user.id,
-				deletedAt: null,
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-		}),
-	);
+  return await cache.wrap(cacheKey, () =>
+    prisma.automation.findMany({
+      where: {
+        userId: user.id,
+        deletedAt: null,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+  );
 };
 
 export const getAutomations = withActionErrorHandler(action);

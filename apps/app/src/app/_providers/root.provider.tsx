@@ -6,23 +6,19 @@ import NuqsProvider from "./nuqs.provider";
 import { Analytics } from "@vercel/analytics/next";
 import QueryProvider from "./query.provider";
 
-export default function RootProvider({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
-	return (
-		<>
-			<Analytics />
-			<TooltipProvider>
-				<ThemeProvider>
-					<NuqsProvider>
-						<QueryProvider>
-							<ToastProvider>{children}</ToastProvider>
-						</QueryProvider>
-					</NuqsProvider>
-				</ThemeProvider>
-			</TooltipProvider>
-		</>
-	);
+export default function RootProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <Analytics />
+      <TooltipProvider>
+        <ThemeProvider>
+          <NuqsProvider>
+            <QueryProvider>
+              <ToastProvider>{children}</ToastProvider>
+            </QueryProvider>
+          </NuqsProvider>
+        </ThemeProvider>
+      </TooltipProvider>
+    </>
+  );
 }

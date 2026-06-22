@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { RiTimeLine, RiLoader2Line, RiPlayCircleLine } from "@remixicon/react";
-import { Button } from "@/shared/ui/button";
-import { Card, CardContent } from "@/shared/ui/card";
-import { Badge } from "@/shared/ui/badge";
-import type { Automation } from "@prisma/generated/client";
-import { cn } from "@shared/utils/cn";
-import { getProvider } from "@entities/provider-registry";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { toast } from "sonner";
-import { handleError } from "@shared/utils/handle-error";
-import { BodySchema, IdentifierSchema } from "@entities/discord/client";
-import { InfoModal } from "./info-modal";
-import { useState } from "react";
-import { DeleteButton } from "@features/delete-automation";
-import { ToggleStatusButton } from "@features/toggle-automation-status";
+import { RiTimeLine, RiLoader2Line, RiPlayCircleLine } from '@remixicon/react';
+import { Button } from '@/shared/ui/button';
+import { Card, CardContent } from '@/shared/ui/card';
+import { Badge } from '@/shared/ui/badge';
+import type { Automation } from '@prisma/generated/client';
+import { cn } from '@shared/utils/cn';
+import { getProvider } from '@entities/provider-registry';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import { toast } from 'sonner';
+import { handleError } from '@shared/utils/handle-error';
+import { BodySchema, IdentifierSchema } from '@entities/discord/client';
+import { InfoModal } from './info-modal';
+import { useState } from 'react';
+import { DeleteButton } from '@features/delete-automation';
+import { ToggleStatusButton } from '@features/toggle-automation-status';
 
 function AutomationCard({ automation }: { automation: Automation }) {
   const [infoModal, setInfoModal] = useState(false);
@@ -24,7 +24,7 @@ function AutomationCard({ automation }: { automation: Automation }) {
     IdentifierSchema.safeParse(automation.identifier);
 
   const { data: bodyData, success: bodySuccess } = BodySchema.safeParse(
-    automation.body
+    automation.body,
   );
 
   const canTest = identifierSuccess && bodySuccess;
@@ -37,12 +37,12 @@ function AutomationCard({ automation }: { automation: Automation }) {
       channelId: string;
       message: string;
     }) =>
-      await axios.post("/api/discord/send", {
+      await axios.post('/api/discord/send', {
         channelId,
         message,
       }),
     onSuccess: () => {
-      toast.success("Test message sent successfully!");
+      toast.success('Test message sent successfully!');
     },
     onError: (err) => {
       handleError(err);
@@ -50,7 +50,7 @@ function AutomationCard({ automation }: { automation: Automation }) {
   });
   const handleSendTest = () => {
     if (!identifierSuccess || !bodySuccess)
-      return toast.warning("Incomplete configuration for testing");
+      return toast.warning('Incomplete configuration for testing');
 
     testMutation.mutate({
       channelId: identifierData.channelId,
@@ -78,8 +78,8 @@ function AutomationCard({ automation }: { automation: Automation }) {
     <Card
       size="sm"
       className={cn(
-        "relative overflow-hidden transition-all duration-200 hover:shadow-lg",
-        automation.isActive && "border-l-[3px]"
+        'relative overflow-hidden transition-all duration-200 hover:shadow-lg',
+        automation.isActive && 'border-l-[3px]',
       )}
       style={
         automation.isActive
@@ -101,10 +101,10 @@ function AutomationCard({ automation }: { automation: Automation }) {
           {/* Provider icon badge */}
           <div
             className={cn(
-              "flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors",
+              'flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors',
               automation.isActive
-                ? "text-primary-foreground"
-                : "bg-muted text-muted-foreground"
+                ? 'text-primary-foreground'
+                : 'bg-muted text-muted-foreground',
             )}
             style={automation.isActive ? { backgroundColor: color } : undefined}
           >
@@ -115,31 +115,31 @@ function AutomationCard({ automation }: { automation: Automation }) {
           <div className="min-w-0 space-y-1">
             <div className="flex items-center gap-2">
               <h3 className="truncate text-sm font-semibold">
-                {automation.name || "Unnamed Automation"}
+                {automation.name || 'Unnamed Automation'}
               </h3>
               <span
                 className={cn(
-                  "inline-block size-1.5 shrink-0 rounded-full",
+                  'inline-block size-1.5 shrink-0 rounded-full',
                   automation.isActive
-                    ? "bg-emerald-500"
-                    : "bg-muted-foreground/30"
+                    ? 'bg-emerald-500'
+                    : 'bg-muted-foreground/30',
                 )}
               />
               <Badge
-                variant={automation.isActive ? "default" : "secondary"}
+                variant={automation.isActive ? 'default' : 'secondary'}
                 className="h-5 px-1.5 text-[11px] leading-none font-medium capitalize"
               >
-                {automation.isActive ? "Active" : "Inactive"}
+                {automation.isActive ? 'Active' : 'Inactive'}
               </Badge>
             </div>
             <div className="text-muted-foreground flex items-center gap-2 text-xs">
               <span className="inline-flex items-center gap-1">
                 <RiTimeLine className="size-3" />
                 <span>
-                  Last run:{" "}
+                  Last run:{' '}
                   {automation.lastRunAt
                     ? new Date(automation.lastRunAt).toLocaleString()
-                    : "Never"}
+                    : 'Never'}
                 </span>
               </span>
               <span className="text-muted-foreground/20">·</span>
@@ -158,7 +158,7 @@ function AutomationCard({ automation }: { automation: Automation }) {
             id={automation.id}
             variant="outline"
             size="icon-sm"
-            title={automation.isActive ? "Pause" : "Resume"}
+            title={automation.isActive ? 'Pause' : 'Resume'}
           />
 
           <Button
@@ -166,7 +166,7 @@ function AutomationCard({ automation }: { automation: Automation }) {
             size="icon-sm"
             onClick={handleSendTest}
             disabled={testMutation.isPending || !canTest}
-            title={canTest ? "Test automation" : "Incomplete configuration"}
+            title={canTest ? 'Test automation' : 'Incomplete configuration'}
           >
             {testMutation.isPending ? (
               <RiLoader2Line className="size-4 animate-spin" />

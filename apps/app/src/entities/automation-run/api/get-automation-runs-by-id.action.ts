@@ -1,14 +1,14 @@
-"use server";
+'use server';
 
-import { requireAuth } from "@shared/api/auth.guard";
-import { cache } from "@shared/api/cache";
-import { withActionErrorHandler } from "@shared/api/server-error-handlers";
-import { cacheKeys } from "@shared/consts/cache";
-import prisma from "@shared/utils/prisma";
+import { requireAuth } from '@shared/api/auth.guard';
+import { cache } from '@shared/api/cache';
+import { withActionErrorHandler } from '@shared/api/server-error-handlers';
+import { cacheKeys } from '@shared/consts/cache';
+import prisma from '@shared/utils/prisma';
 import {
   AutomationRunSchema,
   type AutomationRunType,
-} from "../model/validator";
+} from '../model/validator';
 
 const action = async (values: AutomationRunType) => {
   const user = await requireAuth();
@@ -26,9 +26,9 @@ const action = async (values: AutomationRunType) => {
         },
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
-    })
+    }),
   );
 };
 

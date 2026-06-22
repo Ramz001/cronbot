@@ -1,10 +1,10 @@
-import { getGuilds } from "@entities/discord";
+import { getGuilds } from '@entities/discord';
 import {
   CreateAutomationError,
   CreateAutomationForm,
   HAS_NO_INTEGRATIONS,
-} from "@features/create-automation";
-import { getIntegrationTokensCount } from "@entities/integration-token";
+} from '@features/create-automation';
+import { getIntegrationTokensCount } from '@entities/integration-token';
 
 export default async function CreateAutomationPage() {
   const count = await getIntegrationTokensCount();
@@ -19,7 +19,7 @@ export default async function CreateAutomationPage() {
   }
 
   if (count.data === 0) {
-    return <CreateAutomationError error={""} status={HAS_NO_INTEGRATIONS} />;
+    return <CreateAutomationError error={''} status={HAS_NO_INTEGRATIONS} />;
   }
 
   const guilds = await getGuilds();

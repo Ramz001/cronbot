@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Sidebar,
@@ -7,10 +7,10 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
-} from "@shared/ui/sidebar";
-import SidebarTitle from "./title";
-import { SidebarLinks } from "./links";
-import { SidebarUser } from "./user";
+} from '@shared/ui/sidebar';
+import SidebarTitle from './title';
+import { SidebarLinks } from './links';
+import { SidebarUser } from './user';
 
 export function AppSidebar() {
   return (

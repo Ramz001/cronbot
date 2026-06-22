@@ -1,4 +1,4 @@
-import { cn } from "@shared/utils/cn";
+import { cn } from '@shared/utils/cn';
 
 export default function Gutter({
   children,
@@ -8,7 +8,7 @@ export default function Gutter({
   className?: string;
 }) {
   return (
-    <section className={cn("container mx-auto px-4", className)}>
+    <section className={cn('container mx-auto px-4', className)}>
       {children}
     </section>
   );

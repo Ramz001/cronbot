@@ -3,8 +3,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@shared/ui/sidebar";
-import { RiCommandLine, RiTimeLine } from "@remixicon/react";
+} from '@shared/ui/sidebar';
+import { RiCommandLine, RiTimeLine } from '@remixicon/react';
 
 const SidebarTitle = () => {
   const { toggleSidebar } = useSidebar();

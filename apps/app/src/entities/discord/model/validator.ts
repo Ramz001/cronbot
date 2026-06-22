@@ -1,8 +1,8 @@
-import z from "zod";
+import z from 'zod';
 
-export const GuildIdSchema = z.string().min(1, "Guild ID is required");
-export const ChannelIdSchema = z.string().min(1, "Channel ID is required");
-export const MessageSchema = z.string().min(1, "Message is required");
+export const GuildIdSchema = z.string().min(1, 'Guild ID is required');
+export const ChannelIdSchema = z.string().min(1, 'Channel ID is required');
+export const MessageSchema = z.string().min(1, 'Message is required');
 
 export const GetChannelsSchema = z.object({
   guildId: GuildIdSchema,

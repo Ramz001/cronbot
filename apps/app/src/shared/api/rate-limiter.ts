@@ -1,12 +1,12 @@
-import { RateLimiterPrisma, RateLimiterRes } from "rate-limiter-flexible";
-import { TooManyRequestsError } from "./errors";
-import z from "zod";
-import prisma from "@shared/utils/prisma";
-import { headers } from "next/headers";
+import { RateLimiterPrisma, RateLimiterRes } from 'rate-limiter-flexible';
+import { TooManyRequestsError } from './errors';
+import z from 'zod';
+import prisma from '@shared/utils/prisma';
+import { headers } from 'next/headers';
 
 export enum RATE_LIMIT_METHODS {
-  ip = "ip",
-  session = "session",
+  ip = 'ip',
+  session = 'session',
 }
 
 const limiterCache = new Map();
@@ -15,9 +15,9 @@ async function getUserIP() {
   const headersList = await headers();
 
   const ip =
-    headersList.get("x-forwarded-for")?.split(",")[0] ||
-    headersList.get("x-real-ip") ||
-    "127.0.0.1"; // Fallback for local development
+    headersList.get('x-forwarded-for')?.split(',')[0] ||
+    headersList.get('x-real-ip') ||
+    '127.0.0.1'; // Fallback for local development
 
   return ip;
 }
@@ -32,7 +32,7 @@ const getLimiter = (points: number, duration: number) => {
         storeClient: prisma,
         points,
         duration,
-      })
+      }),
     );
   }
 
@@ -51,7 +51,7 @@ const RateLimitSchema = z.object({
 
 type RateLimitOptions = z.input<typeof RateLimitSchema>;
 
-const RATE_LIMIT_DEBUG = process.env.RATE_LIMIT_DEBUG === "1";
+const RATE_LIMIT_DEBUG = process.env.RATE_LIMIT_DEBUG === '1';
 
 const buildKey = (action: string, method: string, identifier: string) =>
   `${action}:${method}:${identifier}`;
@@ -84,7 +84,7 @@ export const handleRateLimit = async (options: RateLimitOptions) => {
 
     if (RATE_LIMIT_DEBUG) {
       console.debug({
-        module: "rate-limit",
+        module: 'rate-limit',
         rateLimitKey: key,
         points,
         duration,
@@ -94,10 +94,10 @@ export const handleRateLimit = async (options: RateLimitOptions) => {
   } catch (error: unknown) {
     if (error instanceof RateLimiterRes) {
       throw new TooManyRequestsError(
-        `Rate limit exceeded. Retry in ${Math.ceil(error.msBeforeNext / 1000)}s.`
+        `Rate limit exceeded. Retry in ${Math.ceil(error.msBeforeNext / 1000)}s.`,
       );
     }
 
-    console.error({ error, message: "Rate limiter failure" });
+    console.error({ error, message: 'Rate limiter failure' });
   }
 };

@@ -1,28 +1,28 @@
-import { toast } from "sonner";
-import { ZodError } from "zod";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
-import axios, { type AxiosError } from "axios";
+import { toast } from 'sonner';
+import { ZodError } from 'zod';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
+import axios, { type AxiosError } from 'axios';
 
 type ErrorKind =
-  | "zod"
-  | "prisma"
-  | "axios-validation"
-  | "axios"
-  | "error"
-  | "string"
-  | "unknown";
+  | 'zod'
+  | 'prisma'
+  | 'axios-validation'
+  | 'axios'
+  | 'error'
+  | 'string'
+  | 'unknown';
 
 function classifyError(error: unknown): ErrorKind {
-  if (error instanceof ZodError) return "zod";
-  if (error instanceof PrismaClientKnownRequestError) return "prisma";
+  if (error instanceof ZodError) return 'zod';
+  if (error instanceof PrismaClientKnownRequestError) return 'prisma';
   if (axios.isAxiosError(error)) {
     // Server may have returned structured Zod issues via mapError
     const issues = error.response?.data?.error?.issues;
-    return Array.isArray(issues) ? "axios-validation" : "axios";
+    return Array.isArray(issues) ? 'axios-validation' : 'axios';
   }
-  if (error instanceof Error) return "error";
-  if (typeof error === "string") return "string";
-  return "unknown";
+  if (error instanceof Error) return 'error';
+  if (typeof error === 'string') return 'string';
+  return 'unknown';
 }
 
 /**
@@ -35,39 +35,39 @@ export function handleError(error: unknown, showToast = true) {
   let message: string;
 
   switch (kind) {
-    case "zod": {
+    case 'zod': {
       const zod = error as ZodError;
-      message = zod.issues.map((i) => i.message).join(", ");
+      message = zod.issues.map((i) => i.message).join(', ');
       break;
     }
-    case "prisma": {
+    case 'prisma': {
       const prisma = error as PrismaClientKnownRequestError;
       message = `Database error: ${prisma.message}`;
       break;
     }
-    case "axios-validation": {
+    case 'axios-validation': {
       const ax = error as AxiosError<{
         error: { issues: Array<{ message: string }> };
       }>;
-      message = ax.response!.data.error.issues.map((i) => i.message).join(", ");
+      message = ax.response!.data.error.issues.map((i) => i.message).join(', ');
       break;
     }
-    case "axios":
+    case 'axios':
       message = (error as AxiosError).message;
       break;
-    case "error":
+    case 'error':
       message = (error as Error).message;
       break;
-    case "string":
+    case 'string':
       message = error as string;
       break;
     default:
-      message = "Something went wrong.";
+      message = 'Something went wrong.';
   }
 
   if (showToast) {
     toast.error(message);
   }
 
-  console.error("[Client Error]:", error);
+  console.error('[Client Error]:', error);
 }

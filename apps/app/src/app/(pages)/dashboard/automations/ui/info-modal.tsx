@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Dialog,
@@ -6,17 +6,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/shared/ui/dialog";
-import { Button } from "@shared/ui/button";
-import { Badge } from "@/shared/ui/badge";
-import type { Automation } from "@prisma/generated/client";
-import { RiFileTextLine, RiTimeLine, RiLoader2Line } from "@remixicon/react";
-import { IdentifierSchema, BodySchema } from "@entities/discord/client";
-import type { ProviderType } from "@entities/provider-registry";
-import { getAutomationRunsById } from "@entities/automation-run";
-import { RUN_STATUS_CONFIG } from "@entities/automation-run/client";
-import { useQuery } from "@tanstack/react-query";
-import { cn } from "@shared/utils/cn";
+} from '@/shared/ui/dialog';
+import { Button } from '@shared/ui/button';
+import { Badge } from '@/shared/ui/badge';
+import type { Automation } from '@prisma/generated/client';
+import { RiFileTextLine, RiTimeLine, RiLoader2Line } from '@remixicon/react';
+import { IdentifierSchema, BodySchema } from '@entities/discord/client';
+import type { ProviderType } from '@entities/provider-registry';
+import { getAutomationRunsById } from '@entities/automation-run';
+import { RUN_STATUS_CONFIG } from '@entities/automation-run/client';
+import { useQuery } from '@tanstack/react-query';
+import { cn } from '@shared/utils/cn';
 
 export const InfoModal = ({
   automation,
@@ -35,10 +35,10 @@ export const InfoModal = ({
     ? identifierResult.data
     : {};
   const bodyResult = BodySchema.safeParse(automation.body);
-  const bodyData = bodyResult.success ? bodyResult.data : { message: "" };
+  const bodyData = bodyResult.success ? bodyResult.data : { message: '' };
 
-  const formatter = new Intl.DurationFormat("en", {
-    style: "short",
+  const formatter = new Intl.DurationFormat('en', {
+    style: 'short',
   });
 
   const {
@@ -47,11 +47,11 @@ export const InfoModal = ({
     isError: runsErrored,
     error: runsError,
   } = useQuery({
-    queryKey: ["automation-runs", automation.id],
+    queryKey: ['automation-runs', automation.id],
     queryFn: async () => {
       const result = await getAutomationRunsById({ id: automation.id });
       if (!result.success)
-        throw new Error(result.error?.message ?? "Failed to load runs");
+        throw new Error(result.error?.message ?? 'Failed to load runs');
       return result.data ?? [];
     },
     enabled: !!open,
@@ -66,7 +66,7 @@ export const InfoModal = ({
       </DialogTrigger>
       <DialogContent className="gap-0 p-0 sm:max-w-lg">
         <DialogHeader className="px-6 pt-6 pb-3">
-          <DialogTitle>{automation.name || "Unnamed Automation"}</DialogTitle>
+          <DialogTitle>{automation.name || 'Unnamed Automation'}</DialogTitle>
         </DialogHeader>
 
         {/* Provider & Channel info */}
@@ -108,10 +108,10 @@ export const InfoModal = ({
               <dt className="w-12 shrink-0">Status</dt>
               <dd>
                 <Badge
-                  variant={automation.isActive ? "default" : "secondary"}
+                  variant={automation.isActive ? 'default' : 'secondary'}
                   className="h-5 px-1.5 text-[11px] leading-none font-medium capitalize"
                 >
-                  {automation.isActive ? "Active" : "Inactive"}
+                  {automation.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </dd>
             </div>
@@ -155,7 +155,7 @@ export const InfoModal = ({
             <p className="text-destructive py-2 text-xs">
               {runsError instanceof Error
                 ? runsError.message
-                : "Failed to load runs"}
+                : 'Failed to load runs'}
             </p>
           )}
 
@@ -173,13 +173,13 @@ export const InfoModal = ({
                   <li
                     key={run.id}
                     className={cn(
-                      "flex items-start gap-3 rounded-xl border p-3 text-sm",
-                      meta?.bg ?? "bg-muted/30"
+                      'flex items-start gap-3 rounded-xl border p-3 text-sm',
+                      meta?.bg ?? 'bg-muted/30',
                     )}
                   >
                     {meta ? (
                       <meta.Icon
-                        className={cn("mt-0.5 size-4 shrink-0", meta.color)}
+                        className={cn('mt-0.5 size-4 shrink-0', meta.color)}
                       />
                     ) : (
                       <RiTimeLine className="text-muted-foreground mt-0.5 size-4 shrink-0" />
@@ -189,8 +189,8 @@ export const InfoModal = ({
                         <Badge
                           variant="outline"
                           className={cn(
-                            "h-5 px-1.5 text-[11px] font-medium capitalize",
-                            meta?.color
+                            'h-5 px-1.5 text-[11px] font-medium capitalize',
+                            meta?.color,
                           )}
                         >
                           {meta?.label ?? run.status}
@@ -205,7 +205,7 @@ export const InfoModal = ({
                         )}
                         {run.durationMs != null && (
                           <span>
-                            Duration:{" "}
+                            Duration:{' '}
                             {formatter.format({
                               seconds: Math.floor(run.durationMs / 1000),
                             })}
@@ -213,7 +213,7 @@ export const InfoModal = ({
                         )}
                         {run.scheduledAt && (
                           <span>
-                            Scheduled:{" "}
+                            Scheduled:{' '}
                             {new Date(run.scheduledAt).toLocaleString()}
                           </span>
                         )}

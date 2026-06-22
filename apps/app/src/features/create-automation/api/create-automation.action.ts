@@ -1,14 +1,14 @@
-"use server";
+'use server';
 
-import { withActionErrorHandler } from "@shared/api/server-error-handlers";
-import { requireAuth } from "@shared/api/auth.guard";
+import { withActionErrorHandler } from '@shared/api/server-error-handlers';
+import { requireAuth } from '@shared/api/auth.guard';
 import {
   CreateAutomationSchema,
   type CreateAutomationType,
-} from "../model/validator";
-import prisma from "@shared/utils/prisma";
-import { cache } from "@shared/api/cache";
-import { cacheKeys } from "@shared/consts/cache";
+} from '../model/validator';
+import prisma from '@shared/utils/prisma';
+import { cache } from '@shared/api/cache';
+import { cacheKeys } from '@shared/consts/cache';
 
 const action = async (values: CreateAutomationType) => {
   const user = await requireAuth();
@@ -17,7 +17,7 @@ const action = async (values: CreateAutomationType) => {
 
   await prisma.automation.create({
     data: {
-      name: name || "",
+      name: name || '',
       provider,
       body: body || {},
       identifier: identifier || {},

@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
 import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "@shared/ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@shared/ui/avatar";
-import { RiLogoutBoxRLine } from "@remixicon/react";
-import { signOut, useSession } from "@entities/auth";
+} from '@shared/ui/sidebar';
+import { Avatar, AvatarFallback, AvatarImage } from '@shared/ui/avatar';
+import { RiLogoutBoxRLine } from '@remixicon/react';
+import { signOut, useSession } from '@entities/auth';
 
 export function SidebarUser() {
   const { data } = useSession();
@@ -20,9 +20,9 @@ export function SidebarUser() {
       <SidebarMenuItem>
         <SidebarMenuButton size="lg">
           <Avatar className="h-8 w-8 rounded-lg">
-            <AvatarImage src={user.image || undefined} alt={user.name || ""} />
+            <AvatarImage src={user.image || undefined} alt={user.name || ''} />
             <AvatarFallback className="rounded-lg">
-              {user.name?.slice(0, 2).toUpperCase() || "U"}
+              {user.name?.slice(0, 2).toUpperCase() || 'U'}
             </AvatarFallback>
           </Avatar>
           <div className="grid flex-1 text-left text-sm leading-tight">

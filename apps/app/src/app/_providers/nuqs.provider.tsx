@@ -1,4 +1,4 @@
-import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 export default function NuqsProvider({
   children,

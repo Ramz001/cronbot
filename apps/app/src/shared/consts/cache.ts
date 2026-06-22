@@ -1,10 +1,10 @@
 export const CACHE_KEYS = {
-  INTEGRATION_TOKEN: "integration-tokens",
-  INTEGRATION_TOKEN_COUNT: "integration-tokens-count",
-  DISCORD_GUILD: "discord-guilds",
-  DISCORD_CHANNELS: "discord-channels",
-  AUTOMATION: "automations",
-  AUTOMATION_RUN: "automation-runs",
+  INTEGRATION_TOKEN: 'integration-tokens',
+  INTEGRATION_TOKEN_COUNT: 'integration-tokens-count',
+  DISCORD_GUILD: 'discord-guilds',
+  DISCORD_CHANNELS: 'discord-channels',
+  AUTOMATION: 'automations',
+  AUTOMATION_RUN: 'automation-runs',
 } as const;
 
 export const cacheKeys = {

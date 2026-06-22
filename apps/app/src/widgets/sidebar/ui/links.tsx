@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "@shared/ui/sidebar";
-import { tabs } from "../consts/tabs";
+} from '@shared/ui/sidebar';
+import { tabs } from '../consts/tabs';
 
 export function SidebarLinks() {
   const pathname = usePathname();

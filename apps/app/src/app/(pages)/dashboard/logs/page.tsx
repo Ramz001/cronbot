@@ -1,6 +1,6 @@
-import { Accordion } from "@/shared/ui/accordion";
-import { LogItem } from "./ui/log-item";
-import { getAutomationRuns } from "@entities/automation-run";
+import { Accordion } from '@/shared/ui/accordion';
+import { LogItem } from './ui/log-item';
+import { getAutomationRuns } from '@entities/automation-run';
 
 const StatsPage = async () => {
   const result = await getAutomationRuns();

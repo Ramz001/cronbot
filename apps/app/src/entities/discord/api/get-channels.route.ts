@@ -1,20 +1,20 @@
-import type { NextRequest } from "next/server";
-import { authHeaders } from "../utils/auth-headers";
-import { DISCORD_API } from "../consts/api";
-import { requireAuth } from "@shared/api/auth.guard";
-import { cache } from "@shared/api/cache";
-import { cacheKeys } from "@shared/consts/cache";
-import { GuildIdSchema } from "../model/validator";
+import type { NextRequest } from 'next/server';
+import { authHeaders } from '../utils/auth-headers';
+import { DISCORD_API } from '../consts/api';
+import { requireAuth } from '@shared/api/auth.guard';
+import { cache } from '@shared/api/cache';
+import { cacheKeys } from '@shared/consts/cache';
+import { GuildIdSchema } from '../model/validator';
 import {
   withRouteErrorHandler,
   type RouteResult,
-} from "@shared/api/server-error-handlers";
-import type { ChannelType } from "../model/types";
-import axios from "axios";
+} from '@shared/api/server-error-handlers';
+import type { ChannelType } from '../model/types';
+import axios from 'axios';
 
 async function getGuildChannels(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ): Promise<RouteResult<ChannelType[]>> {
   const user = await requireAuth();
   const { id } = await params;
@@ -25,7 +25,7 @@ async function getGuildChannels(
 
     const { data } = await axios.get(
       `${DISCORD_API}/guilds/${guildId}/channels`,
-      { headers }
+      { headers },
     );
 
     return data;

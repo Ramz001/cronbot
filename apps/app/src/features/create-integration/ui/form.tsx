@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import { Provider } from "@prisma/generated/enums";
-import { RiAddLine } from "@remixicon/react";
-import { Button } from "@shared/ui/button";
+import { Provider } from '@prisma/generated/enums';
+import { RiAddLine } from '@remixicon/react';
+import { Button } from '@shared/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@shared/ui/dialog";
-import { Input } from "@shared/ui/input";
-import { Label } from "@shared/ui/label";
+} from '@shared/ui/dialog';
+import { Input } from '@shared/ui/input';
+import { Label } from '@shared/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@shared/ui/select";
-import { useForm } from "@tanstack/react-form";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { createIntegrationAction } from "../api/create-integration.action";
+} from '@shared/ui/select';
+import { useForm } from '@tanstack/react-form';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { createIntegrationAction } from '../api/create-integration.action';
 
 function CreateIntegrationForm() {
   const router = useRouter();
@@ -30,9 +30,9 @@ function CreateIntegrationForm() {
   const form = useForm({
     defaultValues: {
       provider: Provider.discord,
-      token: "",
-      title: "",
-      expiresIn: "30",
+      token: '',
+      title: '',
+      expiresIn: '30',
     },
     onSubmit: async ({ value }) => {
       const expiresInDays = parseInt(value.expiresIn, 10);
@@ -47,10 +47,10 @@ function CreateIntegrationForm() {
       });
 
       if (res.success) {
-        toast.success("Integration created successfully!");
+        toast.success('Integration created successfully!');
         router.refresh();
       } else {
-        toast.error(res.error?.message || "Failed to create integration");
+        toast.error(res.error?.message || 'Failed to create integration');
       }
     },
   });
@@ -68,7 +68,7 @@ function CreateIntegrationForm() {
         name="provider"
         validators={{
           onChange: ({ value }) =>
-            !value ? "A provider is required" : undefined,
+            !value ? 'A provider is required' : undefined,
         }}
         children={(field) => (
           <div className="space-y-2">
@@ -152,7 +152,7 @@ function CreateIntegrationForm() {
               disabled={!canSubmit}
               className="w-full sm:w-auto"
             >
-              {isSubmitting ? "Creating..." : "Create Integration"}
+              {isSubmitting ? 'Creating...' : 'Create Integration'}
             </Button>
           )}
         />

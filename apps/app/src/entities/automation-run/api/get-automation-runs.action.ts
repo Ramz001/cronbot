@@ -1,10 +1,10 @@
-"use server";
+'use server';
 
-import { requireAuth } from "@shared/api/auth.guard";
-import { cache } from "@shared/api/cache";
-import { withActionErrorHandler } from "@shared/api/server-error-handlers";
-import { cacheKeys } from "@shared/consts/cache";
-import prisma from "@shared/utils/prisma";
+import { requireAuth } from '@shared/api/auth.guard';
+import { cache } from '@shared/api/cache';
+import { withActionErrorHandler } from '@shared/api/server-error-handlers';
+import { cacheKeys } from '@shared/consts/cache';
+import prisma from '@shared/utils/prisma';
 
 const action = async () => {
   const user = await requireAuth();
@@ -20,12 +20,12 @@ const action = async () => {
         },
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
       include: {
         automation: true,
       },
-    })
+    }),
   );
 };
 

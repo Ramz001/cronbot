@@ -1,23 +1,23 @@
-import UserAgent from "user-agents";
-import prisma from "@shared/utils/prisma";
-import { IntegrationTokenStatus, Provider } from "@prisma/generated/enums";
-import { decrypt } from "@shared/api/encryption";
-import { cache } from "@shared/api/cache";
-import { UnauthorizedError } from "@shared/api/errors";
+import UserAgent from 'user-agents';
+import prisma from '@shared/utils/prisma';
+import { IntegrationTokenStatus, Provider } from '@prisma/generated/enums';
+import { decrypt } from '@shared/api/encryption';
+import { cache } from '@shared/api/cache';
+import { UnauthorizedError } from '@shared/api/errors';
 
 function getSessionHeaders() {
-  const ua = new UserAgent({ deviceCategory: "desktop" });
+  const ua = new UserAgent({ deviceCategory: 'desktop' });
 
   return {
-    "User-Agent": ua.toString(),
+    'User-Agent': ua.toString(),
     Accept:
-      "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    Connection: "keep-alive",
-    "sec-ch-ua":
+      'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
+    Connection: 'keep-alive',
+    'sec-ch-ua':
       '"Google Chrome";v="124", "Chromium";v="124", "Not-A.Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"Windows"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
   };
 }
 
@@ -40,7 +40,7 @@ const fetcher = async (userId: string) => {
 
 export const authHeaders = async ({ userId }: { userId: string }) => {
   if (!userId)
-    throw new UnauthorizedError("User ID is required for auth headers");
+    throw new UnauthorizedError('User ID is required for auth headers');
 
   const decryptedToken = await fetcher(userId);
 

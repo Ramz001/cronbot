@@ -1,42 +1,42 @@
-"use client";
+'use client';
 
-import { useForm, useStore } from "@tanstack/react-form";
-import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
-import { Textarea } from "@/shared/ui/textarea";
+import { useForm, useStore } from '@tanstack/react-form';
+import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card';
+import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
+import { Textarea } from '@/shared/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui/select";
-import { Field, FieldLabel, FieldContent, FieldError } from "@/shared/ui/field";
-import { Provider } from "@prisma/generated/enums";
-import { cn } from "@shared/utils/cn";
-import { RiHashtag, RiLoader2Line } from "@remixicon/react";
-import { PROVIDERS } from "@entities/provider-registry";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { toast } from "sonner";
-import { handleError } from "@shared/utils/handle-error";
-import { createAutomation } from "../api/create-automation.action";
-import type { CreateAutomationType } from "../model/validator";
+} from '@/shared/ui/select';
+import { Field, FieldLabel, FieldContent, FieldError } from '@/shared/ui/field';
+import { Provider } from '@prisma/generated/enums';
+import { cn } from '@shared/utils/cn';
+import { RiHashtag, RiLoader2Line } from '@remixicon/react';
+import { PROVIDERS } from '@entities/provider-registry';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { toast } from 'sonner';
+import { handleError } from '@shared/utils/handle-error';
+import { createAutomation } from '../api/create-automation.action';
+import type { CreateAutomationType } from '../model/validator';
 import {
   type ChannelType,
   type GuildType,
   CHANNEL_TYPE,
-} from "@entities/discord/client";
-import type { SendMessageBodyType } from "@features/discord-send-message";
+} from '@entities/discord/client';
+import type { SendMessageBodyType } from '@features/discord-send-message';
 
 export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
   const form = useForm({
     defaultValues: {
-      name: "",
+      name: '',
       provider: Provider.discord,
-      identifier: { guildId: "", channelId: "" },
-      body: { message: "" },
+      identifier: { guildId: '', channelId: '' },
+      body: { message: '' },
     },
     onSubmit: async ({ value }) => {
       await createMutation.mutateAsync(value);
@@ -45,7 +45,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
 
   const selectedGuildId = useStore(
     form.baseStore,
-    (state) => state.values.identifier.guildId
+    (state) => state.values.identifier.guildId,
   );
 
   const createMutation = useMutation({
@@ -57,7 +57,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
       return result;
     },
     onSuccess: () => {
-      toast.success("Automation created successfully!");
+      toast.success('Automation created successfully!');
       form.reset();
     },
     onError: (err) => {
@@ -70,10 +70,10 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
     isLoading: isLoadingChannels,
     error: channelsError,
   } = useQuery<ChannelType[]>({
-    queryKey: ["discord-channels", selectedGuildId],
+    queryKey: ['discord-channels', selectedGuildId],
     queryFn: async () => {
       const { data } = await axios.get(
-        `/api/discord/guilds/${selectedGuildId}`
+        `/api/discord/guilds/${selectedGuildId}`,
       );
       return data.data ?? [];
     },
@@ -82,14 +82,14 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
 
   const testMutation = useMutation({
     mutationFn: async ({ channelId, message }: SendMessageBodyType) => {
-      const { data } = await axios.post("/api/discord/send", {
+      const { data } = await axios.post('/api/discord/send', {
         channelId,
         message,
       });
       return data;
     },
     onSuccess: () => {
-      toast.success("Test message sent successfully!");
+      toast.success('Test message sent successfully!');
     },
     onError: (err) => {
       handleError(err);
@@ -151,14 +151,14 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                         key={provider.value}
                         type="button"
                         className={cn(
-                          "flex h-auto flex-col items-center justify-center gap-2 rounded-xl border p-4 transition-colors",
+                          'flex h-auto flex-col items-center justify-center gap-2 rounded-xl border p-4 transition-colors',
                           isSelected
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:bg-accent/50"
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:bg-accent/50',
                         )}
                         style={
                           {
-                            "--primary": provider.color,
+                            '--primary': provider.color,
                           } as React.CSSProperties
                         }
                         onClick={() => field.handleChange(provider.value)}
@@ -221,19 +221,19 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                       <SelectValue
                         placeholder={
                           !selectedGuildId
-                            ? "Select a server first"
+                            ? 'Select a server first'
                             : isLoadingChannels
-                              ? "Loading channels..."
+                              ? 'Loading channels...'
                               : channelsError
-                                ? "Failed to load channels"
-                                : "Select a channel..."
+                                ? 'Failed to load channels'
+                                : 'Select a channel...'
                         }
                       />
                     </SelectTrigger>
                     <SelectContent>
                       {channels
                         ?.filter(
-                          (channel) => channel.type === CHANNEL_TYPE.GUILD_TEXT
+                          (channel) => channel.type === CHANNEL_TYPE.GUILD_TEXT,
                         )
                         .map((channel) => (
                           <SelectItem key={channel.id} value={channel.id}>
@@ -249,7 +249,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                       {(channelsError as any)?.error?.message ??
                         (channelsError instanceof Error
                           ? channelsError.message
-                          : "Failed to load channels")}
+                          : 'Failed to load channels')}
                     </p>
                   )}
                 </FieldContent>
@@ -296,7 +296,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                 Sending...
               </>
             ) : (
-              "Test Automation"
+              'Test Automation'
             )}
           </Button>
           <Button
@@ -310,7 +310,7 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                 Creating...
               </>
             ) : (
-              "Create Automation"
+              'Create Automation'
             )}
           </Button>
         </CardFooter>

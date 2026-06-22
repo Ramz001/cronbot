@@ -1,4 +1,4 @@
-import z from "zod";
+import z from 'zod';
 
 const PermissionOverwriteSchema = z.object({
   id: z.string(),

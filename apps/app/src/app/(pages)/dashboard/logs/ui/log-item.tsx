@@ -2,21 +2,21 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/shared/ui/accordion";
-import { Badge } from "@/shared/ui/badge";
-import { Button } from "@/shared/ui/button";
-import { Separator } from "@/shared/ui/separator";
+} from '@/shared/ui/accordion';
+import { Badge } from '@/shared/ui/badge';
+import { Button } from '@/shared/ui/button';
+import { Separator } from '@/shared/ui/separator';
 import {
   RiCheckLine,
   RiCloseLine,
   RiDownloadLine,
   RiFileListLine,
-} from "@remixicon/react";
+} from '@remixicon/react';
 import {
   type Automation,
   type AutomationRun,
   AutomationRunStatus,
-} from "@prisma/generated/client";
+} from '@prisma/generated/client';
 
 export async function LogItem({
   log,
@@ -37,10 +37,10 @@ export async function LogItem({
   );
 
   const statusColor = isSuccess
-    ? "bg-emerald-500/10 text-emerald-500"
+    ? 'bg-emerald-500/10 text-emerald-500'
     : isSkipped
-      ? "bg-amber-500/10 text-amber-500"
-      : "bg-red-500/10 text-red-500";
+      ? 'bg-amber-500/10 text-amber-500'
+      : 'bg-red-500/10 text-red-500';
 
   return (
     <AccordionItem
@@ -63,7 +63,7 @@ export async function LogItem({
           </span>
           <Badge
             variant={
-              isSuccess ? "default" : isSkipped ? "secondary" : "destructive"
+              isSuccess ? 'default' : isSkipped ? 'secondary' : 'destructive'
             }
             className="capitalize"
           >
@@ -91,7 +91,7 @@ export async function LogItem({
                 Scheduled At
               </span>
               <span className="text-sm font-medium">
-                {log?.scheduledAt?.toLocaleString() ?? "—"}
+                {log?.scheduledAt?.toLocaleString() ?? '—'}
               </span>
             </div>
             <div className="flex flex-col gap-1.5">
@@ -121,7 +121,7 @@ export async function LogItem({
                 Started At
               </span>
               <span className="text-sm font-medium">
-                {log.startedAt?.toLocaleString() ?? "—"}
+                {log.startedAt?.toLocaleString() ?? '—'}
               </span>
             </div>
             <div className="flex flex-col gap-1.5">
@@ -129,7 +129,7 @@ export async function LogItem({
                 Finished At
               </span>
               <span className="text-sm font-medium">
-                {log.finishedAt?.toLocaleString() ?? "—"}
+                {log.finishedAt?.toLocaleString() ?? '—'}
               </span>
             </div>
             <div className="flex flex-col gap-1.5">

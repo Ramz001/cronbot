@@ -1,12 +1,12 @@
-import { Provider } from "@prisma/generated/enums";
-import { Icon } from "../client";
-import type { ProviderType } from "@entities/provider-registry";
+import { Provider } from '@prisma/generated/enums';
+import { Icon } from '../client';
+import type { ProviderType } from '@entities/provider-registry';
 
 export const DISCORD_PROVIDER: ProviderType = {
   value: Provider.discord,
-  label: "Discord",
+  label: 'Discord',
   icon: Icon,
-  color: "#5865F2",
+  color: '#5865F2',
 };
 
 export enum CHANNEL_TYPE {

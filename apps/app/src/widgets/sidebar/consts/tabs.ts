@@ -4,16 +4,16 @@ import {
   RiFlowChart,
   RiRobot2Line,
   RiStackLine,
-} from "@remixicon/react";
+} from '@remixicon/react';
 
 export const tabs = [
-  { title: "Calendar", url: "", icon: RiCalendarLine },
+  { title: 'Calendar', url: '', icon: RiCalendarLine },
   {
-    title: "Automation Builder",
-    url: "/automations-builder",
+    title: 'Automation Builder',
+    url: '/automations-builder',
     icon: RiFlowChart,
   },
-  { title: "Automations", url: "/automations", icon: RiRobot2Line },
-  { title: "Integrations", url: "/integrations", icon: RiStackLine },
-  { title: "Logs", url: "/logs", icon: RiFileListLine },
+  { title: 'Automations', url: '/automations', icon: RiRobot2Line },
+  { title: 'Integrations', url: '/integrations', icon: RiStackLine },
+  { title: 'Logs', url: '/logs', icon: RiFileListLine },
 ];

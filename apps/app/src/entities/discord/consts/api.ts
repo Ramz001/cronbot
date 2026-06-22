@@ -1,1 +1,1 @@
-export const DISCORD_API = "https://discord.com/api/v9";
+export const DISCORD_API = 'https://discord.com/api/v9';

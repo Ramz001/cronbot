@@ -1,4 +1,4 @@
-import { Toaster } from "@shared/ui/sonner";
+import { Toaster } from '@shared/ui/sonner';
 
 export default function ToastProvider({
   children,

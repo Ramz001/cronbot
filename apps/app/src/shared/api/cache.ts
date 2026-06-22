@@ -1,4 +1,4 @@
-import { createCache } from "cache-manager";
+import { createCache } from 'cache-manager';
 
 export const cache = createCache({
   ttl: 600_000, // 10 minutes (matches custom cacheLife expire)

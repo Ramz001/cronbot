@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { Badge } from "@/shared/ui/badge";
-import { Button } from "@/shared/ui/button";
-import { RiErrorWarningLine, RiWifiOffLine } from "@remixicon/react";
-import { errorMaps, HAS_NO_INTEGRATIONS } from "../consts/errors";
+import Link from 'next/link';
+import { Badge } from '@/shared/ui/badge';
+import { Button } from '@/shared/ui/button';
+import { RiErrorWarningLine, RiWifiOffLine } from '@remixicon/react';
+import { errorMaps, HAS_NO_INTEGRATIONS } from '../consts/errors';
 import {
   Card,
   CardAction,
@@ -11,11 +11,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@shared/ui/card";
+} from '@shared/ui/card';
 
 function isNetworkError(message: string) {
   return /network|timeout|failed to fetch|econnrefused|enotfound/i.test(
-    message
+    message,
   );
 }
 
@@ -31,11 +31,11 @@ export function CreateAutomationError({
 
   const Icon = config?.icon ?? (isNetwork ? RiWifiOffLine : RiErrorWarningLine);
   const title =
-    config?.title ?? (isNetwork ? "Connection error" : "Something went wrong");
+    config?.title ?? (isNetwork ? 'Connection error' : 'Something went wrong');
   const description =
     config?.description ??
     (isNetwork
-      ? "Please check your internet connection and try again."
+      ? 'Please check your internet connection and try again.'
       : error);
 
   return (
@@ -66,7 +66,7 @@ export function CreateAutomationError({
         <CardContent>
           <p className="text-muted-foreground bg-muted rounded-md px-3 py-2 font-mono text-xs">
             HTTP {status}
-            {config?.title ? ` — ${config.title}` : ""}
+            {config?.title ? ` — ${config.title}` : ''}
           </p>
         </CardContent>
       )}

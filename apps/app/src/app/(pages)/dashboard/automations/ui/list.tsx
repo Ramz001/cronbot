@@ -1,6 +1,6 @@
-import { RiTimeLine } from "@remixicon/react";
-import AutomationCard from "./card";
-import { getAutomations } from "@entities/automation";
+import { RiTimeLine } from '@remixicon/react';
+import AutomationCard from './card';
+import { getAutomations } from '@entities/automation';
 
 export async function AutomationsList() {
   const result = await getAutomations();

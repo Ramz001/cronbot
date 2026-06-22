@@ -1,15 +1,15 @@
-"use server";
+'use server';
 
-import { requireAuth } from "@shared/api/auth.guard";
-import { withActionErrorHandler } from "@shared/api/server-error-handlers";
+import { requireAuth } from '@shared/api/auth.guard';
+import { withActionErrorHandler } from '@shared/api/server-error-handlers';
 import {
   ToggleAutomationStatusSchema,
   type ToggleAutomationStatusType,
-} from "../model/validator";
-import prisma from "@shared/utils/prisma";
-import { cache } from "@shared/api/cache";
-import { cacheKeys } from "@shared/consts/cache";
-import { NotFoundError } from "@shared/api/errors";
+} from '../model/validator';
+import prisma from '@shared/utils/prisma';
+import { cache } from '@shared/api/cache';
+import { cacheKeys } from '@shared/consts/cache';
+import { NotFoundError } from '@shared/api/errors';
 
 const toggleAutomationStatus = async (values: ToggleAutomationStatusType) => {
   const user = await requireAuth();
@@ -22,7 +22,7 @@ const toggleAutomationStatus = async (values: ToggleAutomationStatusType) => {
   });
 
   if (!automation) {
-    throw new NotFoundError("Automation not found");
+    throw new NotFoundError('Automation not found');
   }
 
   await prisma.automation.update({
@@ -36,5 +36,5 @@ const toggleAutomationStatus = async (values: ToggleAutomationStatusType) => {
 };
 
 export const toggleAutomationStatusAction = withActionErrorHandler(
-  toggleAutomationStatus
+  toggleAutomationStatus,
 );

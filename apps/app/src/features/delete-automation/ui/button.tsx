@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -11,14 +11,14 @@ import {
   AlertDialogFooter,
   AlertDialogTitle,
   AlertDialogDescription,
-} from "@shared/ui/alert-dialog";
-import { Button } from "@shared/ui/button";
+} from '@shared/ui/alert-dialog';
+import { Button } from '@shared/ui/button';
 import {
   DeleteAutomationSchema,
   type DeleteAutomationType,
-} from "../model/validator";
-import { deleteAutomationAction } from "../api/delete-automation.action";
-import { RiDeleteBin2Line, RiLoader2Fill } from "@remixicon/react";
+} from '../model/validator';
+import { deleteAutomationAction } from '../api/delete-automation.action';
+import { RiDeleteBin2Line, RiLoader2Fill } from '@remixicon/react';
 
 export const DeleteButton = (props: DeleteAutomationType) => {
   const { id } = DeleteAutomationSchema.parse(props);
@@ -31,11 +31,11 @@ export const DeleteButton = (props: DeleteAutomationType) => {
       const res = await deleteAutomationAction({ id });
 
       if (res.success) {
-        toast.success("Automation deleted successfully");
+        toast.success('Automation deleted successfully');
         setOpen(false);
         router.refresh();
       } else {
-        toast.error(res.error?.message || "Failed to delete automation");
+        toast.error(res.error?.message || 'Failed to delete automation');
       }
     });
   };
@@ -73,7 +73,7 @@ export const DeleteButton = (props: DeleteAutomationType) => {
             onClick={handleDelete}
             disabled={isPending}
           >
-            {isPending ? "Deleting..." : "Delete"}
+            {isPending ? 'Deleting...' : 'Delete'}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

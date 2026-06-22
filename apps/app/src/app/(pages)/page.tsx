@@ -1,13 +1,13 @@
-import { Button } from "@/shared/ui/button";
-import { Suspense } from "react";
-import { RiSparklingLine } from "@remixicon/react";
-import { getSession } from "@/auth";
-import { headers } from "next/headers";
-import { RiArrowRightLine } from "@remixicon/react";
-import { GithubLoginButton } from "@entities/auth";
-import Link from "next/link";
-import Gutter from "@shared/ui/gutter";
-import Navbar from "@widgets/navbar";
+import { Button } from '@/shared/ui/button';
+import { Suspense } from 'react';
+import { RiSparklingLine } from '@remixicon/react';
+import { getSession } from '@/auth';
+import { headers } from 'next/headers';
+import { RiArrowRightLine } from '@remixicon/react';
+import { GithubLoginButton } from '@entities/auth';
+import Link from 'next/link';
+import Gutter from '@shared/ui/gutter';
+import Navbar from '@widgets/navbar';
 
 export default function HomePage() {
   return (
@@ -27,7 +27,7 @@ export default function HomePage() {
         </div>
 
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-          Automate your{" "}
+          Automate your{' '}
           <span className="from-primary to-primary/60 bg-linear-to-r bg-clip-text text-transparent">
             work tasks
           </span>
@@ -58,7 +58,7 @@ export default function HomePage() {
             size="lg"
             className="h-12 w-full px-8 font-semibold sm:w-auto"
           >
-            <Link href={"https://docs.cronbot.uz"}>Documentation</Link>
+            <Link href={'https://docs.cronbot.uz'}>Documentation</Link>
           </Button>
         </div>
       </Gutter>

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -11,13 +11,13 @@ import {
   AlertDialogFooter,
   AlertDialogTitle,
   AlertDialogDescription,
-} from "@shared/ui/alert-dialog";
-import { Button } from "@shared/ui/button";
+} from '@shared/ui/alert-dialog';
+import { Button } from '@shared/ui/button';
 import {
   DeleteIntegrationSchema,
   type DeleteIntegrationType,
-} from "../model/validator";
-import { deleteIntegrationAction } from "../api/delete-integration.action";
+} from '../model/validator';
+import { deleteIntegrationAction } from '../api/delete-integration.action';
 
 export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
   const { id } = DeleteIntegrationSchema.parse(props);
@@ -30,11 +30,11 @@ export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
       const res = await deleteIntegrationAction({ id });
 
       if (res.success) {
-        toast.success("Integration deleted successfully");
+        toast.success('Integration deleted successfully');
         setOpen(false);
         router.refresh();
       } else {
-        toast.error(res.error?.message || "Failed to delete integration");
+        toast.error(res.error?.message || 'Failed to delete integration');
       }
     });
   };
@@ -43,7 +43,7 @@ export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm" disabled={isPending}>
-          {isPending ? "Deleting..." : "Delete"}
+          {isPending ? 'Deleting...' : 'Delete'}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -63,7 +63,7 @@ export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
             onClick={handleDelete}
             disabled={isPending}
           >
-            {isPending ? "Deleting..." : "Delete"}
+            {isPending ? 'Deleting...' : 'Delete'}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,5 +1,5 @@
-import { CreateIntegrationDialog } from "@features/create-integration";
-import { IntegrationsList } from "./ui/list";
+import { CreateIntegrationDialog } from '@features/create-integration';
+import { IntegrationsList } from './ui/list';
 
 const IntegrationsPage = async () => {
   return (

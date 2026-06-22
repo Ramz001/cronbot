@@ -1,4 +1,4 @@
-import type { IntegrationToken } from "@prisma/generated/client";
+import type { IntegrationToken } from '@prisma/generated/client';
 import {
   Card,
   CardContent,
@@ -6,19 +6,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@shared/ui/card";
-import { Badge } from "@shared/ui/badge";
+} from '@shared/ui/card';
+import { Badge } from '@shared/ui/badge';
 import {
   RiCalendarLine,
   RiRobot2Line,
   RiKey2Line,
   RiTimeLine,
-} from "@remixicon/react";
-import { formatDistanceToNow } from "date-fns";
-import { DeleteIntegrationButton } from "@features/delete-integration/ui/button";
+} from '@remixicon/react';
+import { formatDistanceToNow } from 'date-fns';
+import { DeleteIntegrationButton } from '@features/delete-integration/ui/button';
 
 interface IntegrationCardProps {
-  token: Omit<IntegrationToken, "token">;
+  token: Omit<IntegrationToken, 'token'>;
 }
 
 export function IntegrationCard({ token }: IntegrationCardProps) {
@@ -35,15 +35,15 @@ export function IntegrationCard({ token }: IntegrationCardProps) {
           </div>
           <div>
             <CardTitle className="text-lg">
-              {token.title || "Discord Bot"}
+              {token.title || 'Discord Bot'}
             </CardTitle>
             <CardDescription className="font-medium capitalize">
               {token.provider} Integration
             </CardDescription>
           </div>
         </div>
-        <Badge variant={isExpired ? "destructive" : "default"}>
-          {isExpired ? "Expired" : "Active"}
+        <Badge variant={isExpired ? 'destructive' : 'default'}>
+          {isExpired ? 'Expired' : 'Active'}
         </Badge>
       </CardHeader>
       <CardContent className="flex-1 space-y-4 text-sm">
@@ -55,7 +55,7 @@ export function IntegrationCard({ token }: IntegrationCardProps) {
         <div className="text-muted-foreground mt-4 flex items-center gap-2">
           <RiCalendarLine className="h-4 w-4" />
           <span>
-            Added{" "}
+            Added{' '}
             {formatDistanceToNow(new Date(token.createdAt), {
               addSuffix: true,
             })}
@@ -65,7 +65,7 @@ export function IntegrationCard({ token }: IntegrationCardProps) {
           <div className="text-muted-foreground flex items-center gap-2 dark:text-orange-400">
             <RiTimeLine className="h-4 w-4" />
             <span>
-              Expires{" "}
+              Expires{' '}
               {formatDistanceToNow(new Date(token.expiresAt), {
                 addSuffix: true,
               })}

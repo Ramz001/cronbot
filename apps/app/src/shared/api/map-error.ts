@@ -1,7 +1,7 @@
-import { AxiosError } from "axios";
-import z from "zod";
-import { isPrismaError, mapPrismaError } from "./map-prisma-error";
-import { HttpError } from "./errors";
+import { AxiosError } from 'axios';
+import z from 'zod';
+import { isPrismaError, mapPrismaError } from './map-prisma-error';
+import { HttpError } from './errors';
 
 export type MapErrorResult = {
   error: { message: string; issues?: Array<z.core.$ZodIssue> };
@@ -12,7 +12,7 @@ export function mapError(error: unknown): MapErrorResult {
   if (error instanceof z.ZodError) {
     return {
       error: {
-        message: "Validation failed",
+        message: 'Validation failed',
         issues: error.issues,
       },
       status: 400,
@@ -24,7 +24,7 @@ export function mapError(error: unknown): MapErrorResult {
     const message =
       error.response?.data?.message ||
       error.message ||
-      "An error occurred during the API request";
+      'An error occurred during the API request';
 
     return {
       error: { message },
@@ -54,7 +54,7 @@ export function mapError(error: unknown): MapErrorResult {
   }
 
   // Handle string errors
-  if (typeof error === "string") {
+  if (typeof error === 'string') {
     return {
       error: { message: error },
       status: 500,
@@ -63,7 +63,7 @@ export function mapError(error: unknown): MapErrorResult {
 
   // Default error
   return {
-    error: { message: "An unexpected error occurred" },
+    error: { message: 'An unexpected error occurred' },
     status: 500,
   };
 }

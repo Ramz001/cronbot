@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { ThemeToggle } from "./theme-toggle";
-import { UserMenu } from "./user-menu";
-import { useSession } from "@entities/auth";
-import { GithubLoginButton } from "@entities/auth";
+import { ThemeToggle } from './theme-toggle';
+import { UserMenu } from './user-menu';
+import { useSession } from '@entities/auth';
+import { GithubLoginButton } from '@entities/auth';
 
 const ClientSection = () => {
   const { data } = useSession();

@@ -1,6 +1,6 @@
-import { SidebarProvider } from "@shared/ui/sidebar";
-import { AppSidebar } from "@widgets/sidebar";
-import BackgroundPattern from "@shared/ui/background-pattern";
+import { SidebarProvider } from '@shared/ui/sidebar';
+import { AppSidebar } from '@widgets/sidebar';
+import BackgroundPattern from '@shared/ui/background-pattern';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (

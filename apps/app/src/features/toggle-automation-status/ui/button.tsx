@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { Button } from "@shared/ui/button";
+import { useTransition } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { Button } from '@shared/ui/button';
 import {
   ToggleAutomationStatusSchema,
   type ToggleAutomationStatusType,
-} from "../model/validator";
-import { toggleAutomationStatusAction } from "../api/toggle-automation-status.action";
-import { RiLoader2Fill, RiPauseLine, RiPlayLine } from "@remixicon/react";
+} from '../model/validator';
+import { toggleAutomationStatusAction } from '../api/toggle-automation-status.action';
+import { RiLoader2Fill, RiPauseLine, RiPlayLine } from '@remixicon/react';
 
 export const ToggleStatusButton = (
   props: ToggleAutomationStatusType & {
     isActive: boolean;
-    variant?: "outline" | "ghost";
-    size?: "icon-sm" | "sm";
+    variant?: 'outline' | 'ghost';
+    size?: 'icon-sm' | 'sm';
     className?: string;
     title?: string;
-  }
+  },
 ) => {
   const { id } = ToggleAutomationStatusSchema.parse(props);
   const [isPending, startTransition] = useTransition();
@@ -29,18 +29,18 @@ export const ToggleStatusButton = (
       const res = await toggleAutomationStatusAction({ id });
 
       if (res.success) {
-        toast.success(res.data ? "Automation activated" : "Automation paused");
+        toast.success(res.data ? 'Automation activated' : 'Automation paused');
         router.refresh();
       } else {
-        toast.error(res.error?.message || "Failed to toggle automation status");
+        toast.error(res.error?.message || 'Failed to toggle automation status');
       }
     });
   };
 
   return (
     <Button
-      variant={props.variant || "outline"}
-      size={props.size || "icon-sm"}
+      variant={props.variant || 'outline'}
+      size={props.size || 'icon-sm'}
       onClick={handleToggle}
       disabled={isPending}
       title={props.title}

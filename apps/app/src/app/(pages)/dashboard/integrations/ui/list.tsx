@@ -1,6 +1,6 @@
-import { IntegrationCard } from "./card";
-import { ScrollArea } from "@shared/ui/scroll-area";
-import { getIntegrationTokens } from "@entities/integration-token";
+import { IntegrationCard } from './card';
+import { ScrollArea } from '@shared/ui/scroll-area';
+import { getIntegrationTokens } from '@entities/integration-token';
 
 export async function IntegrationsList() {
   const res = await getIntegrationTokens();
@@ -13,7 +13,7 @@ export async function IntegrationsList() {
         </h3>
         <p className="mt-2 max-w-sm text-sm text-red-500">
           {res.error.message ||
-            "An unexpected error occurred while fetching your integrations."}
+            'An unexpected error occurred while fetching your integrations.'}
         </p>
       </div>
     );

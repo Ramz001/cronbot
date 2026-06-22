@@ -1,15 +1,15 @@
-"use server";
+'use server';
 
-import { requireAuth } from "@shared/api/auth.guard";
-import { withActionErrorHandler } from "@shared/api/server-error-handlers";
+import { requireAuth } from '@shared/api/auth.guard';
+import { withActionErrorHandler } from '@shared/api/server-error-handlers';
 import {
   CreateIntegrationSchema,
   type CreateIntegrationType,
-} from "../model/validator";
-import prisma from "@shared/utils/prisma";
-import { encrypt } from "@shared/api/encryption";
-import { cache } from "@shared/api/cache";
-import { cacheKeys } from "@shared/consts/cache";
+} from '../model/validator';
+import prisma from '@shared/utils/prisma';
+import { encrypt } from '@shared/api/encryption';
+import { cache } from '@shared/api/cache';
+import { cacheKeys } from '@shared/consts/cache';
 
 const createIntegration = async (values: CreateIntegrationType) => {
   const user = await requireAuth();

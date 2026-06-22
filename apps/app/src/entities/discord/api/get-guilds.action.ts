@@ -1,11 +1,11 @@
-import { DISCORD_API } from "../consts/api";
-import { authHeaders } from "../utils/auth-headers";
-import { requireAuth } from "@shared/api/auth.guard";
-import { withActionErrorHandler } from "@shared/api/server-error-handlers";
-import { cache } from "@shared/api/cache";
-import { cacheKeys } from "@shared/consts/cache";
-import axios from "axios";
-import type { GuildType } from "../model/types";
+import { DISCORD_API } from '../consts/api';
+import { authHeaders } from '../utils/auth-headers';
+import { requireAuth } from '@shared/api/auth.guard';
+import { withActionErrorHandler } from '@shared/api/server-error-handlers';
+import { cache } from '@shared/api/cache';
+import { cacheKeys } from '@shared/consts/cache';
+import axios from 'axios';
+import type { GuildType } from '../model/types';
 
 const action = async (): Promise<GuildType[]> => {
   const user = await requireAuth();

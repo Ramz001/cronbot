@@ -1,16 +1,16 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { env } from "@shared/configs/env";
-import { cache } from "@shared/api/cache";
-import { withRouteErrorHandler } from "@shared/api/server-error-handlers";
-import z from "zod";
-import { CACHE_KEYS } from "@shared/consts/cache";
+import { type NextRequest, NextResponse } from 'next/server';
+import { env } from '@shared/configs/env';
+import { cache } from '@shared/api/cache';
+import { withRouteErrorHandler } from '@shared/api/server-error-handlers';
+import z from 'zod';
+import { CACHE_KEYS } from '@shared/consts/cache';
 
 const AuthHeader = z
   .string()
-  .startsWith("Bearer ")
-  .transform((value) => value.replace("Bearer ", ""))
+  .startsWith('Bearer ')
+  .transform((value) => value.replace('Bearer ', ''))
   .refine((token) => token === env.CACHE_WEBHOOK_SECRET, {
-    message: "Unauthorized",
+    message: 'Unauthorized',
   });
 
 const Body = z.object({
@@ -18,7 +18,7 @@ const Body = z.object({
 });
 
 async function cacheClear(req: NextRequest) {
-  AuthHeader.parse(req.headers.get("authorization"));
+  AuthHeader.parse(req.headers.get('authorization'));
 
   const body = Body.parse(await req.json());
 

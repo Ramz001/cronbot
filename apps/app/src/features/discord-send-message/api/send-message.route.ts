@@ -1,12 +1,12 @@
-import type { NextRequest } from "next/server";
+import type { NextRequest } from 'next/server';
 import {
   type RouteResult,
   withRouteErrorHandler,
-} from "@shared/api/server-error-handlers";
-import { DISCORD_API, authHeaders } from "@entities/discord";
-import { SendMessageBody } from "../model/validator";
-import { requireAuth } from "@shared/api/auth.guard";
-import axios from "axios";
+} from '@shared/api/server-error-handlers';
+import { DISCORD_API, authHeaders } from '@entities/discord';
+import { SendMessageBody } from '../model/validator';
+import { requireAuth } from '@shared/api/auth.guard';
+import axios from 'axios';
 
 async function sendMessage(req: NextRequest): Promise<RouteResult<string>> {
   const user = await requireAuth();
@@ -18,7 +18,7 @@ async function sendMessage(req: NextRequest): Promise<RouteResult<string>> {
   const { data } = await axios.post(
     `${DISCORD_API}/channels/${channelId}/messages`,
     { content: message },
-    { headers }
+    { headers },
   );
 
   return data?.id;

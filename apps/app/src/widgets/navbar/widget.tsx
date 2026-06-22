@@ -1,7 +1,7 @@
-import Link from "next/link";
-import Gutter from "@shared/ui/gutter";
-import ClientSection from "./ui/client-section";
-import { RiTimeLine } from "@remixicon/react";
+import Link from 'next/link';
+import Gutter from '@shared/ui/gutter';
+import ClientSection from './ui/client-section';
+import { RiTimeLine } from '@remixicon/react';
 
 export default function Navbar() {
   return (

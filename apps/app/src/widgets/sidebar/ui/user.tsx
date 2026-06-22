@@ -1,6 +1,10 @@
 "use client";
 
-import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@shared/ui/sidebar";
+import {
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@shared/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@shared/ui/avatar";
 import { RiLogoutBoxRLine } from "@remixicon/react";
 import { signOut, useSession } from "@entities/auth";

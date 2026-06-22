@@ -13,7 +13,10 @@ import {
   AlertDialogDescription,
 } from "@shared/ui/alert-dialog";
 import { Button } from "@shared/ui/button";
-import { DeleteIntegrationSchema, type DeleteIntegrationType } from "../model/validator";
+import {
+  DeleteIntegrationSchema,
+  type DeleteIntegrationType,
+} from "../model/validator";
 import { deleteIntegrationAction } from "../api/delete-integration.action";
 
 export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
@@ -47,15 +50,19 @@ export const DeleteIntegrationButton = (props: DeleteIntegrationType) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Integration</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete this integration? This action cannot be undone. The
-            associated bot token will be revoked immediately.
+            Are you sure you want to delete this integration? This action cannot
+            be undone. The associated bot token will be revoked immediately.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogTrigger asChild>
             <Button variant="outline">Cancel</Button>
           </AlertDialogTrigger>
-          <Button variant="destructive" onClick={handleDelete} disabled={isPending}>
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isPending}
+          >
             {isPending ? "Deleting..." : "Delete"}
           </Button>
         </AlertDialogFooter>

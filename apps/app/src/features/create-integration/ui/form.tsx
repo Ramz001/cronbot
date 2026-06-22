@@ -3,10 +3,22 @@
 import { Provider } from "@prisma/generated/enums";
 import { RiAddLine } from "@remixicon/react";
 import { Button } from "@shared/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@shared/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@shared/ui/dialog";
 import { Input } from "@shared/ui/input";
 import { Label } from "@shared/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@shared/ui/select";
 import { useForm } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -55,7 +67,8 @@ function CreateIntegrationForm() {
       <form.Field
         name="provider"
         validators={{
-          onChange: ({ value }) => (!value ? "A provider is required" : undefined),
+          onChange: ({ value }) =>
+            !value ? "A provider is required" : undefined,
         }}
         children={(field) => (
           <div className="space-y-2">
@@ -114,7 +127,11 @@ function CreateIntegrationForm() {
         children={(field) => (
           <div className="space-y-2">
             <Label htmlFor={field.name}>Expires In</Label>
-            <Select name={field.name} value={field.state.value} onValueChange={field.handleChange}>
+            <Select
+              name={field.name}
+              value={field.state.value}
+              onValueChange={field.handleChange}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select duration" />
               </SelectTrigger>
@@ -130,7 +147,11 @@ function CreateIntegrationForm() {
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-            <Button type="submit" disabled={!canSubmit} className="w-full sm:w-auto">
+            <Button
+              type="submit"
+              disabled={!canSubmit}
+              className="w-full sm:w-auto"
+            >
               {isSubmitting ? "Creating..." : "Create Integration"}
             </Button>
           )}

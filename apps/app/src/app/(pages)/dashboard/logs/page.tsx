@@ -32,7 +32,11 @@ const StatsPage = async () => {
       <div className="mt-4 flex flex-col gap-4">
         <h2 className="text-xl font-semibold tracking-tight">Worker Logs</h2>
 
-        <Accordion type="single" collapsible className="w-full space-y-2 border-none">
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full space-y-2 border-none"
+        >
           {logs.map((log) => (
             <LogItem key={log.id} log={log} />
           ))}

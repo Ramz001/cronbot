@@ -4,7 +4,10 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@shared/ui/button";
-import { ToggleAutomationStatusSchema, type ToggleAutomationStatusType } from "../model/validator";
+import {
+  ToggleAutomationStatusSchema,
+  type ToggleAutomationStatusType,
+} from "../model/validator";
 import { toggleAutomationStatusAction } from "../api/toggle-automation-status.action";
 import { RiLoader2Fill, RiPauseLine, RiPlayLine } from "@remixicon/react";
 
@@ -15,7 +18,7 @@ export const ToggleStatusButton = (
     size?: "icon-sm" | "sm";
     className?: string;
     title?: string;
-  },
+  }
 ) => {
   const { id } = ToggleAutomationStatusSchema.parse(props);
   const [isPending, startTransition] = useTransition();

@@ -32,7 +32,7 @@ const getLimiter = (points: number, duration: number) => {
         storeClient: prisma,
         points,
         duration,
-      }),
+      })
     );
   }
 
@@ -94,7 +94,7 @@ export const handleRateLimit = async (options: RateLimitOptions) => {
   } catch (error: unknown) {
     if (error instanceof RateLimiterRes) {
       throw new TooManyRequestsError(
-        `Rate limit exceeded. Retry in ${Math.ceil(error.msBeforeNext / 1000)}s.`,
+        `Rate limit exceeded. Retry in ${Math.ceil(error.msBeforeNext / 1000)}s.`
       );
     }
 

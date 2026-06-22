@@ -27,7 +27,11 @@ export async function decrypt(encryptedText: string) {
   const key = getKey();
   const [ivHex, encrypted] = encryptedText.split(":");
 
-  const decipher = crypto.createDecipheriv(ALGORITHM, key, Buffer.from(ivHex, "hex"));
+  const decipher = crypto.createDecipheriv(
+    ALGORITHM,
+    key,
+    Buffer.from(ivHex, "hex")
+  );
 
   let decrypted = decipher.update(encrypted, "hex", "utf8");
   decrypted += decipher.final("utf8");

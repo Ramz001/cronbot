@@ -5,7 +5,10 @@ import { cache } from "@shared/api/cache";
 import { withActionErrorHandler } from "@shared/api/server-error-handlers";
 import { cacheKeys } from "@shared/consts/cache";
 import prisma from "@shared/utils/prisma";
-import { AutomationRunSchema, type AutomationRunType } from "../model/validator";
+import {
+  AutomationRunSchema,
+  type AutomationRunType,
+} from "../model/validator";
 
 const action = async (values: AutomationRunType) => {
   const user = await requireAuth();
@@ -25,7 +28,7 @@ const action = async (values: AutomationRunType) => {
       orderBy: {
         createdAt: "desc",
       },
-    }),
+    })
   );
 };
 

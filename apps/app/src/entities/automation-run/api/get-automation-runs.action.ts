@@ -25,7 +25,7 @@ const action = async () => {
       include: {
         automation: true,
       },
-    }),
+    })
   );
 };
 

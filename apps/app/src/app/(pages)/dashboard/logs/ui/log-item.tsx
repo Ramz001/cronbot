@@ -1,9 +1,22 @@
-import { AccordionContent, AccordionItem, AccordionTrigger } from "@/shared/ui/accordion";
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/shared/ui/accordion";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { Separator } from "@/shared/ui/separator";
-import { RiCheckLine, RiCloseLine, RiDownloadLine, RiFileListLine } from "@remixicon/react";
-import { type Automation, type AutomationRun, AutomationRunStatus } from "@prisma/generated/client";
+import {
+  RiCheckLine,
+  RiCloseLine,
+  RiDownloadLine,
+  RiFileListLine,
+} from "@remixicon/react";
+import {
+  type Automation,
+  type AutomationRun,
+  AutomationRunStatus,
+} from "@prisma/generated/client";
 
 export async function LogItem({
   log,
@@ -36,16 +49,22 @@ export async function LogItem({
     >
       <AccordionTrigger className="hover:bg-muted/50 mr-4 flex flex-1 items-center justify-between gap-4 border-transparent px-4 py-3 transition-colors hover:no-underline">
         <div className="flex items-center gap-3">
-          <div className={`flex h-8 w-8 items-center justify-center rounded-full ${statusColor}`}>
+          <div
+            className={`flex h-8 w-8 items-center justify-center rounded-full ${statusColor}`}
+          >
             {statusIcon}
           </div>
           <span className="font-semibold">{log.automation.name}</span>
         </div>
         <div className="text-muted-foreground mr-6 flex items-center gap-4 text-sm font-normal">
           <span className="hidden sm:inline-block">{log.retries} retries</span>
-          <span className="hidden sm:inline-block">{log.scheduledAt?.toLocaleString()}</span>
+          <span className="hidden sm:inline-block">
+            {log.scheduledAt?.toLocaleString()}
+          </span>
           <Badge
-            variant={isSuccess ? "default" : isSkipped ? "secondary" : "destructive"}
+            variant={
+              isSuccess ? "default" : isSkipped ? "secondary" : "destructive"
+            }
             className="capitalize"
           >
             {log.status}
@@ -85,31 +104,41 @@ export async function LogItem({
               <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
                 Provider
               </span>
-              <span className="text-sm font-medium capitalize">{log.automation.provider}</span>
+              <span className="text-sm font-medium capitalize">
+                {log.automation.provider}
+              </span>
             </div>
             <div className="flex flex-col gap-1.5">
               <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
                 Status
               </span>
-              <span className="text-sm font-medium capitalize">{log.status}</span>
+              <span className="text-sm font-medium capitalize">
+                {log.status}
+              </span>
             </div>
             <div className="flex flex-col gap-1.5">
               <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
                 Started At
               </span>
-              <span className="text-sm font-medium">{log.startedAt?.toLocaleString() ?? "—"}</span>
+              <span className="text-sm font-medium">
+                {log.startedAt?.toLocaleString() ?? "—"}
+              </span>
             </div>
             <div className="flex flex-col gap-1.5">
               <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
                 Finished At
               </span>
-              <span className="text-sm font-medium">{log.finishedAt?.toLocaleString() ?? "—"}</span>
+              <span className="text-sm font-medium">
+                {log.finishedAt?.toLocaleString() ?? "—"}
+              </span>
             </div>
             <div className="flex flex-col gap-1.5">
               <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
                 Automation ID
               </span>
-              <span className="font-mono text-xs font-medium">{log.automationId}</span>
+              <span className="font-mono text-xs font-medium">
+                {log.automationId}
+              </span>
             </div>
             <div className="flex flex-col gap-1.5">
               <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
@@ -126,7 +155,11 @@ export async function LogItem({
               <RiFileListLine className="size-4" />
               View Full Log
             </Button>
-            <Button variant="outline" size="sm" className="w-full justify-start gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full justify-start gap-2"
+            >
               <RiDownloadLine className="size-4" />
               Download
             </Button>

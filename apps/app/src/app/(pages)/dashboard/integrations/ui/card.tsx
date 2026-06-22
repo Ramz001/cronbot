@@ -8,7 +8,12 @@ import {
   CardTitle,
 } from "@shared/ui/card";
 import { Badge } from "@shared/ui/badge";
-import { RiCalendarLine, RiRobot2Line, RiKey2Line, RiTimeLine } from "@remixicon/react";
+import {
+  RiCalendarLine,
+  RiRobot2Line,
+  RiKey2Line,
+  RiTimeLine,
+} from "@remixicon/react";
 import { formatDistanceToNow } from "date-fns";
 import { DeleteIntegrationButton } from "@features/delete-integration/ui/button";
 
@@ -17,7 +22,9 @@ interface IntegrationCardProps {
 }
 
 export function IntegrationCard({ token }: IntegrationCardProps) {
-  const isExpired = token.expiresAt ? new Date(token.expiresAt) < new Date() : false;
+  const isExpired = token.expiresAt
+    ? new Date(token.expiresAt) < new Date()
+    : false;
 
   return (
     <Card className="flex flex-col">
@@ -27,7 +34,9 @@ export function IntegrationCard({ token }: IntegrationCardProps) {
             <RiRobot2Line className="h-5 w-5" />
           </div>
           <div>
-            <CardTitle className="text-lg">{token.title || "Discord Bot"}</CardTitle>
+            <CardTitle className="text-lg">
+              {token.title || "Discord Bot"}
+            </CardTitle>
             <CardDescription className="font-medium capitalize">
               {token.provider} Integration
             </CardDescription>

@@ -5,7 +5,13 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui/select";
 import { Field, FieldLabel, FieldContent, FieldError } from "@/shared/ui/field";
 import { Provider } from "@prisma/generated/enums";
 import { cn } from "@shared/utils/cn";
@@ -17,7 +23,11 @@ import { toast } from "sonner";
 import { handleError } from "@shared/utils/handle-error";
 import { createAutomation } from "../api/create-automation.action";
 import type { CreateAutomationType } from "../model/validator";
-import { type ChannelType, type GuildType, CHANNEL_TYPE } from "@entities/discord/client";
+import {
+  type ChannelType,
+  type GuildType,
+  CHANNEL_TYPE,
+} from "@entities/discord/client";
 import type { SendMessageBodyType } from "@features/discord-send-message";
 
 export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
@@ -33,7 +43,10 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
     },
   });
 
-  const selectedGuildId = useStore(form.baseStore, (state) => state.values.identifier.guildId);
+  const selectedGuildId = useStore(
+    form.baseStore,
+    (state) => state.values.identifier.guildId
+  );
 
   const createMutation = useMutation({
     mutationFn: async (values: CreateAutomationType) => {
@@ -59,7 +72,9 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
   } = useQuery<ChannelType[]>({
     queryKey: ["discord-channels", selectedGuildId],
     queryFn: async () => {
-      const { data } = await axios.get(`/api/discord/guilds/${selectedGuildId}`);
+      const { data } = await axios.get(
+        `/api/discord/guilds/${selectedGuildId}`
+      );
       return data.data ?? [];
     },
     enabled: !!selectedGuildId,
@@ -139,13 +154,19 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                           "flex h-auto flex-col items-center justify-center gap-2 rounded-xl border p-4 transition-colors",
                           isSelected
                             ? "border-primary bg-primary/5"
-                            : "border-border hover:bg-accent/50",
+                            : "border-border hover:bg-accent/50"
                         )}
-                        style={{ "--primary": provider.color } as React.CSSProperties}
+                        style={
+                          {
+                            "--primary": provider.color,
+                          } as React.CSSProperties
+                        }
                         onClick={() => field.handleChange(provider.value)}
                       >
                         <Icon className="size-6" />
-                        <span className="text-sm font-medium">{provider.label}</span>
+                        <span className="text-sm font-medium">
+                          {provider.label}
+                        </span>
                       </Button>
                     );
                   })}
@@ -211,7 +232,9 @@ export const CreateAutomationForm = ({ guilds }: { guilds: GuildType[] }) => {
                     </SelectTrigger>
                     <SelectContent>
                       {channels
-                        ?.filter((channel) => channel.type === CHANNEL_TYPE.GUILD_TEXT)
+                        ?.filter(
+                          (channel) => channel.type === CHANNEL_TYPE.GUILD_TEXT
+                        )
                         .map((channel) => (
                           <SelectItem key={channel.id} value={channel.id}>
                             <RiHashtag className="mr-1 inline size-3 shrink-0" />

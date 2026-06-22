@@ -7,5 +7,9 @@ export default function Gutter({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <section className={cn("container mx-auto px-4", className)}>{children}</section>;
+  return (
+    <section className={cn("container mx-auto px-4", className)}>
+      {children}
+    </section>
+  );
 }

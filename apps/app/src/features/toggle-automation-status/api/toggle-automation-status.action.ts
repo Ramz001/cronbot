@@ -2,7 +2,10 @@
 
 import { requireAuth } from "@shared/api/auth.guard";
 import { withActionErrorHandler } from "@shared/api/server-error-handlers";
-import { ToggleAutomationStatusSchema, type ToggleAutomationStatusType } from "../model/validator";
+import {
+  ToggleAutomationStatusSchema,
+  type ToggleAutomationStatusType,
+} from "../model/validator";
 import prisma from "@shared/utils/prisma";
 import { cache } from "@shared/api/cache";
 import { cacheKeys } from "@shared/consts/cache";
@@ -32,4 +35,6 @@ const toggleAutomationStatus = async (values: ToggleAutomationStatusType) => {
   await cache.del(cacheKeys.automation(user.id));
 };
 
-export const toggleAutomationStatusAction = withActionErrorHandler(toggleAutomationStatus);
+export const toggleAutomationStatusAction = withActionErrorHandler(
+  toggleAutomationStatus
+);

@@ -29,7 +29,7 @@ export type RouteResult<T = void> = RouteSuccess<T> | RouteError;
  * Ignores the handler's normal return value — only ensures errors are handled consistently.
  */
 export function withActionErrorHandler<Args extends unknown[], T>(
-  handler: (...args: Args) => Promise<T>,
+  handler: (...args: Args) => Promise<T>
 ) {
   return async (...args: Args): Promise<ActionResult<T>> => {
     try {
@@ -44,7 +44,10 @@ export function withActionErrorHandler<Args extends unknown[], T>(
 
       const logInfo =
         error instanceof Error
-          ? { message: error.message, response: (error as any).response?.data }
+          ? {
+              message: error.message,
+              response: (error as any).response?.data,
+            }
           : error;
 
       console.error("[Server Action Error]:", logInfo);
@@ -63,7 +66,7 @@ export function withActionErrorHandler<Args extends unknown[], T>(
  * Ignores the handler's normal return value — only ensures errors are handled consistently.
  */
 export const withRouteErrorHandler = <TContext extends unknown[]>(
-  handler: (req: NextRequest, ...args: TContext) => Promise<NextResponse>,
+  handler: (req: NextRequest, ...args: TContext) => Promise<NextResponse>
 ) => {
   return async (req: NextRequest, ...args: TContext): Promise<NextResponse> => {
     try {
@@ -75,11 +78,16 @@ export const withRouteErrorHandler = <TContext extends unknown[]>(
 
       console.error(`[Route Error] ${(error as Error)?.message}`);
 
-      return NextResponse.json({ success: false, error: mappedError }, { status });
+      return NextResponse.json(
+        { success: false, error: mappedError },
+        { status }
+      );
     }
   };
 };
 
-export function isSuccess<T = void>(res: ActionResult<T>): res is ActionSuccess<T> {
+export function isSuccess<T = void>(
+  res: ActionResult<T>
+): res is ActionSuccess<T> {
   return res.success === true;
 }

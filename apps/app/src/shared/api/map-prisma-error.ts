@@ -118,7 +118,15 @@ export function isPrismaError(error: unknown): boolean {
 function createErrorDetails(error: any) {
   if (!error || typeof error !== "object") return null;
 
-  const { cause, stack, clientVersion, retryable, code, batchRequestIdx, meta } = error;
+  const {
+    cause,
+    stack,
+    clientVersion,
+    retryable,
+    code,
+    batchRequestIdx,
+    meta,
+  } = error;
 
   const hasAnyProperty =
     cause !== undefined ||
@@ -161,7 +169,8 @@ const extractUniqueField = (error: any) => {
   }
 
   // Prisma 6+ (driver adapter)
-  const adapterField = error.meta?.driverAdapterError?.cause?.constraint?.fields?.[0];
+  const adapterField =
+    error.meta?.driverAdapterError?.cause?.constraint?.fields?.[0];
 
   if (typeof adapterField === "string") {
     return adapterField;

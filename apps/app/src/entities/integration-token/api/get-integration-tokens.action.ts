@@ -23,7 +23,7 @@ const getTokens = async () => {
       orderBy: {
         createdAt: "desc",
       },
-    }),
+    })
   );
 };
 
@@ -37,7 +37,7 @@ const getTokensCount = async () => {
         userId: user.id,
         status: IntegrationTokenStatus.active,
       },
-    }),
+    })
   );
 };
 

@@ -23,7 +23,7 @@ const localizer = dateFnsLocalizer({
 });
 
 const DnDCalendar = withDragAndDrop<CalendarEvent>(
-  ShadcnBigCalendar as ComponentType<CalendarProps<CalendarEvent>>,
+  ShadcnBigCalendar as ComponentType<CalendarProps<CalendarEvent>>
 );
 
 type CalendarEvent = {
@@ -141,17 +141,24 @@ const presetEvents: CalendarEvent[] = [
 const LandingPage = () => {
   const [view, setView] = useState<View>(Views.WEEK);
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [events, setEvents] = useState<CalendarEvent[]>(() => [...presetEvents]);
+  const [events, setEvents] = useState<CalendarEvent[]>(() => [
+    ...presetEvents,
+  ]);
   const [selectedSlot, setSelectedSlot] = useState<SlotInfo | null>(null);
 
-  const eventPropGetter: CalendarProps<CalendarEvent>["eventPropGetter"] = (event) => {
+  const eventPropGetter: CalendarProps<CalendarEvent>["eventPropGetter"] = (
+    event
+  ) => {
     const status = event.status ?? "pending";
     return {
       className: `event-status-${status}`,
     };
   };
 
-  const handleEventDrop = ({ event, start }: EventInteractionArgs<CalendarEvent>) => {
+  const handleEventDrop = ({
+    event,
+    start,
+  }: EventInteractionArgs<CalendarEvent>) => {
     const nextStart = new Date(start);
     const nextEnd = new Date(nextStart);
     nextEnd.setMinutes(nextEnd.getMinutes() + FIXED_DURATION_MINUTES);
@@ -164,7 +171,7 @@ const LandingPage = () => {
             end: nextEnd,
             allDay: false,
           }
-        : existingEvent,
+        : existingEvent
     );
     setEvents(updatedEvents);
   };

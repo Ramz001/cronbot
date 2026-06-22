@@ -25,7 +25,12 @@ export const GithubLoginButton = ({
   };
 
   return (
-    <Button onClick={handleLogin} variant="outline" type="button" className={className}>
+    <Button
+      onClick={handleLogin}
+      variant="outline"
+      type="button"
+      className={className}
+    >
       <RiGithubFill className="h-4 w-4" />
       {title}
     </Button>

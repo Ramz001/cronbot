@@ -13,7 +13,10 @@ import {
   AlertDialogDescription,
 } from "@shared/ui/alert-dialog";
 import { Button } from "@shared/ui/button";
-import { DeleteAutomationSchema, type DeleteAutomationType } from "../model/validator";
+import {
+  DeleteAutomationSchema,
+  type DeleteAutomationType,
+} from "../model/validator";
 import { deleteAutomationAction } from "../api/delete-automation.action";
 import { RiDeleteBin2Line, RiLoader2Fill } from "@remixicon/react";
 
@@ -57,14 +60,19 @@ export const DeleteButton = (props: DeleteAutomationType) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Automation</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete this automation? This action cannot be undone.
+            Are you sure you want to delete this automation? This action cannot
+            be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogTrigger asChild>
             <Button variant="outline">Cancel</Button>
           </AlertDialogTrigger>
-          <Button variant="destructive" onClick={handleDelete} disabled={isPending}>
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isPending}
+          >
             {isPending ? "Deleting..." : "Delete"}
           </Button>
         </AlertDialogFooter>

@@ -51,7 +51,7 @@ export function UserMenu({ user }: UserMenuProps) {
             <span
               className={cn(
                 "flex size-8 items-center justify-center rounded-full text-xs font-semibold",
-                "bg-secondary text-secondary-foreground",
+                "bg-secondary text-secondary-foreground"
               )}
             >
               {initials}
@@ -65,9 +65,13 @@ export function UserMenu({ user }: UserMenuProps) {
         <div className="flex items-start gap-3 px-3 py-2.5">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <p className="text-foreground truncate text-sm font-medium">{user.name ?? ""}</p>
+              <p className="text-foreground truncate text-sm font-medium">
+                {user.name ?? ""}
+              </p>
             </div>
-            <p className="text-muted-foreground truncate text-xs">{user.email}</p>
+            <p className="text-muted-foreground truncate text-xs">
+              {user.email}
+            </p>
           </div>
         </div>
 

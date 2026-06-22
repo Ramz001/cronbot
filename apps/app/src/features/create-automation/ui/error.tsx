@@ -14,7 +14,9 @@ import {
 } from "@shared/ui/card";
 
 function isNetworkError(message: string) {
-  return /network|timeout|failed to fetch|econnrefused|enotfound/i.test(message);
+  return /network|timeout|failed to fetch|econnrefused|enotfound/i.test(
+    message
+  );
 }
 
 export function CreateAutomationError({
@@ -28,10 +30,13 @@ export function CreateAutomationError({
   const config = status ? errorMaps[status] : undefined;
 
   const Icon = config?.icon ?? (isNetwork ? RiWifiOffLine : RiErrorWarningLine);
-  const title = config?.title ?? (isNetwork ? "Connection error" : "Something went wrong");
+  const title =
+    config?.title ?? (isNetwork ? "Connection error" : "Something went wrong");
   const description =
     config?.description ??
-    (isNetwork ? "Please check your internet connection and try again." : error);
+    (isNetwork
+      ? "Please check your internet connection and try again."
+      : error);
 
   return (
     <Card className="mx-auto w-full max-w-2xl">

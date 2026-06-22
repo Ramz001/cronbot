@@ -31,7 +31,9 @@ export const InfoModal = ({
 }) => {
   const { label, color, icon: ProviderIcon } = provider;
   const identifierResult = IdentifierSchema.safeParse(automation.identifier);
-  const { channelId, guildId } = identifierResult.success ? identifierResult.data : {};
+  const { channelId, guildId } = identifierResult.success
+    ? identifierResult.data
+    : {};
   const bodyResult = BodySchema.safeParse(automation.body);
   const bodyData = bodyResult.success ? bodyResult.data : { message: "" };
 
@@ -48,7 +50,8 @@ export const InfoModal = ({
     queryKey: ["automation-runs", automation.id],
     queryFn: async () => {
       const result = await getAutomationRunsById({ id: automation.id });
-      if (!result.success) throw new Error(result.error?.message ?? "Failed to load runs");
+      if (!result.success)
+        throw new Error(result.error?.message ?? "Failed to load runs");
       return result.data ?? [];
     },
     enabled: !!open,
@@ -85,7 +88,9 @@ export const InfoModal = ({
               <div className="text-muted-foreground ml-12 flex items-center gap-2 text-xs">
                 <dt className="w-12 shrink-0">Server</dt>
                 <dd>
-                  <code className="bg-muted rounded px-1.5 py-0.5 text-xs">{guildId}</code>
+                  <code className="bg-muted rounded px-1.5 py-0.5 text-xs">
+                    {guildId}
+                  </code>
                 </dd>
               </div>
             )}
@@ -93,7 +98,9 @@ export const InfoModal = ({
               <div className="text-muted-foreground ml-12 flex items-center gap-2 text-xs">
                 <dt className="w-12 shrink-0">Channel</dt>
                 <dd>
-                  <code className="bg-muted rounded px-1.5 py-0.5 text-xs">{channelId}</code>
+                  <code className="bg-muted rounded px-1.5 py-0.5 text-xs">
+                    {channelId}
+                  </code>
                 </dd>
               </div>
             )}
@@ -119,10 +126,14 @@ export const InfoModal = ({
 
         {/* Message body */}
         <section className="border-border border-t px-6 py-3">
-          <h2 className="text-muted-foreground mb-1.5 text-xs font-medium">Message Body</h2>
+          <h2 className="text-muted-foreground mb-1.5 text-xs font-medium">
+            Message Body
+          </h2>
           <div className="bg-muted/50 max-h-64 min-h-16 overflow-y-auto rounded-xl border p-3 text-sm wrap-break-word whitespace-pre-wrap">
             {bodyData?.message || (
-              <span className="text-muted-foreground italic">No message content</span>
+              <span className="text-muted-foreground italic">
+                No message content
+              </span>
             )}
           </div>
         </section>
@@ -142,12 +153,16 @@ export const InfoModal = ({
 
           {runsErrored && (
             <p className="text-destructive py-2 text-xs">
-              {runsError instanceof Error ? runsError.message : "Failed to load runs"}
+              {runsError instanceof Error
+                ? runsError.message
+                : "Failed to load runs"}
             </p>
           )}
 
           {!runsLoading && !runsErrored && runs.length === 0 && (
-            <p className="text-muted-foreground py-2 text-xs italic">No runs yet</p>
+            <p className="text-muted-foreground py-2 text-xs italic">
+              No runs yet
+            </p>
           )}
 
           {!runsLoading && !runsErrored && runs.length > 0 && (
@@ -159,11 +174,13 @@ export const InfoModal = ({
                     key={run.id}
                     className={cn(
                       "flex items-start gap-3 rounded-xl border p-3 text-sm",
-                      meta?.bg ?? "bg-muted/30",
+                      meta?.bg ?? "bg-muted/30"
                     )}
                   >
                     {meta ? (
-                      <meta.Icon className={cn("mt-0.5 size-4 shrink-0", meta.color)} />
+                      <meta.Icon
+                        className={cn("mt-0.5 size-4 shrink-0", meta.color)}
+                      />
                     ) : (
                       <RiTimeLine className="text-muted-foreground mt-0.5 size-4 shrink-0" />
                     )}
@@ -173,7 +190,7 @@ export const InfoModal = ({
                           variant="outline"
                           className={cn(
                             "h-5 px-1.5 text-[11px] font-medium capitalize",
-                            meta?.color,
+                            meta?.color
                           )}
                         >
                           {meta?.label ?? run.status}
@@ -183,7 +200,9 @@ export const InfoModal = ({
                         </span>
                       </div>
                       <div className="text-muted-foreground mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5 text-xs">
-                        {run.triggeredBy && <span>Trigger: {run.triggeredBy}</span>}
+                        {run.triggeredBy && (
+                          <span>Trigger: {run.triggeredBy}</span>
+                        )}
                         {run.durationMs != null && (
                           <span>
                             Duration:{" "}
@@ -193,12 +212,17 @@ export const InfoModal = ({
                           </span>
                         )}
                         {run.scheduledAt && (
-                          <span>Scheduled: {new Date(run.scheduledAt).toLocaleString()}</span>
+                          <span>
+                            Scheduled:{" "}
+                            {new Date(run.scheduledAt).toLocaleString()}
+                          </span>
                         )}
                         {run.retries > 0 && <span>Retries: {run.retries}</span>}
                       </div>
                       {run.error && (
-                        <p className="mt-1 text-xs leading-relaxed text-red-500">{run.error}</p>
+                        <p className="mt-1 text-xs leading-relaxed text-red-500">
+                          {run.error}
+                        </p>
                       )}
                     </div>
                   </li>

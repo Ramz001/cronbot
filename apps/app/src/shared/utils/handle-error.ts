@@ -3,7 +3,14 @@ import { ZodError } from "zod";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import axios, { type AxiosError } from "axios";
 
-type ErrorKind = "zod" | "prisma" | "axios-validation" | "axios" | "error" | "string" | "unknown";
+type ErrorKind =
+  | "zod"
+  | "prisma"
+  | "axios-validation"
+  | "axios"
+  | "error"
+  | "string"
+  | "unknown";
 
 function classifyError(error: unknown): ErrorKind {
   if (error instanceof ZodError) return "zod";

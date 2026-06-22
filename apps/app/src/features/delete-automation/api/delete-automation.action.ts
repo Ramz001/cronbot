@@ -1,13 +1,21 @@
 "use server";
 
 import { requireAuth } from "@shared/api/auth.guard";
-import { type ActionResult, withActionErrorHandler } from "@shared/api/server-error-handlers";
-import { DeleteAutomationSchema, type DeleteAutomationType } from "../model/validator";
+import {
+  type ActionResult,
+  withActionErrorHandler,
+} from "@shared/api/server-error-handlers";
+import {
+  DeleteAutomationSchema,
+  type DeleteAutomationType,
+} from "../model/validator";
 import prisma from "@shared/utils/prisma";
 import { cache } from "@shared/api/cache";
 import { cacheKeys } from "@shared/consts/cache";
 
-const deleteAutomation = async (values: DeleteAutomationType): Promise<ActionResult> => {
+const deleteAutomation = async (
+  values: DeleteAutomationType
+): Promise<ActionResult> => {
   const user = await requireAuth();
 
   const { id } = DeleteAutomationSchema.parse(values);

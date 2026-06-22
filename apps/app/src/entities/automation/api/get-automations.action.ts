@@ -19,7 +19,7 @@ const action = async () => {
       orderBy: {
         createdAt: "desc",
       },
-    }),
+    })
   );
 };
 

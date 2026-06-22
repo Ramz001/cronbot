@@ -1,4 +1,9 @@
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@shared/ui/sidebar";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@shared/ui/sidebar";
 import { RiCommandLine, RiTimeLine } from "@remixicon/react";
 
 const SidebarTitle = () => {

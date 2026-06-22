@@ -5,13 +5,16 @@ import { requireAuth } from "@shared/api/auth.guard";
 import { cache } from "@shared/api/cache";
 import { cacheKeys } from "@shared/consts/cache";
 import { GuildIdSchema } from "../model/validator";
-import { withRouteErrorHandler, type RouteResult } from "@shared/api/server-error-handlers";
+import {
+  withRouteErrorHandler,
+  type RouteResult,
+} from "@shared/api/server-error-handlers";
 import type { ChannelType } from "../model/types";
 import axios from "axios";
 
 async function getGuildChannels(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<RouteResult<ChannelType[]>> {
   const user = await requireAuth();
   const { id } = await params;
@@ -20,7 +23,10 @@ async function getGuildChannels(
   return await cache.wrap(cacheKeys.discordChannel(guildId), async () => {
     const headers = await authHeaders({ userId: user.id });
 
-    const { data } = await axios.get(`${DISCORD_API}/guilds/${guildId}/channels`, { headers });
+    const { data } = await axios.get(
+      `${DISCORD_API}/guilds/${guildId}/channels`,
+      { headers }
+    );
 
     return data;
   });

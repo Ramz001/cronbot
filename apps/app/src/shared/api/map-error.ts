@@ -22,7 +22,9 @@ export function mapError(error: unknown): MapErrorResult {
   // Handle AxiosErrors first since they extend Error
   if (error instanceof AxiosError) {
     const message =
-      error.response?.data?.message || error.message || "An error occurred during the API request";
+      error.response?.data?.message ||
+      error.message ||
+      "An error occurred during the API request";
 
     return {
       error: { message },

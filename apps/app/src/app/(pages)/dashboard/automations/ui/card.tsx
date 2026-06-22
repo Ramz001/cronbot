@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  RiTimeLine,
-  RiLoader2Line,
-  RiPlayCircleLine,
-} from "@remixicon/react";
+import { RiTimeLine, RiLoader2Line, RiPlayCircleLine } from "@remixicon/react";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { Badge } from "@/shared/ui/badge";
@@ -24,16 +20,23 @@ import { ToggleStatusButton } from "@features/toggle-automation-status";
 function AutomationCard({ automation }: { automation: Automation }) {
   const [infoModal, setInfoModal] = useState(false);
 
-  const { data: identifierData, success: identifierSuccess } = IdentifierSchema.safeParse(
-    automation.identifier,
-  );
+  const { data: identifierData, success: identifierSuccess } =
+    IdentifierSchema.safeParse(automation.identifier);
 
-  const { data: bodyData, success: bodySuccess } = BodySchema.safeParse(automation.body);
+  const { data: bodyData, success: bodySuccess } = BodySchema.safeParse(
+    automation.body
+  );
 
   const canTest = identifierSuccess && bodySuccess;
 
   const testMutation = useMutation({
-    mutationFn: async ({ channelId, message }: { channelId: string; message: string }) =>
+    mutationFn: async ({
+      channelId,
+      message,
+    }: {
+      channelId: string;
+      message: string;
+    }) =>
       await axios.post("/api/discord/send", {
         channelId,
         message,
@@ -76,9 +79,13 @@ function AutomationCard({ automation }: { automation: Automation }) {
       size="sm"
       className={cn(
         "relative overflow-hidden transition-all duration-200 hover:shadow-lg",
-        automation.isActive && "border-l-[3px]",
+        automation.isActive && "border-l-[3px]"
       )}
-      style={automation.isActive ? ({ borderLeftColor: color } as React.CSSProperties) : {}}
+      style={
+        automation.isActive
+          ? ({ borderLeftColor: color } as React.CSSProperties)
+          : {}
+      }
       onClick={() => setInfoModal(true)}
     >
       {/* Subtle gradient accent on hover */}
@@ -95,7 +102,9 @@ function AutomationCard({ automation }: { automation: Automation }) {
           <div
             className={cn(
               "flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors",
-              automation.isActive ? "text-primary-foreground" : "bg-muted text-muted-foreground",
+              automation.isActive
+                ? "text-primary-foreground"
+                : "bg-muted text-muted-foreground"
             )}
             style={automation.isActive ? { backgroundColor: color } : undefined}
           >
@@ -111,7 +120,9 @@ function AutomationCard({ automation }: { automation: Automation }) {
               <span
                 className={cn(
                   "inline-block size-1.5 shrink-0 rounded-full",
-                  automation.isActive ? "bg-emerald-500" : "bg-muted-foreground/30",
+                  automation.isActive
+                    ? "bg-emerald-500"
+                    : "bg-muted-foreground/30"
                 )}
               />
               <Badge
@@ -126,7 +137,9 @@ function AutomationCard({ automation }: { automation: Automation }) {
                 <RiTimeLine className="size-3" />
                 <span>
                   Last run:{" "}
-                  {automation.lastRunAt ? new Date(automation.lastRunAt).toLocaleString() : "Never"}
+                  {automation.lastRunAt
+                    ? new Date(automation.lastRunAt).toLocaleString()
+                    : "Never"}
                 </span>
               </span>
               <span className="text-muted-foreground/20">·</span>
@@ -136,7 +149,10 @@ function AutomationCard({ automation }: { automation: Automation }) {
         </div>
 
         {/* Action buttons */}
-        <div className="flex shrink-0 items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="flex shrink-0 items-center gap-1.5"
+          onClick={(e) => e.stopPropagation()}
+        >
           <ToggleStatusButton
             isActive={automation.isActive}
             id={automation.id}

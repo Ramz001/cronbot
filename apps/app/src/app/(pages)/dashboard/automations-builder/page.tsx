@@ -10,7 +10,12 @@ export default async function CreateAutomationPage() {
   const count = await getIntegrationTokensCount();
 
   if (!count.success) {
-    return <CreateAutomationError error={count.error.message} status={count.status} />;
+    return (
+      <CreateAutomationError
+        error={count.error.message}
+        status={count.status}
+      />
+    );
   }
 
   if (count.data === 0) {
@@ -20,7 +25,12 @@ export default async function CreateAutomationPage() {
   const guilds = await getGuilds();
 
   if (!guilds.success) {
-    return <CreateAutomationError error={guilds.error.message} status={guilds.status} />;
+    return (
+      <CreateAutomationError
+        error={guilds.error.message}
+        status={guilds.status}
+      />
+    );
   }
 
   return <CreateAutomationForm guilds={guilds.data ?? []} />;

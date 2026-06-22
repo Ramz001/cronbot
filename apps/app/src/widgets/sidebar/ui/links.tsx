@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@shared/ui/sidebar";
+import {
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@shared/ui/sidebar";
 import { tabs } from "../consts/tabs";
 
 export function SidebarLinks() {

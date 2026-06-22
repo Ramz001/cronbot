@@ -712,7 +712,11 @@ button.rbc-input::-moz-focus-inner {
   border-color: var(--border);
 }
 .rbc-toolbar button.rbc-active:hover {
-  background-color: color-mix(in oklab, var(--secondary) 80%, transparent) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--secondary) 80%,
+    transparent
+  ) !important;
 }
 .rbc-toolbar .rbc-btn-group {
   display: inline-flex;
@@ -777,7 +781,11 @@ button.rbc-input::-moz-focus-inner {
   box-shadow: 0 1px 2px 0 color-mix(in oklab, black 8%, transparent) !important;
 }
 .dark .rbc-toolbar .rbc-btn-group > button.rbc-active {
-  background-color: color-mix(in oklab, var(--input) 30%, transparent) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--input) 30%,
+    transparent
+  ) !important;
   border-color: var(--input);
 }
 .rbc-time-view {

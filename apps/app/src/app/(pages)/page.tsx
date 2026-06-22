@@ -34,14 +34,18 @@ export default function HomePage() {
         </h1>
 
         <p className="text-muted-foreground max-w-2xl sm:text-xl sm:leading-8">
-          Professional Discord self-bot platform to manage, execute, and scale daily automated work
-          routines.
+          Professional Discord self-bot platform to manage, execute, and scale
+          daily automated work routines.
         </p>
 
         <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
           <Suspense
             fallback={
-              <Button size="lg" className="h-12 w-full px-8 font-semibold sm:w-auto" disabled>
+              <Button
+                size="lg"
+                className="h-12 w-full px-8 font-semibold sm:w-auto"
+                disabled
+              >
                 Loading...
               </Button>
             }
@@ -68,7 +72,11 @@ async function SessionButtons() {
   });
 
   return session ? (
-    <Button asChild size="lg" className="h-12 w-full px-8 font-semibold sm:w-auto">
+    <Button
+      asChild
+      size="lg"
+      className="h-12 w-full px-8 font-semibold sm:w-auto"
+    >
       <Link href="/dashboard">
         Go to Dashboard <RiArrowRightLine className="ml-2 h-4 w-4" />
       </Link>

@@ -33,7 +33,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/app.Dockerfile
     container_name: cronbot-app
     restart: unless-stopped
     ports:
@@ -50,7 +50,7 @@ services:
   worker:
     build:
       context: .
-      dockerfile: Dockerfile.worker
+      dockerfile: docker/worker.Dockerfile
     container_name: cronbot-worker
     restart: unless-stopped
     ports:

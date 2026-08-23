@@ -4,7 +4,8 @@ on:
   schedule:
     # Every day at 22:00 UTC = 03:00 GMT+5 (next day).
     # The script itself decides whether to send based on odd/even day (SEND_DAY).
-    - cron: '0 22 * * *'
+    - cron: "0 22 * * *"
+  workflow_dispatch:
 
 jobs:
   send:

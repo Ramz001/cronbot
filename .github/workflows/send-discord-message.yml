@@ -2,9 +2,9 @@ name: Send Discord Message
 
 on:
   schedule:
-    # Every day at 21:50 UTC = 02:50 GMT+5 (next day).
+    # Every day at 21:45 UTC = 02:50 GMT+5 (next day).
     # The script itself decides whether to send based on odd/even day (SEND_DAY).
-    - cron: "50 21 * * *"
+    - cron: "45 21 * * *"
   workflow_dispatch:
 
 jobs:

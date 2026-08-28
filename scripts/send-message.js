@@ -9,6 +9,9 @@
 //   SEND_DAY            - "odd" (default) or "even"; the message is only sent
 //                         when the current GMT+5 day matches this parity
 //
+// The script also only sends within a 30-minute window after the scheduled
+// time (21:45 UTC); runs outside that window are skipped.
+//
 // Everything else (API base URL, headers, endpoint shape, HTTP method) is
 // intentionally hardcoded.
 
@@ -33,6 +36,28 @@ if (!DISCORD_MESSAGE) fail("DISCORD_MESSAGE is not set");
 const sendDay = SEND_DAY.toLowerCase();
 if (sendDay !== "odd" && sendDay !== "even") {
   fail('SEND_DAY must be "odd" or "even"');
+}
+
+// Only send within a 30-minute window after the scheduled time (21:45 UTC).
+const SCHEDULE_HOUR_UTC = 21;
+const SCHEDULE_MINUTE_UTC = 45;
+const WINDOW_MINUTES = 30;
+
+function minutesSinceSchedule(now) {
+  const scheduled = new Date(now);
+  scheduled.setUTCHours(SCHEDULE_HOUR_UTC, SCHEDULE_MINUTE_UTC, 0, 0);
+  if (scheduled > now) {
+    scheduled.setUTCDate(scheduled.getUTCDate() - 1);
+  }
+  return (now - scheduled) / 60_000;
+}
+
+const elapsedMinutes = minutesSinceSchedule(new Date());
+if (elapsedMinutes > WINDOW_MINUTES) {
+  console.log(
+    `Skipping: ${Math.round(elapsedMinutes)} min since 21:45 UTC is outside the ${WINDOW_MINUTES}-minute window`,
+  );
+  process.exit(0);
 }
 
 // Day of month in GMT+5 (UTC+5), so parity matches the configured schedule.

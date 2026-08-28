@@ -41,7 +41,7 @@ if (sendDay !== "odd" && sendDay !== "even") {
 // Only send within a 30-minute window after the scheduled time (21:45 UTC).
 const SCHEDULE_HOUR_UTC = 21;
 const SCHEDULE_MINUTE_UTC = 45;
-const WINDOW_MINUTES = 30;
+const WINDOW_MINUTES = 45;
 
 function minutesSinceSchedule(now) {
   const scheduled = new Date(now);

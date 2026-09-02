@@ -1,68 +1,88 @@
+# -----------------------------------------------------------
+# Cronbot — Docker Compose
+# Only the cron service is active; the rest is commented out.
+# -----------------------------------------------------------
 services:
   # -----------------------------------------------------------
-  # PostgreSQL — database for Prisma
+  # Cron — node-cron scheduler that posts the Discord message
   # -----------------------------------------------------------
-  postgres:
-    image: postgres:17-alpine
-    container_name: cronbot-postgres
+  cron:
+    build:
+      context: .
+      dockerfile: docker/cron.Dockerfile
+    container_name: cronbot-cron
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-cronbot}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cronbot}
-      POSTGRES_DB: ${POSTGRES_DB:-cronbot}
-    ports:
-      - '${POSTGRES_PORT:-5432}:5432'
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      DISCORD_CHANNEL_ID: ${DISCORD_CHANNEL_ID}
+      DISCORD_MESSAGE: ${DISCORD_MESSAGE}
+      SEND_DAY: ${SEND_DAY:-odd}
+      CRON_SCHEDULE: ${CRON_SCHEDULE:-}
 
   # -----------------------------------------------------------
-  # Redis — job queue backend for BullMQ (worker)
+  # PostgreSQL — database for Prisma (commented out)
   # -----------------------------------------------------------
-  redis:
-    image: redis:7-alpine
-    container_name: cronbot-redis
-    restart: unless-stopped
-    ports:
-      - '${REDIS_PORT:-6379}:6379'
-    volumes:
-      - redis-data:/data
+  # postgres:
+  #   image: postgres:17-alpine
+  #   container_name: cronbot-postgres
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER:-cronbot}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cronbot}
+  #     POSTGRES_DB: ${POSTGRES_DB:-cronbot}
+  #   ports:
+  #     - '${POSTGRES_PORT:-5432}:5432'
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
 
   # -----------------------------------------------------------
-  # Dashboard — Next.js app
+  # Redis — job queue backend for BullMQ (worker) (commented out)
   # -----------------------------------------------------------
-  app:
-    build:
-      context: .
-      dockerfile: docker/app.Dockerfile
-    container_name: cronbot-app
-    restart: unless-stopped
-    ports:
-      - '${APP_PORT:-3000}:3000'
-    env_file:
-      - .env
-    depends_on:
-      postgres:
-        condition: service_started
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: cronbot-redis
+  #   restart: unless-stopped
+  #   ports:
+  #     - '${REDIS_PORT:-6379}:6379'
+  #   volumes:
+  #     - redis-data:/data
 
   # -----------------------------------------------------------
-  # Worker — NestJS job processor (BullMQ)
+  # Dashboard — Next.js app (commented out)
   # -----------------------------------------------------------
-  worker:
-    build:
-      context: .
-      dockerfile: docker/worker.Dockerfile
-    container_name: cronbot-worker
-    restart: unless-stopped
-    ports:
-      - '${WORKER_PORT:-3001}:3000'
-    env_file:
-      - .env
-    depends_on:
-      postgres:
-        condition: service_started
-      redis:
-        condition: service_started
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/app.Dockerfile
+  #   container_name: cronbot-app
+  #   restart: unless-stopped
+  #   ports:
+  #     - '${APP_PORT:-3000}:3000'
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     postgres:
+  #       condition: service_started
 
-volumes:
-  postgres-data:
-  redis-data:
+  # -----------------------------------------------------------
+  # Worker — NestJS job processor (BullMQ) (commented out)
+  # -----------------------------------------------------------
+  # worker:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/worker.Dockerfile
+  #   container_name: cronbot-worker
+  #   restart: unless-stopped
+  #   ports:
+  #     - '${WORKER_PORT:-3001}:3000'
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     postgres:
+  #       condition: service_started
+  #     redis:
+  #       condition: service_started
+
+# volumes:
+#   postgres-data:
+#   redis-data:

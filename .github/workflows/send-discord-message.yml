@@ -1,25 +1,25 @@
-name: Send Discord Message
+# name: Send Discord Message
 
-on:
-  schedule:
-    # Every day at 21:45 UTC = 02:45 GMT+5 (next day).
-    # The script itself decides whether to send based on odd/even day (SEND_DAY).
-    - cron: "45 21 * * *"
-  workflow_dispatch:
+# on:
+#   schedule:
+#     # Every day at 21:45 UTC = 02:45 GMT+5 (next day).
+#     # The script itself decides whether to send based on odd/even day (SEND_DAY).
+#     - cron: "45 21 * * *"
+#   workflow_dispatch:
 
-jobs:
-  send:
-    runs-on: ubuntu-latest
-    environment: Production
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Send Discord message
-        env:
-          DISCORD_TOKEN: ${{ vars.DISCORD_TOKEN }}
-          DISCORD_CHANNEL_ID: ${{ vars.DISCORD_CHANNEL_ID }}
-          DISCORD_MESSAGE: ${{ vars.DISCORD_MESSAGE }}
-          SEND_DAY: ${{ vars.SEND_DAY || 'odd' }}
-        run: node scripts/send-message.js
+# jobs:
+#   send:
+#     runs-on: ubuntu-latest
+#     environment: Production
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: 22
+#       - name: Send Discord message
+#         env:
+#           DISCORD_TOKEN: ${{ vars.DISCORD_TOKEN }}
+#           DISCORD_CHANNEL_ID: ${{ vars.DISCORD_CHANNEL_ID }}
+#           DISCORD_MESSAGE: ${{ vars.DISCORD_MESSAGE }}
+#           SEND_DAY: ${{ vars.SEND_DAY || 'odd' }}
+#         run: node scripts/send-message.js

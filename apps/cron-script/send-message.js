@@ -12,10 +12,13 @@
 //   SEND_DAY            - "odd" (default) or "even": only send when the
 //                         current GMT+5 day-of-month matches; "off" disables
 //                         sending entirely
+//   MANUAL_SEND         - "true" to force a send for one-shot/manual testing:
+//                         skips the 21:45 UTC ±30-minute window check and the
+//                         SEND_DAY gate, so running it any time posts now
 //
 // The cron runs every day; SEND_DAY decides which days actually send.
 // A run outside the 30-minute window after the scheduled time (21:45 UTC)
-// fails instead of sending.
+// fails instead of sending — unless MANUAL_SEND is "true".
 //
 // Everything else (API base URL, headers, endpoint shape, HTTP method) is
 // intentionally hardcoded.
@@ -51,25 +54,31 @@ async function run(env = process.env) {
     DISCORD_CHANNEL_ID,
     DISCORD_MESSAGE,
     SEND_DAY = "odd",
+    MANUAL_SEND = "false",
   } = env;
 
   if (!DISCORD_TOKEN) throw new Error("DISCORD_TOKEN is not set");
   if (!DISCORD_CHANNEL_ID) throw new Error("DISCORD_CHANNEL_ID is not set");
   if (!DISCORD_MESSAGE) throw new Error("DISCORD_MESSAGE is not set");
 
+  // Manual one-shot mode ("true") skips the schedule gates below so the
+  // message is posted whenever it is run — for testing the container.
+  const manualSend = MANUAL_SEND.toLowerCase() === "true";
+
   const sendDay = SEND_DAY.toLowerCase();
   if (sendDay !== "odd" && sendDay !== "even" && sendDay !== "off") {
     throw new Error('SEND_DAY must be "odd", "even" or "off"');
   }
 
-  if (sendDay === "off") {
+  if (!manualSend && sendDay === "off") {
     return { skipped: "SEND_DAY is off" };
   }
 
   // Only send within a window after the scheduled time (21:45 UTC);
-  // running outside the window is a hard failure.
+  // running outside the window is a hard failure. Manual one-shot runs
+  // (MANUAL_SEND=true) skip this check.
   const elapsedMinutes = minutesSinceSchedule(new Date());
-  if (elapsedMinutes > WINDOW_MINUTES) {
+  if (!manualSend && elapsedMinutes > WINDOW_MINUTES) {
     throw new Error(
       `${Math.round(elapsedMinutes)} min since 21:45 UTC is outside the ${WINDOW_MINUTES}-minute window`,
     );
@@ -79,7 +88,7 @@ async function run(env = process.env) {
   const localDayOfMonth = new Date(Date.now() + GMT5_OFFSET_MS).getUTCDate();
   const isOddDay = localDayOfMonth % 2 === 1;
 
-  if (sendDay === "odd" ? !isOddDay : isOddDay) {
+  if (!manualSend && (sendDay === "odd" ? !isOddDay : isOddDay)) {
     return {
       skipped: `day ${localDayOfMonth} is ${isOddDay ? "odd" : "even"}, SEND_DAY=${sendDay}`,
     };

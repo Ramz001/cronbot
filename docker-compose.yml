@@ -5,6 +5,11 @@
 services:
   # -----------------------------------------------------------
   # Cron — node-cron scheduler that posts the Discord message
+  #
+  # Manual one-shot test (sends once, then the container exits):
+  #   docker compose run --rm -e MANUAL_SEND=true cron node send-message.js
+  # MANUAL_SEND=true skips the 21:45 UTC window and SEND_DAY gates so
+  # the message is posted immediately regardless of the current time/day.
   # -----------------------------------------------------------
   cron:
     build:
@@ -18,6 +23,7 @@ services:
       DISCORD_MESSAGE: ${DISCORD_MESSAGE}
       SEND_DAY: ${SEND_DAY:-odd}
       CRON_SCHEDULE: ${CRON_SCHEDULE:-}
+      MANUAL_SEND: ${MANUAL_SEND:-false}
 
   # -----------------------------------------------------------
   # PostgreSQL — database for Prisma (commented out)

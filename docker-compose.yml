@@ -7,12 +7,12 @@ services:
   # Cron — node-cron scheduler that posts the Discord message
   #
   # Manual one-shot test (sends once, then the container exits):
-  #   docker compose run --rm -e MANUAL_SEND=true cron node send-message.js
+  #   docker compose run --rm -e MANUAL_SEND=true cron-prod node send-message.js
   # MANUAL_SEND=true skips the 21:45 UTC window and SEND_DAY gates so
   # the message is posted immediately regardless of the current time/day.
 
 
-  
+
   # -----------------------------------------------------------
   # cron-dev:
   #   build:

@@ -105,8 +105,16 @@ async function run(env = process.env) {
   });
 
   if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Discord API responded with ${response.status}: ${body}`);
+    const body = (await response.text()).trim();
+    const hint =
+      response.status === 401 || response.status === 403
+        ? " — check DISCORD_TOKEN (valid token with permission to post in this channel)"
+        : response.status >= 500
+          ? " — Discord API error, retry later"
+          : "";
+    throw new Error(
+      `Discord API POST ${url} failed with HTTP ${response.status} ${response.statusText}${hint}. Response: ${body}`,
+    );
   }
 
   const data = await response.json();

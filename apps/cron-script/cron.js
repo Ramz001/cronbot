@@ -10,7 +10,7 @@
 const cron = require("node-cron");
 const { run } = require("./send-message");
 
-const schedule = process.env.CRON_SCHEDULE || "45 21 * * *";
+const schedule = process.env.CRON_SCHEDULE;
 
 async function tick() {
   try {

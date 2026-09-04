@@ -10,12 +10,27 @@ services:
   #   docker compose run --rm -e MANUAL_SEND=true cron node send-message.js
   # MANUAL_SEND=true skips the 21:45 UTC window and SEND_DAY gates so
   # the message is posted immediately regardless of the current time/day.
+
+
+  
   # -----------------------------------------------------------
-  cron:
-    build:
-      context: .
-      dockerfile: docker/cron.Dockerfile
-    container_name: cronbot-cron
+  # cron-dev:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/cron.Dockerfile
+  #   container_name: cronbot-cron
+  #   restart: unless-stopped
+  #   environment:
+  #     DISCORD_TOKEN: ${DISCORD_TOKEN}
+  #     DISCORD_CHANNEL_ID: ${DISCORD_CHANNEL_ID}
+  #     DISCORD_MESSAGE: ${DISCORD_MESSAGE}
+  #     SEND_DAY: ${SEND_DAY:-odd}
+  #     CRON_SCHEDULE: ${CRON_SCHEDULE:-}
+  #     MANUAL_SEND: ${MANUAL_SEND:-false}
+
+  cron-prod:
+    image: ramz001/cronbot-cron
+    container_name: cronbot-cron-prod
     restart: unless-stopped
     environment:
       DISCORD_TOKEN: ${DISCORD_TOKEN}
@@ -24,7 +39,6 @@ services:
       SEND_DAY: ${SEND_DAY:-odd}
       CRON_SCHEDULE: ${CRON_SCHEDULE:-}
       MANUAL_SEND: ${MANUAL_SEND:-false}
-
   # -----------------------------------------------------------
   # PostgreSQL — database for Prisma (commented out)
   # -----------------------------------------------------------

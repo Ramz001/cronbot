@@ -2,7 +2,7 @@
 // Docker container (the container stays alive between runs).
 //
 // Environment variables:
-//   CRON_SCHEDULE - crontab expression in UTC (default "45 21 * * *")
+//   CRON_SCHEDULE - crontab expression in UTC (required, e.g. "0 22 * * *")
 //   RUN_ON_START  - set to "true" to run the job once at startup (for testing)
 //   ...plus everything `send-message.js` reads:
 //     DISCORD_TOKEN, DISCORD_CHANNEL_ID, DISCORD_MESSAGE, SEND_DAY

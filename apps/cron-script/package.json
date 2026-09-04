@@ -5,7 +5,8 @@
   "description": "Standalone node-cron scheduler that posts a Discord message",
   "scripts": {
     "start": "node cron.js",
-    "send": "node send-message.js"
+    "send": "node send-message.js",
+    "test": "node --test"
   },
   "dependencies": {
     "node-cron": "^4.6.0"

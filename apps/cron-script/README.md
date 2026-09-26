@@ -75,9 +75,11 @@ docker compose up -d cron-prod
 ```
 
 The container runs `cron.js`, which stays alive between runs and executes on
-`CRON_SCHEDULE` (UTC). Any failure (bad config, outside the window, Discord
-non-2xx like 401) crashes the process with exit code 1; `restart:
-unless-stopped` brings it back and the error is loud in `docker logs`.
+`CRON_SCHEDULE` (UTC), delayed by a random 0–120 second jitter so the message
+never posts at the exact scheduled second. Any failure (bad config, outside
+the window, Discord non-2xx like 401) crashes the process with exit code 1;
+`restart: unless-stopped` brings it back and the error is loud in `docker
+logs`.
 
 ### One-shot / manual (CLI)
 

@@ -1,1 +1,0 @@
-export const DISCORD_API = 'https://discord.com/api/v9';

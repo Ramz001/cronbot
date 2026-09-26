@@ -10,21 +10,38 @@
 // A failed run (e.g. Discord API returns 401 or any non-2xx, bad config, or
 // a run outside the send window) is fatal: the process logs the error and
 // exits non-zero so the container crashes and Docker can restart it.
+//
+// Each scheduled run is delayed by a random 0-120s jitter so the message
+// never posts at the exact scheduled second. Manual runs skip the jitter.
 
 const cron = require("node-cron");
 const { run } = require("./send-message");
 
 const schedule = process.env.CRON_SCHEDULE;
+const JITTER_MAX_SECONDS = 120;
+const manualSend = process.env.MANUAL_SEND?.toLowerCase() === "true";
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 async function tick() {
   // Throws on any failure (missing config, outside the send window, or a
   // non-2xx Discord API response such as 401). Deliberately not caught here —
   // the caller decides how to handle the error.
+  const jitterSeconds = manualSend
+    ? 0
+    : Math.floor(Math.random() * (JITTER_MAX_SECONDS + 1));
+  if (jitterSeconds > 0) await sleep(jitterSeconds * 1000);
+
+  const startedAt = Date.now();
   const result = await run();
   if (result.skipped) {
     console.log(`Skipping: ${result.skipped}`);
   } else {
-    console.log(`Message sent (id: ${result.sent})`);
+    console.log(
+      `Message sent (id: ${result.sent}) — tick at ${new Date(startedAt).toISOString()}, took ${Date.now() - startedAt}ms, jitter ${jitterSeconds}s`,
+    );
   }
 }
 
@@ -54,7 +71,9 @@ if (!cron.validate(schedule)) {
 
 cron.schedule(schedule, () => tick().catch(crash), { timezone: "Etc/UTC" });
 
-console.log(`Cron scheduler running: "${schedule}" (UTC)`);
+console.log(
+  `Cron scheduler running: "${schedule}" (UTC), system time ${new Date().toISOString()}`,
+);
 
 if (process.env.RUN_ON_START === "true") {
   console.log("RUN_ON_START is set, running the job once now");
